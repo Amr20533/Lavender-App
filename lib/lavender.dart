@@ -9,6 +9,8 @@ import 'package:lavender/features/home/data/repositories/home_repo_impl.dart';
 import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
 import 'package:lavender/features/home/presenation/cubit/quote_cubit.dart';
 import 'package:lavender/features/onbording/presentation/cubit/onbording_cubit.dart';
+import 'package:lavender/features/programs/data/repositories/quizzes_repository_impl.dart';
+import 'package:lavender/features/programs/presentation/cubit/quiz_cubit.dart';
 import 'package:lavender/features/sign_in/logic/use_cases/sign_in_usecase.dart';
 import 'package:lavender/features/sign_in/presentation/cubit/sign_in_cubit.dart';
 import 'package:lavender/features/sign_up/data/repositories/auth_repository_impl.dart';
@@ -43,6 +45,7 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (_) => SignUpCubit(SignUpUseCase(AuthRepositoryImpl(),),),),
         BlocProvider(create: (_) => HomeCubit(HomeRepositoryImpl())..fetchSpecialists()),
         BlocProvider(create: (_) => QuoteCubit(HomeRepositoryImpl())..fetchQuotes(),),
+        BlocProvider(create: (_) => QuizCubit(QuizRepositoryImpl())..fetchMeasurementQuizzes(),),
         ],
           child: MaterialApp(
            locale: context.locale,

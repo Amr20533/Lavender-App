@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/features/home/presenation/home_screen.dart';
+import 'package:lavender/features/programs/presentation/programs_screen.dart';
 
 class MainView extends StatefulWidget {
   const MainView({super.key});
@@ -18,7 +19,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
   final List<Widget> _pages = [
     HomeScreen(),
     const Center(child: Text("🔍 Search")),
-    const Center(child: Text("❤️ Favorites")),
+    ProgramsScreen(),
     const Center(child: Text("👤 Profile")),
     const Center(child: Text("👤 Profile")),
   ];

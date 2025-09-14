@@ -11,6 +11,7 @@ import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
 import 'package:lavender/features/home/presenation/cubit/home_state.dart';
 import 'package:lavender/features/home/presenation/cubit/quote_cubit.dart';
 import 'package:lavender/features/home/presenation/cubit/quote_state.dart';
+import 'package:lavender/features/home/widgets/alex_text.dart';
 import 'package:lavender/features/home/widgets/specialists_card.dart';
 import '../../../core/routing/router.dart';
 import '../widgets/doctor_card.dart';
@@ -282,11 +283,7 @@ class HomeScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("مقولة اليوم", style: GoogleFonts.alexandria(
-                                  fontSize: 16.sp,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.primaryColorLavenderLangAndText
-                              )),
+                              AlexText(text: "مقولة اليوم"),
                             Stack(
                               alignment: Alignment.center,
                               clipBehavior: Clip.none,

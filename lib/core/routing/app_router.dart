@@ -6,6 +6,7 @@ import 'package:lavender/features/home/presenation/home_screen.dart';
 import 'package:lavender/features/home/presenation/main_view.dart';
 import 'package:lavender/features/home/presenation/specialists_screen.dart';
 import 'package:lavender/features/onbording/presentation/screens/onbpording_screen.dart';
+import 'package:lavender/features/programs/presentation/measurements_screen.dart';
 import 'package:lavender/features/sign_in/presentation/screens/sign_in.dart';
 import 'package:lavender/features/sign_up/presentation/screens/login_or_signup_Screen.dart';
 import 'package:lavender/features/sign_up/presentation/screens/sign_up.dart';
@@ -43,6 +44,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => SpecialistsScreen());
       case Routes.allDoctorsScreen:
         return MaterialPageRoute(builder: (_) => AllDoctorsScreen());
+      case Routes.measurementScreen:
+        return MaterialPageRoute(builder: (_) => MeasurementsScreen());
 
       default:
         return MaterialPageRoute(
