@@ -11,6 +11,7 @@ class AppColors {
   static const Color grey100 = Color(0xFFF5EFFB);
   static const Color grey200 = Color(0xFFD6D7EC);
   static const Color purple50 =  Color(0xFFF2F2FF);
+  static const Color dividerColor =  Color(0xFFF6F6FF);
   static const Color purpleappbar =  Color(0xFFEDEEFF);
   static const Color purple100 = Color(0xFFD7D6FD);
   static const Color purple200 = Color(0xFFC3C2FD);
@@ -41,6 +42,7 @@ class AppColors {
   static const Color inactiveBorderColor     = Color(0xFFF0F4FC);
   static const Color inActiveDateColor = Color(0xFF8A96BC);
   static const Color shadePurpleColor = Color(0xFFDCDCF9);
+  static Color shadowColor = Color(0xFF000000).withValues(alpha: 0.04);
 
 
   static const LinearGradient linearGradient = LinearGradient(

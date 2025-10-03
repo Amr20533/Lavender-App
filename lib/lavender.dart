@@ -5,11 +5,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive/hive.dart';
 import 'package:lavender/core/routing/app_router.dart';
 import 'package:lavender/core/routing/router.dart';
+import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/features/home/data/repositories/home_repo_impl.dart';
 import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
 import 'package:lavender/features/home/presenation/cubit/quote_cubit.dart';
 import 'package:lavender/features/onbording/presentation/cubit/onbording_cubit.dart';
+import 'package:lavender/features/programs/data/repositories/music_repository_impl.dart';
 import 'package:lavender/features/programs/data/repositories/quizzes_repository_impl.dart';
+import 'package:lavender/features/programs/presentation/cubit/music_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/quiz_cubit.dart';
 import 'package:lavender/features/sign_in/logic/use_cases/sign_in_usecase.dart';
 import 'package:lavender/features/sign_in/presentation/cubit/sign_in_cubit.dart';
@@ -46,6 +49,7 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (_) => HomeCubit(HomeRepositoryImpl())..fetchSpecialists()),
         BlocProvider(create: (_) => QuoteCubit(HomeRepositoryImpl())..fetchQuotes(),),
         BlocProvider(create: (_) => QuizCubit(QuizRepositoryImpl())..fetchMeasurementQuizzes(),),
+        BlocProvider(create: (_) => MusicCubit(MusicRepositoryImpl())..fetchMusicCards()),
         ],
           child: MaterialApp(
            locale: context.locale,
@@ -55,7 +59,14 @@ class Lavender extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             onGenerateRoute: appRouter.generateRoute,
             theme: ThemeData(
-              scaffoldBackgroundColor: Colors.white
+              scaffoldBackgroundColor: Colors.white,
+              appBarTheme: AppBarTheme(
+                backgroundColor: Colors.white,
+                centerTitle: true,
+                shadowColor: AppColors.shadowColor,
+                scrolledUnderElevation: 0,
+                elevation: 0,
+              )
             ),
           ),
         );

@@ -11,7 +11,7 @@ import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
 import 'package:lavender/features/home/presenation/cubit/home_state.dart';
 import 'package:lavender/features/home/presenation/cubit/quote_cubit.dart';
 import 'package:lavender/features/home/presenation/cubit/quote_state.dart';
-import 'package:lavender/features/home/widgets/alex_text.dart';
+import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/features/home/widgets/specialists_card.dart';
 import '../../../core/routing/router.dart';
 import '../widgets/doctor_card.dart';
@@ -290,9 +290,9 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 Container(
                                   width: double.infinity,
-                                  height: 190.h,
+                                  height: 200.h,
                                   decoration: BoxDecoration(
-                                      image: DecorationImage(image: AssetImage("assets/images/Frame 1597882141 (1).png"), fit: BoxFit.cover),
+                                      image: DecorationImage(image: AssetImage("assets/images/Frame 1597882141 (1).png"), fit: BoxFit.fill),
                                   ),
                                 ),
                                 Positioned(

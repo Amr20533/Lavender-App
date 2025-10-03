@@ -12,9 +12,11 @@ class CustomButton extends StatelessWidget {
   final Border? border;
   final Color textColor;
   final double? width;
+  final double? height;
 
   const CustomButton({super.key,
-    this.width,
+    this.width = 343,
+    this.height = 48,
     required this.text,
     required this.onPressed,
     this.enabled = true,
@@ -28,20 +30,20 @@ class CustomButton extends StatelessWidget {
     return Padding(
       padding: AppPadding.horizontal16 + AppPadding.all8,
       child: SizedBox(
-        height: 48,
-        width: 343,
+        height: height,
+        width: width,
         child: ElevatedButton(
           onPressed: enabled ? onPressed : null,
           style: ElevatedButton.styleFrom(
             backgroundColor:
             backgroundColor ?? const Color.fromARGB(255, 151, 149, 245),
             shadowColor: shadowColor ?? Colors.transparent,
-            side:
-            border?.top ??
-                BorderSide(color: AppColors.purple600, width: 0.4),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(22),
-            ),
+            // side:
+            // border?.top ??
+            //     BorderSide(color: AppColors.purple600, width: 0.4),
+            // shape: RoundedRectangleBorder(
+            //   borderRadius: BorderRadius.circular(22),
+            // ),
           ),
           child: Text(
             text,

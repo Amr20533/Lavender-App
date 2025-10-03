@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lavender/core/themes/app_colors.dart';
+import 'package:lavender/core/widget/alex_text.dart';
 
 
 class ToolCard extends StatelessWidget {
@@ -26,7 +27,7 @@ class ToolCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width:width ?? 174.w,
+        width:width ?? 163.w,
         height:height ?? 72.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.r),
@@ -34,15 +35,15 @@ class ToolCard extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: Row(
-
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            Padding(
+              padding: EdgeInsetsDirectional.only(start: 12.w),
+              child: AlexText(text: text, color: Colors.black, fontSize: 12,),
+            ),
+
             Image.asset(imagePath, fit: BoxFit.cover),
 
-            Text(text, style: GoogleFonts.alexandria(
-                fontSize: 12.sp,
-                fontWeight: FontWeight.w400,
-                color: Colors.black
-            )),
           ],
         ),
       ),

@@ -6,7 +6,11 @@ import 'package:lavender/features/home/presenation/home_screen.dart';
 import 'package:lavender/features/home/presenation/main_view.dart';
 import 'package:lavender/features/home/presenation/specialists_screen.dart';
 import 'package:lavender/features/onbording/presentation/screens/onbpording_screen.dart';
+import 'package:lavender/features/programs/data/models/music_card_model.dart';
 import 'package:lavender/features/programs/presentation/measurements_screen.dart';
+import 'package:lavender/features/programs/presentation/music_player_screen.dart';
+import 'package:lavender/features/programs/presentation/music_screen.dart';
+import 'package:lavender/features/programs/presentation/quiz_result_screen.dart';
 import 'package:lavender/features/sign_in/presentation/screens/sign_in.dart';
 import 'package:lavender/features/sign_up/presentation/screens/login_or_signup_Screen.dart';
 import 'package:lavender/features/sign_up/presentation/screens/sign_up.dart';
@@ -46,6 +50,15 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => AllDoctorsScreen());
       case Routes.measurementScreen:
         return MaterialPageRoute(builder: (_) => MeasurementsScreen());
+      case Routes.musicScreen:
+        return MaterialPageRoute(builder: (_) => MusicScreen());
+      case Routes.quizResultScreen:
+              return MaterialPageRoute(builder: (_) => QuizResultScreen());
+      case Routes.musicPlayerScreen:
+        final musicCardModel = settings.arguments as MusicCardModel;
+        return MaterialPageRoute(
+          builder: (_) => MusicPlayerScreen(musicCardModel: musicCardModel),
+        );
 
       default:
         return MaterialPageRoute(

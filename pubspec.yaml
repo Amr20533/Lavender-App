@@ -27,6 +27,9 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   flutter_secure_storage:
   rive:
+  audioplayers:
+  cached_network_image:
+  dashed_circular_progress_bar:
 
 dev_dependencies:
   flutter_test:
