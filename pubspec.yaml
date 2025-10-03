@@ -30,6 +30,7 @@ dependencies:
   audioplayers:
   cached_network_image:
   dashed_circular_progress_bar:
+  timeago:
 
 dev_dependencies:
   flutter_test:

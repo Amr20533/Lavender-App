@@ -10,7 +10,7 @@ import 'package:lavender/l10n/app_localizations.dart';
 import '../../home/widgets/view_all_row.dart';
 
 class ProgramsScreen extends StatelessWidget {
-  ProgramsScreen({super.key});
+  const ProgramsScreen({super.key});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
