@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/themes/stylesdart.dart';
+import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/features/home/data/models/specialist.dart';
 
 class DoctorCard extends StatelessWidget {
@@ -19,13 +20,13 @@ class DoctorCard extends StatelessWidget {
         decoration: BoxDecoration(
           color: AppColors.doctorCardColor,
           borderRadius: BorderRadius.circular(16.r),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 6,
-              offset: const Offset(0, 2),
-            ),
-          ],
+          // boxShadow: [
+          //   BoxShadow(
+          //     color: Colors.black12,
+          //     blurRadius: 6,
+          //     offset: const Offset(0, 2),
+          //   ),
+          // ],
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -99,10 +100,9 @@ class DoctorCard extends StatelessWidget {
                       Row(
                         children: [
                           Icon(Icons.circle,
-                              size: 10.sp, color: Colors.greenAccent.shade400),
+                              size: 8.sp, color: Colors.greenAccent.shade400),
                           SizedBox(width: 4.w),
-                          Text("85% attendance",
-                              style: TextStyle(fontSize: 12.sp)),
+                          AlexText(text: "85% attendance",fontSize: 12, color: Colors.black),
                         ],
                       ),
 
@@ -111,10 +111,9 @@ class DoctorCard extends StatelessWidget {
                       Row(
                         children: [
                           Icon(Icons.circle,
-                              size: 10.sp, color: AppColors.primaryColorLavenderLangAndText),
+                              size: 8.sp, color: AppColors.primaryColorLavenderLangAndText),
                           SizedBox(width: 4.w),
-                          Text("20 stories recovery",
-                              style: TextStyle(fontSize: 12.sp)),
+                          AlexText(text: "20 stories recovery",fontSize: 12, color: Colors.black),
                         ],
                       ),
                     ],
@@ -144,14 +143,15 @@ class DoctorCard extends StatelessWidget {
                 Expanded(
                   child: ElevatedButton.icon(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.deepPurpleAccent,
+                      backgroundColor: AppColors.button,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30.r),
                       ),
                       padding: EdgeInsets.symmetric(vertical: 12.h),
                     ),
                     onPressed: () {},
-                    icon: const Icon(Icons.event_available, color: Colors.white),
+                    icon: Image.asset('assets/icons/glass.png'),
+                    // icon: const Icon(Icons.event_available, color: Colors.white),
                     label: Text(
                       "Book now",
                       style: TextStyle(

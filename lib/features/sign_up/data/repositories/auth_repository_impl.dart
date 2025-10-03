@@ -1,3 +1,4 @@
+import 'package:lavender/core/helpers/secure_storage_helper.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/networking/dio_helper.dart';
 import 'package:lavender/features/sign_in/data/models/user_model.dart';
@@ -82,7 +83,12 @@ class AuthRepositoryImpl implements AuthRepository {
   }
 
 
-
   @override
-  Future<void> signOut() => throw UnimplementedError();
+  Future<void> signOut() async {
+    try {
+      await SecureStorageHelper.clearTokens();
+    } catch (e) {
+      throw Exception("Error during sign out: $e");
+    }
+  }
 }

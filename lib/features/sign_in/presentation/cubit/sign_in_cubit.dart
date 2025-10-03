@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lavender/features/sign_in/logic/use_cases/sign_in_usecase.dart';
+import 'package:lavender/features/sign_in/logic/use_cases/sign_out_use_case.dart';
 import 'package:lavender/features/sign_in/presentation/cubit/sign_in_state.dart';
 
 
 class SignInCubit extends Cubit<SigninState> {
   final SignInUseCase signInUseCase;
-  SignInCubit(this.signInUseCase) : super(SigninInitial());
+  final SignOutUseCase signOutUseCase;
+  SignInCubit(this.signInUseCase, this.signOutUseCase) : super(SigninInitial());
 
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -37,4 +39,14 @@ class SignInCubit extends Cubit<SigninState> {
       emit(SigninError("حدث خطأ: ${e.toString()}"));
     }
   }
+  Future<void> signOut() async {
+    emit(SignOutLoading());
+    try {
+      await signOutUseCase();
+      emit(SignOutSuccess());
+    } catch (e) {
+      emit(SignOutError("خطأ أثناء تسجيل الخروج: ${e.toString()}"));
+    }
+  }
+
 }

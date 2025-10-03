@@ -20,7 +20,7 @@ class FavoritesCubit extends Cubit<List<Specialist>> {
   }
 
   // 2. إضافة / إزالة فيفوريت
-  Future<void> toggleFavorite(Specialist specialist) async {
+ /* Future<void> toggleFavorite(Specialist specialist) async {
     final isCurrentlyFavorite =
         state.any((fav) => fav.specialist_id == specialist.specialist_id);
     try {
@@ -43,6 +43,8 @@ class FavoritesCubit extends Cubit<List<Specialist>> {
   // 3. helper function (لـ UI)
   bool isFavorite(String specialist_id) {
     return state.any((fav) => fav.specialist_id == specialist_id);
+
 }
+    */
 }
 

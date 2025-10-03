@@ -1,6 +1,6 @@
 
 import 'package:lavender/features/home/data/models/appointment.dart';
-import 'package:lavender/features/home/data/models/user.dart';
+import 'package:lavender/features/profile/data/models/user.dart';
 
 class Specialist {
   final User user;
@@ -61,4 +61,30 @@ class Specialist {
           .toList(),
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'user': user.toJson(),
+      'profile_pic': profilePic,
+      'date_of_birth': dateOfBirth,
+      'gender': gender,
+      'phone_number': phoneNumber,
+      'role': role,
+      'bio': bio,
+      'country': country,
+      'years_of_experience': yearsOfExperience,
+      'price_per_hour': pricePerHour,
+      'avg_rating': avgRating,
+      'speciality': speciality,
+      'extra_specialty': extraSpecialty,
+      'prev_count': prevCount,
+      'available_count': availableCount,
+      'appointments': appointments.map((a) => a.toJson()).toList(),
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Specialist(user: $user, speciality: $speciality, appointments: $appointments)';
+  }
+
 }

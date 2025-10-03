@@ -19,3 +19,13 @@ final class SigninError extends SigninState {
 
   SigninError(this.message);
 }
+
+final class SignOutLoading extends SigninState {}
+
+final class SignOutSuccess extends SigninState {}
+
+final class SignOutError extends SigninState {
+  final String message;
+
+  SignOutError(this.message);
+}

@@ -26,4 +26,20 @@ class Appointment {
       isBooked: json['is_booked'] ?? false,
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'date': date,
+      'start_time': startTime,
+      'end_time': endTime,
+      'price': price,
+      'is_booked': isBooked,
+    };
+  }
+
+  @override
+  String toString() {
+    return 'Appointment(id: $id, date: $date, start: $startTime, end: $endTime)';
+  }
+
 }

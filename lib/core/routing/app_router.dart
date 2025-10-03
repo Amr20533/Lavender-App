@@ -11,6 +11,7 @@ import 'package:lavender/features/programs/presentation/measurements_screen.dart
 import 'package:lavender/features/programs/presentation/music_player_screen.dart';
 import 'package:lavender/features/programs/presentation/music_screen.dart';
 import 'package:lavender/features/programs/presentation/quiz_result_screen.dart';
+import 'package:lavender/features/search/presentation/search_screen.dart';
 import 'package:lavender/features/sign_in/presentation/screens/sign_in.dart';
 import 'package:lavender/features/sign_up/presentation/screens/login_or_signup_Screen.dart';
 import 'package:lavender/features/sign_up/presentation/screens/sign_up.dart';
@@ -54,6 +55,8 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => MusicScreen());
       case Routes.quizResultScreen:
               return MaterialPageRoute(builder: (_) => QuizResultScreen());
+      case Routes.searchScreen:
+              return MaterialPageRoute(builder: (_) => SearchScreen());
       case Routes.musicPlayerScreen:
         final musicCardModel = settings.arguments as MusicCardModel;
         return MaterialPageRoute(

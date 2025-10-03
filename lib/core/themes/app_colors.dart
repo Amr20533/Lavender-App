@@ -49,9 +49,20 @@ class AppColors {
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
     colors: [
-      pinkShade,
-      purpleShade,
+      primaryColorLavenderLangAndText,
+      purple200,
     ],
+    stops: [0.0, 1.0],
+  );
+
+
+  static const LinearGradient circleGradient = LinearGradient(
+    colors: [
+      Color(0xFFEFB7D3),
+      Color(0xFF8381F6),
+    ],
+    begin: Alignment.centerLeft,
+    end: Alignment.centerRight,
     stops: [0.0, 1.0],
   );
 

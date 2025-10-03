@@ -12,11 +12,17 @@ import 'package:lavender/features/home/data/repositories/home_repo_impl.dart';
 import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
 import 'package:lavender/features/home/presenation/cubit/quote_cubit.dart';
 import 'package:lavender/features/onbording/presentation/cubit/onbording_cubit.dart';
+import 'package:lavender/features/profile/data/repositories/profile_repo_impl.dart';
+import 'package:lavender/features/profile/presentation/cubit/current_user_cubit.dart';
+import 'package:lavender/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:lavender/features/programs/data/repositories/music_repository_impl.dart';
 import 'package:lavender/features/programs/data/repositories/quizzes_repository_impl.dart';
 import 'package:lavender/features/programs/presentation/cubit/music_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/quiz_cubit.dart';
+import 'package:lavender/features/search/data/repositories/search_repository_impl.dart';
+import 'package:lavender/features/search/presentation/cubit/search_cubit.dart';
 import 'package:lavender/features/sign_in/logic/use_cases/sign_in_usecase.dart';
+import 'package:lavender/features/sign_in/logic/use_cases/sign_out_use_case.dart';
 import 'package:lavender/features/sign_in/presentation/cubit/sign_in_cubit.dart';
 import 'package:lavender/features/sign_up/data/repositories/auth_repository_impl.dart';
 import 'package:lavender/features/sign_up/logic/use_cases/sign_up_usecase.dart';
@@ -46,13 +52,16 @@ class Lavender extends StatelessWidget {
         ),
         BlocProvider(create: (_) => SlotCubit(),),
         BlocProvider(create: (_) => DayCubit(),),
-        BlocProvider(create: (_) => SignInCubit(SignInUseCase(AuthRepositoryImpl())),),
+        BlocProvider(create: (_) => SignInCubit(SignInUseCase(AuthRepositoryImpl()), SignOutUseCase(AuthRepositoryImpl())),),
         BlocProvider(create: (_) => SignUpCubit(SignUpUseCase(AuthRepositoryImpl(),),),),
         BlocProvider(create: (_) => HomeCubit(HomeRepositoryImpl())..fetchSpecialists()),
         BlocProvider(create: (_) => QuoteCubit(HomeRepositoryImpl())..fetchQuotes(),),
         BlocProvider(create: (_) => QuizCubit(QuizRepositoryImpl())..fetchMeasurementQuizzes(),),
         BlocProvider(create: (_) => MusicCubit(MusicRepositoryImpl())..fetchMusicCards()),
+        BlocProvider(create: (_) => ProfileCubit(ProfileRepositoryImpl())..fetchUsers()),
+        BlocProvider(create: (_) => CurrentUserCubit(ProfileRepositoryImpl())..fetchCurrentUser()),
         BlocProvider(create: (_) => PostsCubit(CommunityRepositoryImpl())..fetchPosts()),
+        BlocProvider(create: (_) => SearchCubit(SearchRepositoryImpl())),
         ],
           child: MaterialApp(
            locale: context.locale,
