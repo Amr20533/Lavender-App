@@ -25,7 +25,16 @@ class PostResponse {
     };
   }
 
+  PostResponse copyWith({
+    String? status,
+    List<Post>? data,
+  }) {
+    return PostResponse(
+      status: status ?? this.status,
+      data: data ?? this.data,
+    );
+  }
+
   @override
   String toString() => 'PostResponse(status: $status, data: $data)';
 }
-

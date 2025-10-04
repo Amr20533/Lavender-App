@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/circularIcon.dart';
+import 'package:lavender/features/profile/presentation/cubit/current_user_states.dart';
+
+import '../../../../core/widget/custom_cached_network_image.dart';
+import '../../../profile/presentation/cubit/current_user_cubit.dart';
 
 class CommunityAppBar extends StatelessWidget {
   const CommunityAppBar({
@@ -20,13 +26,31 @@ class CommunityAppBar extends StatelessWidget {
       ),
       child:Row(
         children: [
-          Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-                color: AppColors.purple50,
-                shape: BoxShape.circle
-            ),
+          BlocBuilder<CurrentUserCubit, CurrentUserStates>(
+              builder: (context, state) {
+                            if (state is CurrentUserProfileLoading) {
+              return CircularProgressIndicator(color: Colors.white,);
+            }else if (state is CurrentUserProfileLoaded) {
+              final user = state.currentUserInfoResponse.profile.user;
+              final profile = state.currentUserInfoResponse.profile.profilePic;
+              final name = "${user.firstName} ${user.lastName}".trim();
+
+              return Container(
+                width: 42,
+                height: 42,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                decoration: BoxDecoration(
+                    color: AppColors.purple50,
+                    shape: BoxShape.circle
+                ),
+                child: CustomCachedNetworkImage(imageUrl: "${ApiConstants.imagePath}$profile"),
+              );
+
+            } else if (state is CurrentUserProfileError) {
+              return Text("Error loading user");
+            }
+            return SizedBox.shrink();
+          }
           ),
           CircularIcon(icon: 'search.png',),
           const Spacer(),

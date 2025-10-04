@@ -31,6 +31,8 @@ dependencies:
   cached_network_image:
   dashed_circular_progress_bar:
   timeago:
+  like_button:
+
 
 dev_dependencies:
   flutter_test:

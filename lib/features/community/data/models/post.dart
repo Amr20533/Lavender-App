@@ -9,6 +9,7 @@ class Post {
   final String? image;
   final String? video;
   final List<Comment> comments;
+  final bool isLiked;
 
   Post({
     required this.id,
@@ -19,6 +20,7 @@ class Post {
     this.image,
     this.video,
     required this.comments,
+    this.isLiked = false,
   });
 
   factory Post.fromJson(Map<String, dynamic> json) {
@@ -33,6 +35,7 @@ class Post {
       comments: (json['comments'] as List<dynamic>)
           .map((e) => Comment.fromJson(e as Map<String, dynamic>))
           .toList(),
+      isLiked: json['is_liked'] ?? false,
     );
   }
 
@@ -46,12 +49,38 @@ class Post {
       'image': image,
       'video': video,
       'comments': comments.map((c) => c.toJson()).toList(),
+      'is_liked': isLiked,
     };
+  }
+
+  /// ✅ Add this copyWith method
+  Post copyWith({
+    String? id,
+    int? user,
+    String? caption,
+    DateTime? createdAt,
+    int? likesCount,
+    String? image,
+    String? video,
+    List<Comment>? comments,
+    bool? isLiked,
+  }) {
+    return Post(
+      id: id ?? this.id,
+      user: user ?? this.user,
+      caption: caption ?? this.caption,
+      createdAt: createdAt ?? this.createdAt,
+      likesCount: likesCount ?? this.likesCount,
+      image: image ?? this.image,
+      video: video ?? this.video,
+      comments: comments ?? this.comments,
+      isLiked: isLiked ?? this.isLiked,
+    );
   }
 
   @override
   String toString() {
     return 'Post(id: $id, user: $user, caption: $caption, createdAt: $createdAt, '
-        'likesCount: $likesCount, image: $image, video: $video, comments: $comments)';
+        'likesCount: $likesCount, image: $image, video: $video, comments: $comments, isLiked: $isLiked)';
   }
 }

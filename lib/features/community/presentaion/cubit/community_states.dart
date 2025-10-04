@@ -18,3 +18,17 @@ class PostsError extends PostsState {
 
   PostsError(this.message);
 }
+
+class LikePostLoading extends PostsState {}
+
+class LikePostLoaded extends PostsState {
+  final PostResponse postResponse;
+
+  LikePostLoaded(this.postResponse);
+}
+
+class LikePostError extends PostsState {
+  final String message;
+
+  LikePostError(this.message);
+}

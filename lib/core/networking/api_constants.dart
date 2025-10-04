@@ -12,7 +12,9 @@ class ApiConstants {
   static const String getQuotes = "api/v1/quote/daily/";
   static const String getMeasurementQuizzes = "api/v1/quizzes/";
   static const String getMusicCards = "api/v1/music/";
+
   static const String getPosts = "api/v1/posts/";
+  static const String likePost = "api/v1/posts";
 
   static const String searchSpecialists = "api/v1/specialists/";
 

@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/alex_text.dart';
-import 'package:lavender/core/widget/custom_cached_network_image.dart';
-import 'package:lavender/features/community/data/models/post.dart';
 import 'package:lavender/features/community/presentaion/cubit/community_cubit.dart';
 import 'package:lavender/features/community/presentaion/cubit/community_states.dart';
 import 'package:lavender/features/community/presentaion/widgets/community_app_bar.dart';
 import 'package:lavender/features/community/presentaion/widgets/post_card.dart';
-
-import '../../../core/widget/circularIcon.dart';
 
 class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});
