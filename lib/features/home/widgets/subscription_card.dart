@@ -25,26 +25,29 @@ class SubscriptionCard extends StatelessWidget {
           child: Row(
             children: [
               Center(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    AlexText(
-                      text: "احصل علي دعم كامل لرحلتك في\n الباقة السنوية",
-                      fontSize: 12,
-                    ),
-                    Row(
-                      spacing: 5,
-                      children: [
-                        AlexText(
-                          text: "اشترك الان",
-                          color: AppColors.purple900,
-                        ),
-                        const Icon(Icons.arrow_forward_rounded, color: AppColors.purple900,),
-                      ],
-                    ),
+                child: Padding(
+                  padding: const EdgeInsetsDirectional.only(start: 16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      AlexText(
+                        text: "احصل علي دعم كامل لرحلتك في\n الباقة السنوية",
+                        fontSize: 12,
+                      ),
+                      Row(
+                        spacing: 5,
+                        children: [
+                          AlexText(
+                            text: "اشترك الان",
+                            color: AppColors.purple900,
+                          ),
+                          const Icon(Icons.arrow_forward_rounded, color: AppColors.purple900,),
+                        ],
+                      ),
 
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Spacer(),

@@ -1,27 +1,22 @@
 class Favorite {
   final int id;
   final int specialistId;
-  final int user;
   final bool inFavorite;
-  final DateTime? createdAt;
+  final DateTime createdAt;
 
   Favorite({
     required this.id,
     required this.specialistId,
-    required this.user,
     required this.inFavorite,
-    this.createdAt,
+    required this.createdAt,
   });
 
   factory Favorite.fromJson(Map<String, dynamic> json) {
     return Favorite(
-      id: json['id'] as int,
-      specialistId: json['specialist_id'] as int,
-      user: json['user'] as int,
-      inFavorite: json['in_favorite'] as bool,
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'] as String)
-          : null,
+      id: json['id'] ?? 0,
+      specialistId: json['specialist_id'] ?? 0,
+      inFavorite: json['in_favorite'] ?? false,
+      createdAt: DateTime.tryParse(json['created_at'] ?? '') ?? DateTime.now(),
     );
   }
 
@@ -29,14 +24,13 @@ class Favorite {
     return {
       'id': id,
       'specialist_id': specialistId,
-      'user': user,
       'in_favorite': inFavorite,
-      if (createdAt != null) 'created_at': createdAt!.toIso8601String(),
+      'created_at': createdAt.toIso8601String(),
     };
   }
 
   @override
   String toString() {
-    return 'Favorite(id: $id, specialistId: $specialistId, user: $user, inFavorite: $inFavorite, createdAt: $createdAt)';
+    return 'Favorite(id: $id, specialistId: $specialistId,inFavorite: $inFavorite, createdAt: $createdAt)';
   }
 }

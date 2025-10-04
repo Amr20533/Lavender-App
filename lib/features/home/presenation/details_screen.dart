@@ -5,13 +5,10 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lavender/core/helpers/format_helper.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/themes/app_colors.dart';
-import 'package:lavender/core/themes/stylesdart.dart';
+import 'package:lavender/core/widget/custom_cached_network_image.dart';
 import 'package:lavender/features/home/data/models/specialist.dart';
-import 'package:lavender/features/home/widgets/day_chip.dart';
 import 'package:lavender/features/home/widgets/info_card.dart';
-import 'package:lavender/features/home/widgets/time_slot.dart';
 import 'package:lavender/features/home/widgets/time_slot_selector.dart';
-
 import '../../../core/cubits/day_cubit.dart';
 import '../widgets/day_selector.dart';
 
@@ -28,9 +25,10 @@ class PsychologistDetailsPage extends StatelessWidget {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: Image.network(
-                "${ApiConstants.imagePath}${specialist.profilePic}",
+              background: CustomCachedNetworkImage(
+                imageUrl: "${ApiConstants.imagePath}${specialist.profilePic}",
                 fit: BoxFit.cover,
+                heroTag: "specialist_${specialist.user.id}",
               ),
             ),
           ),

@@ -102,7 +102,7 @@ class DioHelper {
   }
 
   // DELETE request
-/*  static Future<Response> deleteData({
+  static Future<Response> deleteData({
     required String url,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
@@ -112,5 +112,5 @@ class DioHelper {
       queryParameters: query,
       options: Options(headers: headers),
 );
-}*/
+}
 }

@@ -4,6 +4,8 @@ import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/features/favorites/presenation/cubit/favorit_cubit.dart';
 import 'package:lavender/features/favorites/presenation/cubit/favorit_state.dart';
 import 'package:lavender/features/home/data/models/specialist.dart';
+import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
+import 'package:lavender/features/home/presenation/cubit/home_state.dart';
 import 'package:lavender/features/home/widgets/doctor_card.dart';
 
 class FavoritesScreen extends StatelessWidget {
@@ -12,39 +14,62 @@ class FavoritesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FavoritesCubit, FavoritesState>(
-      builder: (context, state) {
-        if (state is FavoritesLoading) {
+      builder: (context, favState) {
+        if (favState is FavoritesLoading) {
           return const Center(child: CircularProgressIndicator());
-        } else if (state is FavoritesLoaded) {
-          final favs = state.favoritesResponse.favorites;
+        } else if (favState is FavoritesLoaded) {
+          final favs = favState.favoritesResponse.favorites;
 
           if (favs.isEmpty) {
             return const Center(
-              child: Text(
-                "❤ No favorites yet",
-                style: TextStyle(fontSize: 18),
-              ),
+              child: Text("❤ No favorites yet", style: TextStyle(fontSize: 18)),
             );
           }
 
+          // Get all specialists from HomeCubit
+          final homeState = context.read<HomeCubit>().state;
+          List<Specialist> allSpecialists = [];
+          if (homeState is HomeLoaded) {
+            allSpecialists = homeState.specialists.results.specialists;
+          }
+
+          // Match each favorite with its specialist
+          final favSpecialists = favs
+              .map((fav) {
+            try {
+              return allSpecialists.firstWhere(
+                    (spec) => spec.user.id == fav.specialistId,
+              );
+            } catch (_) {
+              return null;
+            }
+          })
+              .whereType<Specialist>()
+              .toList();
+
           return ListView.separated(
-            itemCount: favs.length,
+            itemCount: favSpecialists.length,
             separatorBuilder: (_, __) => Divider(),
             itemBuilder: (context, index) {
-              final fav = favs[index];
-              // final specialist =
-              return Text('${fav.inFavorite}');
+              final specialist = favSpecialists[index];
+
+              return DoctorCard(
+                specialist: specialist,
+                onTap: () {
+                  Navigator.pushNamed(
+                    context,
+                    Routes.psychologistDetailsPage,
+                    arguments: specialist,
+                  );
+                },
+              );
             },
           );
-        } else if (state is FavoritesError) {
-          return Center(child: Text("Error: ${state.message}"));
+        } else if (favState is FavoritesError) {
+          return Center(child: Text("Error: ${favState.message}"));
         } else {
-          // state is FavoritesInitial
           return const Center(
-            child: Text(
-              "❤ No favorites yet",
-              style: TextStyle(fontSize: 18),
-            ),
+            child: Text("❤ No favorites yet", style: TextStyle(fontSize: 18)),
           );
         }
       },

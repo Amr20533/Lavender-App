@@ -4,7 +4,6 @@ import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/networking/dio_helper.dart';
 import 'package:lavender/features/favorites/data/models/favorites_response.dart';
 import 'package:lavender/features/favorites/logic/favorites_repository.dart';
-import 'package:lavender/features/home/data/models/specialist.dart';
 
 class FavoritesRepositoryImpl implements FavoritesRepository {
   FavoritesRepositoryImpl();
@@ -34,15 +33,32 @@ class FavoritesRepositoryImpl implements FavoritesRepository {
   }
 
   @override
-  Future<void> addToFavorites(int specialist_id, int user, String token) {
-    // TODO: implement addToFavorites
-    throw UnimplementedError();
+  Future<void> addToFavorites(int specialistId) async {
+    String? token = await SecureStorageHelper.getAccessToken();
+    if (token == null) throw Exception("No access token");
+
+    await DioHelper.postData(
+      url: ApiConstants.addToFavorites,
+      data: {"specialist_id": specialistId},
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
   }
 
   @override
-  Future<void> removeFromFavorites(int specialist_id, String token) {
-    // TODO: implement removeFromFavorites
-    throw UnimplementedError();
+  Future<void> removeFromFavorites(int specialistId) async {
+    String? token = await SecureStorageHelper.getAccessToken();
+    if (token == null) throw Exception("No access token");
+
+    await DioHelper.deleteData(
+      url: "${ApiConstants.removeFromFavorites}/$specialistId/",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
   }
 
 //   @override

@@ -4,6 +4,8 @@ import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/themes/stylesdart.dart';
 import 'package:lavender/core/widget/alex_text.dart';
+import 'package:lavender/core/widget/custom_cached_network_image.dart';
+import 'package:lavender/features/favorites/presenation/widgets/favorite_specialist_icon.dart';
 import 'package:lavender/features/home/data/models/specialist.dart';
 
 class DoctorCard extends StatelessWidget {
@@ -37,13 +39,13 @@ class DoctorCard extends StatelessWidget {
                 Container(
                   height: 70.w,
                   width: 70.w,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(12),
-                    image: DecorationImage(
-                      image: NetworkImage("${ApiConstants.imagePath}${specialist.profilePic}"),
-                      fit: BoxFit.cover,
-                    ),
                   ),
+                  child: CustomCachedNetworkImage(
+                    imageUrl: "${ApiConstants.imagePath}${specialist.profilePic}",
+                    heroTag: "specialist_${specialist.user.id}",),
                 ),
                 SizedBox(width: 12.w),
 
@@ -63,11 +65,7 @@ class DoctorCard extends StatelessWidget {
                               overflow: TextOverflow.ellipsis,
                             ),
                           ),
-                          Icon(
-                            Icons.favorite_border,
-                            size: 22.sp,
-                            color: Colors.grey,
-                          ),
+                          FavoriteSpecialistIcon(specialist: specialist),
                         ],
                       ),
 
@@ -190,3 +188,4 @@ class DoctorCard extends StatelessWidget {
     );
   }
 }
+

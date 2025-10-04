@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:lavender/core/themes/app_colors.dart';
 
 class CustomCachedNetworkImage extends StatelessWidget {
   final String? imageUrl;
@@ -25,7 +26,7 @@ class CustomCachedNetworkImage extends StatelessWidget {
       imageUrl: imageUrl ?? "",
       fit: fit,
       placeholder: (context, url) => const Center(
-        child: CircularProgressIndicator(),
+        child: CircularProgressIndicator(color: AppColors.button,),
       ),
       errorWidget: (context, url, error) => const Center(
         child: Icon(Icons.music_note, size: 120, color: Colors.grey),

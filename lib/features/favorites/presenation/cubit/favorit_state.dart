@@ -16,3 +16,15 @@ class FavoritesError extends FavoritesState {
   final String message;
   FavoritesError(this.message);
 }
+
+class AddFavoritesLoading extends FavoritesState {}
+
+class AddFavoritesLoaded extends FavoritesState {
+  final FavoritesResponse favoritesResponse;
+  AddFavoritesLoaded(this.favoritesResponse);
+}
+
+class AddFavoritesError extends FavoritesState {
+  final String message;
+  AddFavoritesError(this.message);
+}
