@@ -8,6 +8,8 @@ import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/features/community/data/repositories/community_repo_impl.dart';
 import 'package:lavender/features/community/presentaion/cubit/community_cubit.dart';
+import 'package:lavender/features/favorites/data/repository/favorites_repository_impl.dart';
+import 'package:lavender/features/favorites/presenation/cubit/favorit_cubit.dart';
 import 'package:lavender/features/home/data/repositories/home_repo_impl.dart';
 import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
 import 'package:lavender/features/home/presenation/cubit/quote_cubit.dart';
@@ -62,6 +64,7 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (_) => CurrentUserCubit(ProfileRepositoryImpl())..fetchCurrentUser()),
         BlocProvider(create: (_) => PostsCubit(CommunityRepositoryImpl())..fetchPosts()),
         BlocProvider(create: (_) => SearchCubit(SearchRepositoryImpl())),
+        BlocProvider(create: (_) => FavoritesCubit(FavoritesRepositoryImpl())..fetchFavorites()),
         ],
           child: MaterialApp(
            locale: context.locale,

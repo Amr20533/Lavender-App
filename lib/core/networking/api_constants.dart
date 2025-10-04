@@ -12,5 +12,6 @@ class ApiConstants {
   static const String getMusicCards = "api/v1/music/";
   static const String getPosts = "api/v1/posts/";
   static const String searchSpecialists = "api/v1/specialists/";
+  static const String getFavorites = "api/v1/specialist/favorites/";
 
 }

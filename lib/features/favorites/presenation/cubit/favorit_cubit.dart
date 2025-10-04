@@ -1,21 +1,21 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lavender/features/favorites/logic/favorites_repository.dart';
+import 'package:lavender/features/favorites/presenation/cubit/favorit_state.dart';
 import 'package:lavender/features/home/data/models/specialist.dart';
 
-class FavoritesCubit extends Cubit<List<Specialist>> {
+class FavoritesCubit extends Cubit<FavoritesState> {
   final FavoritesRepository repository;
-  final String token;
-  final int user;
 
-  FavoritesCubit(this.repository, this.token, this.user) : super([]);
+  FavoritesCubit(this.repository) : super(FavoritesInitial());
 
-  // 1. جلب الفيفوريت من السيرفر
   Future<void> fetchFavorites() async {
     try {
-      final favorites = await repository.getFavoriteSpecialists(token);
-      emit(favorites);
+      emit(FavoritesLoading());
+      final favorites = await repository.getFavoriteSpecialists();
+      emit(FavoritesLoaded(favorites));
     } catch (e) {
       print("Error fetching favorites: $e");
+      emit(FavoritesError(e.toString()));
     }
   }
 
