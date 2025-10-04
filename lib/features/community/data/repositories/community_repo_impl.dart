@@ -9,9 +9,18 @@ import '../../logic/repositories_interface/community_repo.dart';
 class CommunityRepositoryImpl implements CommunityRepository {
   @override
   Future<PostResponse> getPosts() async {
+    String? token = await SecureStorageHelper.getAccessToken();
+    if (token == null) {
+      throw Exception("No access token");
+    }
+
     try {
       final response = await DioHelper.getData(
         url: ApiConstants.getPosts,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
       );
 
       return PostResponse.fromJson(response.data);
