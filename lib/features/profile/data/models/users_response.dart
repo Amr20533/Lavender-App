@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:lavender/features/profile/data/models/user_with_profile.dart';
 
 class UsersResponse {

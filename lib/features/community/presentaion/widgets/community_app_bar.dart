@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/circularIcon.dart';
 import 'package:lavender/features/profile/presentation/cubit/current_user_states.dart';
-
 import '../../../../core/widget/custom_cached_network_image.dart';
 import '../../../profile/presentation/cubit/current_user_cubit.dart';
 

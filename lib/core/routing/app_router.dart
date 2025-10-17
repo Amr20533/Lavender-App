@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/features/Questions/screens/question_screen.dart';
-import 'package:lavender/features/home/presenation/all_doctors_screen.dart';
-import 'package:lavender/features/home/presenation/home_screen.dart';
-import 'package:lavender/features/home/presenation/main_view.dart';
-import 'package:lavender/features/home/presenation/specialists_screen.dart';
+import 'package:lavender/features/home/presenation/screens/all_doctors_screen.dart';
+import 'package:lavender/features/home/presenation/screens/main_view.dart';
+import 'package:lavender/features/home/presenation/screens/specialists_screen.dart';
 import 'package:lavender/features/onbording/presentation/screens/onbpording_screen.dart';
+import 'package:lavender/features/programs/data/models/doctor_basic_info.dart';
 import 'package:lavender/features/programs/data/models/music_card_model.dart';
 import 'package:lavender/features/programs/presentation/measurements_screen.dart';
 import 'package:lavender/features/programs/presentation/music_player_screen.dart';
 import 'package:lavender/features/programs/presentation/music_screen.dart';
 import 'package:lavender/features/programs/presentation/quiz_result_screen.dart';
+import 'package:lavender/features/programs/presentation/reviwes_screen.dart';
 import 'package:lavender/features/search/presentation/search_screen.dart';
 import 'package:lavender/features/sign_in/presentation/screens/sign_in.dart';
 import 'package:lavender/features/sign_up/presentation/screens/login_or_signup_Screen.dart';
@@ -19,7 +20,7 @@ import 'package:lavender/features/splash/presenation/screens/select_language.dar
 import 'package:lavender/features/splash/presenation/screens/splash_timer_screen.dart';
 
 import '../../features/home/data/models/specialist.dart';
-import '../../features/home/presenation/details_screen.dart';
+import '../../features/home/presenation/screens/details_screen.dart';
 
 class AppRouter {
   Route<dynamic> generateRoute(RouteSettings settings) {
@@ -62,6 +63,11 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => MusicPlayerScreen(musicCardModel: musicCardModel),
         );
+       case Routes.reviewsScreen:
+       final doctor = settings.arguments as DoctorBasicInfo;
+      return MaterialPageRoute(
+        builder: (_) => ReviewsScreen(doctor: doctor),
+                );
 
       default:
         return MaterialPageRoute(

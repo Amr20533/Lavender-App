@@ -8,7 +8,7 @@ import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/features/search/presentation/cubit/search_cubit.dart';
 import 'package:lavender/features/search/presentation/cubit/search_states.dart';
 
-import '../../home/widgets/doctor_card.dart';
+import '../../home/presenation/widgets/doctor_card.dart';
 class SearchScreen extends StatefulWidget {
   const SearchScreen({super.key});
 

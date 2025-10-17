@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lavender/features/home/widgets/daily_quote.dart';
-import 'package:lavender/features/home/widgets/home_header.dart';
-import 'package:lavender/features/home/widgets/specialists_slider.dart';
-import 'package:lavender/features/home/widgets/subscription_card.dart';
-import 'package:lavender/features/home/widgets/trip_cards.dart';
-import '../../../core/routing/router.dart';
+import 'package:lavender/features/home/presenation/widgets/daily_quote.dart';
+import 'package:lavender/features/home/presenation/widgets/home_header.dart';
+import 'package:lavender/features/home/presenation/widgets/specialists_slider.dart';
+import 'package:lavender/features/home/presenation/widgets/subscription_card.dart';
+import 'package:lavender/features/home/presenation/widgets/trip_cards.dart';
+import '../../../../core/routing/router.dart';
 import '../widgets/view_all_row.dart';
-import '../../../../l10n/app_localizations.dart';
+import '../../../../../l10n/app_localizations.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});

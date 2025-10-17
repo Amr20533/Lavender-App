@@ -2,7 +2,7 @@ class FormatHelper{
 
   static String removeExtraDots(String val) {
     num value = num.parse(val);
-    if (value % 1 == 0) {
+    if (value % 1 == 0) { 
       return value.toInt().toString();
     }
     return value.toString();

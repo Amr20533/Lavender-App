@@ -1,5 +1,4 @@
 import 'package:lavender/features/favorites/data/models/favorites_response.dart';
-import 'package:lavender/features/home/data/models/specialist.dart';
 
 abstract class FavoritesState {}
 

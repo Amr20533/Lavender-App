@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/widget/back_icon.dart';
 import 'package:lavender/core/widget/custom_cached_network_image.dart';

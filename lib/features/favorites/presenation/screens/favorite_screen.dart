@@ -6,7 +6,7 @@ import 'package:lavender/features/favorites/presenation/cubit/favorit_state.dart
 import 'package:lavender/features/home/data/models/specialist.dart';
 import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
 import 'package:lavender/features/home/presenation/cubit/home_state.dart';
-import 'package:lavender/features/home/widgets/doctor_card.dart';
+import 'package:lavender/features/home/presenation/widgets/doctor_card.dart';
 
 class FavoritesScreen extends StatelessWidget {
   const FavoritesScreen({super.key});

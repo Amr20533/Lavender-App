@@ -32,6 +32,8 @@ dependencies:
   dashed_circular_progress_bar:
   timeago:
   like_button:
+  flutter_rating_bar: ^4.0.1
+  shimmer: ^3.0.0
 
 
 dev_dependencies:

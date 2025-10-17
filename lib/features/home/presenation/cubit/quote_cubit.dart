@@ -1,7 +1,6 @@
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lavender/features/home/logic/repositories_interface/home_repo.dart';
-import 'package:lavender/features/home/presenation/cubit/home_state.dart';
 import 'package:lavender/features/home/presenation/cubit/quote_state.dart';
 
 

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,7 +8,6 @@ import 'package:lavender/core/widget/custom_cached_network_image.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/features/profile/presentation/cubit/current_user_cubit.dart';
 import 'package:lavender/features/profile/presentation/cubit/current_user_states.dart';
-import '../../../../l10n/app_localizations.dart';
 
 class UserInfoBar extends StatelessWidget {
   const UserInfoBar({
@@ -36,8 +34,8 @@ class UserInfoBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
-                    width: 56,
-                    height: 56,
+                    width: 50,
+                    height: 50,
                     padding: EdgeInsets.all(4),
                     decoration: BoxDecoration(
                       gradient: AppColors.circleGradient,

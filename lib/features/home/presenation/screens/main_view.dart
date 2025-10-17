@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/features/community/presentaion/community_screen.dart';
 import 'package:lavender/features/favorites/presenation/screens/favorite_screen.dart';
-import 'package:lavender/features/home/presenation/home_screen.dart';
+import 'package:lavender/features/home/presenation/screens/home_screen.dart';
 import 'package:lavender/features/programs/presentation/programs_screen.dart';
 
 class MainView extends StatefulWidget {
@@ -46,7 +46,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
             // final icons = [Icons.home, Icons.search, Icons.favorite, Icons.person];
             final inactiveIcons = ["inactive_home.svg", "inactive_session.svg", "inactive_programs.svg","inactive_community.svg", "inactive_more.svg"];
             final activeIcons = ["active_home.svg", "active_session.svg", "active_programs.svg", "active_community.svg", "active_more.svg"];
-            final labels = ["Home", "Sessions", "Programs", "Community", "More"];
+            final labels = ["الرئيسية", "الجلسات", "البرامج", "المجتمع", "المزيد"];
 
             final isActive = _currentIndex == index;
 
@@ -57,7 +57,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
               child: AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
                 curve: Curves.easeOutBack,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 decoration: BoxDecoration(
                   // color: isActive ? Colors.deepPurple.shade50 : Colors.transparent,
                   borderRadius: BorderRadius.circular(24),

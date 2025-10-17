@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:lavender/features/home/data/models/quote_response.dart';
 import 'package:lavender/features/home/data/models/specialists_response.dart';
 
 @immutable

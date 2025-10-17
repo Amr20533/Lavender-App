@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lavender/features/home/widgets/specialists_card.dart';
+import 'package:lavender/features/home/presenation/widgets/specialists_card.dart';
 
 class TripCards extends StatelessWidget {
   const TripCards({

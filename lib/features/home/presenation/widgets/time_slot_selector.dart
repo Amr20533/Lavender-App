@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lavender/core/cubits/slot_cubit.dart';
 import 'package:lavender/core/helpers/format_helper.dart';
-import 'package:lavender/core/themes/app_colors.dart';
-import '../data/models/appointment.dart';
+import '../../data/models/appointment.dart';
 import 'time_slot.dart';
 
 class TimeSlotSelector extends StatelessWidget {

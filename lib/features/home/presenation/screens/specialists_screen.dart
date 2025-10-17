@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lavender/core/themes/app_colors.dart';
-import 'package:lavender/features/home/widgets/specialists_card.dart';
+import 'package:lavender/features/home/presenation/widgets/specialists_card.dart';
 
 class SpecialistsScreen extends StatelessWidget {
   const SpecialistsScreen({super.key});

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 
@@ -27,7 +26,7 @@ class ToolCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width:width ?? 163.w,
+        width:width ?? 165.w,
         height:height ?? 72.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.r),

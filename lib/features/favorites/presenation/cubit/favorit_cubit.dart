@@ -3,7 +3,6 @@ import 'package:lavender/features/favorites/data/models/favorite.dart';
 import 'package:lavender/features/favorites/data/models/favorites_response.dart';
 import 'package:lavender/features/favorites/logic/favorites_repository.dart';
 import 'package:lavender/features/favorites/presenation/cubit/favorit_state.dart';
-import 'package:lavender/features/home/data/models/specialist.dart';
 
 class FavoritesCubit extends Cubit<FavoritesState> {
   final FavoritesRepository repository;

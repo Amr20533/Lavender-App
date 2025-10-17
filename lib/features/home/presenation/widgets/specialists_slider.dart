@@ -3,8 +3,8 @@ import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lavender/features/home/presenation/cubit/home_state.dart';
-import '../../../core/routing/router.dart';
-import '../widgets/doctor_card.dart';
+import '../../../../core/routing/router.dart';
+import 'doctor_card.dart';
 
 class SpecialistSlider extends StatelessWidget {
   const SpecialistSlider({

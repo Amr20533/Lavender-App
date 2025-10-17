@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lavender/core/themes/app_colors.dart';
-import 'package:lavender/features/home/widgets/search_filter_bar.dart';
-import 'package:lavender/features/home/widgets/user_info_bar.dart';
+import 'package:lavender/features/home/presenation/widgets/search_filter_bar.dart';
+import 'package:lavender/features/home/presenation/widgets/user_info_bar.dart';
 
 class HomeHeader extends StatelessWidget {
   const HomeHeader({
@@ -28,10 +28,8 @@ class HomeHeader extends StatelessWidget {
             child: SvgPicture.asset("assets/svg/Meditation Icon.svg"),
           ),
         ),
-
         UserInfoBar(),
         SearchFilterBar(),
-
       ],
     );
   }

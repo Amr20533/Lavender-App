@@ -25,7 +25,7 @@ class PostsCubit extends Cubit<PostsState> {
     final posts = List<Post>.from(currentState.postResponse.data);
     final index = posts.indexWhere((p) => p.id == postId);
     if (index == -1) return;
-
+  
     try {
       final likeResponse = await repository.likePost(postId);
 

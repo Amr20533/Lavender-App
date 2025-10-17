@@ -54,7 +54,6 @@ class SubscriptionCard extends StatelessWidget {
               Image.asset(
                 "assets/images/Frame 1597881905 (1).png",
               ),
-
             ],
           ),
         ),

@@ -15,5 +15,6 @@ class Routes {
   static const String musicPlayerScreen ='/music-player-screen';
   static const String quizResultScreen ='/quiz-result-screen';
   static const String searchScreen ='/search-screen';
+    static const String reviewsScreen ='/reviewsScreen';
 
 }

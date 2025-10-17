@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lavender/core/helpers/secure_storage_helper.dart';
 import 'package:lavender/core/routing/router.dart';
-import 'package:lavender/features/splash/presenation/view_model/view_model.dart';
 
 class SplashTimerScreen extends StatefulWidget {
   const SplashTimerScreen({super.key});

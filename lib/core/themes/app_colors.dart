@@ -66,4 +66,24 @@ class AppColors {
     stops: [0.0, 1.0],
   );
 
+    static const Gradient cardGradient = LinearGradient(
+    colors: [
+      Color(0xFFF1F6F9), // رمادي فاتح جدًا
+      Color(0xFFFFFFFF), // أبيض
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+ 
+ static const LinearGradient softRedCardGradient = LinearGradient(
+  colors: [
+   Color(0xFFF1F6F9), 
+    Color.fromARGB(150, 255, 208, 209), 
+    
+  ],
+  begin: Alignment.centerLeft,
+  end: Alignment.bottomCenter,
+  stops: [0.0, 1.2],
+);
+
 }

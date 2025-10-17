@@ -5,7 +5,7 @@ import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
 import 'package:lavender/features/home/presenation/cubit/home_state.dart';
-import 'package:lavender/features/home/widgets/doctor_card.dart';
+import 'package:lavender/features/home/presenation/widgets/doctor_card.dart';
 
 class AllDoctorsScreen extends StatelessWidget {
   const AllDoctorsScreen({super.key});
