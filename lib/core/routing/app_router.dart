@@ -4,6 +4,7 @@ import 'package:lavender/features/Questions/screens/question_screen.dart';
 import 'package:lavender/features/home/presenation/screens/all_doctors_screen.dart';
 import 'package:lavender/features/home/presenation/screens/main_view.dart';
 import 'package:lavender/features/home/presenation/screens/specialists_screen.dart';
+import 'package:lavender/features/home/presenation/widgets/zoom_menu_layout.dart';
 import 'package:lavender/features/onbording/presentation/screens/onbpording_screen.dart';
 import 'package:lavender/features/programs/data/models/doctor_basic_info.dart';
 import 'package:lavender/features/programs/data/models/music_card_model.dart';
@@ -30,7 +31,7 @@ class AppRouter {
       case Routes.selectLanguage:
         return MaterialPageRoute(builder: (_) => SelectLanguage());
       case Routes.homeScreen:
-        return MaterialPageRoute(builder: (_) => MainView());
+        return MaterialPageRoute(builder: (_) => ZoomMenuLayout());
       case Routes.onboardingScreen:
         return MaterialPageRoute(builder: (_) => OnboardingScreen());
       case Routes.psychologistDetailsPage:

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/features/community/presentaion/community_screen.dart';
 import 'package:lavender/features/favorites/presenation/screens/favorite_screen.dart';
+import 'package:lavender/features/home/presenation/cubit/menu_cubit.dart';
 import 'package:lavender/features/home/presenation/screens/home_screen.dart';
 import 'package:lavender/features/programs/presentation/programs_screen.dart';
 
@@ -20,7 +22,7 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
 
   final List<Widget> _pages = [
     HomeScreen(),
-    FavoritesScreen(),
+    const Center(child: Text("👤 Sessions")),
     ProgramsScreen(),
     const CommunityScreen(),
     const Center(child: Text("👤 Profile")),
@@ -29,7 +31,13 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages[_currentIndex],
+
+      body:  Container(
+    decoration: BoxDecoration(
+    gradient: AppColors.linearGradient,
+    ),
+
+    child: _pages[_currentIndex]),
 
       bottomNavigationBar: Container(
         height: 80.h,
@@ -48,41 +56,49 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
             final activeIcons = ["active_home.svg", "active_session.svg", "active_programs.svg", "active_community.svg", "active_more.svg"];
             final labels = ["الرئيسية", "الجلسات", "البرامج", "المجتمع", "المزيد"];
 
-            final isActive = _currentIndex == index;
+            final isActive = _currentIndex == index || _currentIndex == 4;
 
-            return GestureDetector(
-              onTap: () {
-                setState(() => _currentIndex = index);
-              },
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOutBack,
-                padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                decoration: BoxDecoration(
-                  // color: isActive ? Colors.deepPurple.shade50 : Colors.transparent,
-                  borderRadius: BorderRadius.circular(24),
-                ),
-                child: Column(
-                  children: [
-                    AnimatedScale(
-                      scale: isActive ? 1.0 : 0.9,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeOutBack,
-                      child: SvgPicture.asset(isActive ? "assets/svg/${activeIcons[index]}" : "assets/svg/${inactiveIcons[index]}"),
+            return BlocBuilder<MenuCubit, int>(
+                builder: (context, state) {
+                return GestureDetector(
+                  onTap: () {
+                    if (index  == 4){
+                      context.read<MenuCubit>().toggleDrawer();
+                    }else{
+                      setState(() => _currentIndex = index);
+                    }
+                  },
+                  child: AnimatedContainer(
+                    duration: const Duration(milliseconds: 300),
+                    curve: Curves.easeOutBack,
+                    padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                    decoration: BoxDecoration(
+                      // color: isActive ? Colors.deepPurple.shade50 : Colors.transparent,
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                    if (isActive) ...[
-                      const SizedBox(width: 6),
-                      Text(
-                        labels[index],
-                        style: GoogleFonts.alexandria(
-                          color: AppColors.primaryColorLavenderLangAndText,
-                          fontWeight: FontWeight.w600,
+                    child: Column(
+                      children: [
+                        AnimatedScale(
+                          scale: isActive ? 1.0 : 0.9,
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.easeOutBack,
+                          child: SvgPicture.asset(isActive ? "assets/svg/${activeIcons[index]}" : "assets/svg/${inactiveIcons[index]}"),
                         ),
-                      ),
-                    ]
-                  ],
-                ),
-              ),
+                        if (isActive) ...[
+                          const SizedBox(width: 6),
+                          Text(
+                            labels[index],
+                            style: GoogleFonts.alexandria(
+                              color: AppColors.primaryColorLavenderLangAndText,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ]
+                      ],
+                    ),
+                  ),
+                );
+              }
             );
           }),
         ),

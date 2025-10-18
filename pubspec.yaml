@@ -34,6 +34,7 @@ dependencies:
   like_button:
   flutter_rating_bar: ^4.0.1
   shimmer: ^3.0.0
+  flutter_zoom_drawer:
 
 
 dev_dependencies:
@@ -60,3 +61,9 @@ flutter:
     - assets/icons/
     - assets/lang/
     - assets/rive/
+    - assets/fonts/
+
+  fonts:
+    - family: AppIcons
+      fonts:
+        - asset: assets/fonts/AppIcons.ttf

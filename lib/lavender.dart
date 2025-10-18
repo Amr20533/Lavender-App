@@ -12,13 +12,16 @@ import 'package:lavender/features/favorites/data/repository/favorites_repository
 import 'package:lavender/features/favorites/presenation/cubit/favorit_cubit.dart';
 import 'package:lavender/features/home/data/repositories/home_repo_impl.dart';
 import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
+import 'package:lavender/features/home/presenation/cubit/menu_cubit.dart';
 import 'package:lavender/features/home/presenation/cubit/quote_cubit.dart';
 import 'package:lavender/features/onbording/presentation/cubit/onbording_cubit.dart';
 import 'package:lavender/features/profile/data/repositories/profile_repo_impl.dart';
 import 'package:lavender/features/profile/presentation/cubit/current_user_cubit.dart';
 import 'package:lavender/features/profile/presentation/cubit/profile_cubit.dart';
+import 'package:lavender/features/programs/data/repositories/course_repository_impl.dart';
 import 'package:lavender/features/programs/data/repositories/music_repository_impl.dart';
 import 'package:lavender/features/programs/data/repositories/quizzes_repository_impl.dart';
+import 'package:lavender/features/programs/presentation/cubit/courses_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/music_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/quiz_cubit.dart';
 import 'package:lavender/features/search/data/repositories/search_repository_impl.dart';
@@ -64,7 +67,9 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (_) => CurrentUserCubit(ProfileRepositoryImpl())..fetchCurrentUser()),
         BlocProvider(create: (_) => PostsCubit(CommunityRepositoryImpl())..fetchPosts()),
         BlocProvider(create: (_) => SearchCubit(SearchRepositoryImpl())),
+        BlocProvider(create: (context) => MenuCubit()),
         BlocProvider(create: (_) => FavoritesCubit(FavoritesRepositoryImpl())..fetchFavorites()),
+        BlocProvider(create: (_) => CoursesCubit(CoursesRepositoryImpl())..fetchCourses()),
         ],
           child: MaterialApp(
            locale: context.locale,

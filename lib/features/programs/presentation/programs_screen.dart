@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/app_bar_shadow.dart';
 import 'package:lavender/core/widget/back_icon.dart';
+import 'package:lavender/features/programs/presentation/cubit/courses_cubit.dart';
+import 'package:lavender/features/programs/presentation/cubit/courses_states.dart';
+import 'package:lavender/features/programs/presentation/widgets/course_card_shimer.dart';
 import 'package:lavender/features/programs/presentation/widgets/courses_card.dart';
 import 'package:lavender/features/programs/presentation/widgets/daily_emotion.dart';
 import 'package:lavender/features/programs/presentation/widgets/tool_card.dart';
@@ -77,52 +81,58 @@ class ProgramsScreen extends StatelessWidget {
             ),
             ViewAllRow(title: "كورسات عمليه", onTap: () {}),
 
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Padding(
-                padding: EdgeInsetsDirectional.only(
-                  top: 16.h,
-                  bottom: 12.h,
-                  start: 20,
-                ),
-                child: Row(
-                  children: [
-                    CoursesCard(
-                      title: 'ظروف بيئة العمل',
-                      category: 'ضحايا العنف والتعذيب',
-                      imageUrl: 'assets/svg/download (6) 1.svg',
-                      doctorImage: 'assets/images/Ellipse 1215@2x.png',
-                      rating: 4.0,
-                      reviewsCount: 20,
-                      lessonsCount: 5,
-                      price: 2500,
-                    ),
-                    SizedBox(width: 15.w),
-                    CoursesCard(
-                      title: 'العلاقات الاجتماعية',
-                      category: 'العلاقات',
-                      imageUrl: 'assets/svg/download (1) 2.svg',
-                      doctorImage: 'assets/images/Ellipse 1216 (2).png',
-                      rating: 4.0,
-                      reviewsCount: 20,
-                      lessonsCount: 5,
-                      price: 1500,
-                    ),
-                    SizedBox(width: 15.w),
+            BlocBuilder<CoursesCubit, CoursesState>(
+              builder: (context, state) {
+                if (state is CoursesLoading) {
+                  return SizedBox(
+                    height: 290.h,
+                    child: ListView.separated(
+                      padding: EdgeInsetsDirectional.only(
+                        top: 16.h,
+                        bottom: 12.h,
+                        start: 20,
+                        end: 20,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: 4,
+                      separatorBuilder: (context, index) => SizedBox(width: 15.w),
+                      itemBuilder: (context, index) {
 
-                    CoursesCard(
-                      title: 'العلاقات الاجتماعية',
-                      category: 'العلاقات',
-                      imageUrl: 'assets/svg/download (1) 2.svg',
-                      doctorImage: 'assets/images/Ellipse 1216 (2).png',
-                      rating: 4.0,
-                      reviewsCount: 20,
-                      lessonsCount: 5,
-                      price: 1500,
+                        return CourseCardShimmer();
+                      },
                     ),
-                  ],
-                ),
-              ),
+                  );
+                } else if (state is CoursesLoaded) {
+                  final courses = state.courses;
+
+                  return SizedBox(
+                    height: 290.h,
+                    child: ListView.separated(
+                      padding: EdgeInsetsDirectional.only(
+                        top: 16.h,
+                        bottom: 12.h,
+                        start: 20,
+                        end: 20,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      itemCount: courses.length,
+                      separatorBuilder: (context, index) => SizedBox(width: 15.w),
+                      itemBuilder: (context, index) {
+                        final course = courses[index];
+
+                        return CoursesCard(
+                          course: course,
+                        );
+                      },
+                    ),
+                  );
+                } else if (state is CoursesError) {
+                  debugPrint('Error: ${state.message}');
+                  return Center(child: Text('Error: ${state.message}'));
+                } else {
+                  return const SizedBox.shrink();
+                }
+              },
             ),
           ],
         ),

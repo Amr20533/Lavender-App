@@ -6,6 +6,7 @@ import 'package:lavender/core/helpers/format_helper.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/themes/app_colors.dart';
+import 'package:lavender/core/widget/app_icons.dart';
 import 'package:lavender/core/widget/custom_cached_network_image.dart';
 import 'package:lavender/features/home/data/models/specialist.dart';
 import 'package:lavender/features/home/presenation/widgets/info_card.dart';
@@ -150,9 +151,14 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                     const SizedBox(height: 24),
 
                     /// Schedule
-                    Text(
-                      "الجدول 🗓️",
-                      style: Theme.of(context).textTheme.titleMedium,
+                    Row(
+                      children: [
+                        Icon(Icons.calendar_month, color: AppColors.primaryColorLavenderLangAndText,),
+                        Text(
+                          "الجدول",
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 12),
                     BlocBuilder<DayCubit, DateTime>(
