@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/features/Questions/screens/question_screen.dart';
 import 'package:lavender/features/home/presenation/screens/all_doctors_screen.dart';
-import 'package:lavender/features/home/presenation/screens/main_view.dart';
 import 'package:lavender/features/home/presenation/screens/specialists_screen.dart';
 import 'package:lavender/features/home/presenation/widgets/zoom_menu_layout.dart';
 import 'package:lavender/features/onbording/presentation/screens/onbpording_screen.dart';
+import 'package:lavender/features/programs/data/models/course_model.dart';
 import 'package:lavender/features/programs/data/models/doctor_basic_info.dart';
 import 'package:lavender/features/programs/data/models/music_card_model.dart';
+import 'package:lavender/features/programs/presentation/course_one.dart';
+import 'package:lavender/features/programs/presentation/first_quiz_screen.dart';
 import 'package:lavender/features/programs/presentation/measurements_screen.dart';
 import 'package:lavender/features/programs/presentation/music_player_screen.dart';
 import 'package:lavender/features/programs/presentation/music_screen.dart';
@@ -69,6 +71,19 @@ class AppRouter {
       return MaterialPageRoute(
         builder: (_) => ReviewsScreen(doctor: doctor),
                 );
+                case Routes.firstQuizScreen:
+                return MaterialPageRoute(builder: (_) => FirstQuizScreen());
+       /* case Routes.courseOne:
+                final course = settings.arguments as CourseModel;
+                return MaterialPageRoute(builder: (_) => CourseOne(
+                  course: course,
+                ));  */
+           case Routes.courseOne: 
+           return MaterialPageRoute(builder: (_)=> CourseOne()) ;       
+        
+      // case Routes.userInfoProfile:
+      //  return MaterialPageRoute(builder: (_) => UserInfoProfile());  
+            
 
       default:
         return MaterialPageRoute(

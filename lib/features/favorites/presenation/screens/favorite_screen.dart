@@ -55,13 +55,13 @@ class FavoritesScreen extends StatelessWidget {
             })
                 .whereType<Specialist>()
                 .toList();
-
             return ListView.separated(
+              padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
               itemCount: favSpecialists.length,
-              separatorBuilder: (_, __) => Divider(),
+              separatorBuilder: (_, __) => SizedBox(height: 20,),
               itemBuilder: (context, index) {
                 final specialist = favSpecialists[index];
-
+              
                 return DoctorCard(
                   specialist: specialist,
                   onTap: () {

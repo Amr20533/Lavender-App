@@ -50,12 +50,12 @@ class _SignInScreenState extends State<SignInScreen> {
                           user.refreshToken,
                         );
 
-                        showFloatingMessage(
+                       /* showFloatingMessage(
                           context,
                           "تم تسجيل الدخول بنجاح 🎉",
                           background: AppColors.green1,
                           seconds: 2,
-                        );
+                        );*/
 
                         Navigator.pushReplacementNamed(context, Routes.homeScreen);
                     } else if (state is SigninError) {

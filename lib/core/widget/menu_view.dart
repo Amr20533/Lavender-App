@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/app_icons.dart';
 import 'package:lavender/core/widget/nav_tile.dart';
+import 'package:lavender/core/widget/user_info_profile.dart';
 import 'package:lavender/features/home/presenation/cubit/menu_cubit.dart';
 import 'package:lavender/features/sign_in/presentation/cubit/sign_in_cubit.dart';
 import 'package:lavender/features/sign_in/presentation/cubit/sign_in_state.dart';
@@ -13,57 +15,54 @@ class MenuView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
-        gradient: AppColors.linearGradient
-      ),
+      decoration: BoxDecoration(gradient: AppColors.linearGradient),
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.only(bottom: 35, top: 95, left: 20),
           child: BlocBuilder<MenuCubit, int>(
-            builder: (context, state){
+            builder: (context, state) {
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  UserInfoProfile(),
                   NavTile(
-                    onTap: (){
+                    onTap: () {
+                      Navigator.pushNamed(context, Routes.userInfoProfile);
                     },
                     title: "Profile",
                     icon: AppIcons.userSquare,
                   ),
                   NavTile(
-                    onTap: (){
-                    },
+                    onTap: () {},
                     title: "History",
                     icon: AppIcons.history,
                   ),
                   NavTile(
-                    onTap: (){
+                    onTap: () {
                       context.read<MenuCubit>().selectTile(2);
                     },
                     title: "Favorites",
                     icon: AppIcons.heart,
                   ),
                   NavTile(
-                    onTap: (){
-                    },
+                    onTap: () {},
                     title: "Settings",
                     icon: AppIcons.history,
                   ),
 
                   BlocBuilder<SignInCubit, SigninState>(
-                      builder: (signInContext, state){
+                    builder: (signInContext, state) {
                       return NavTile(
-                        onTap: (){
+                        onTap: () {
                           signInContext.read<SignInCubit>().signOut();
                           context.read<MenuCubit>().toggleDrawer();
-
                         },
                         title: "Logout",
                         icon: Icons.logout,
                       );
-                    }
+                    },
                   ),
-                  // const Spacer(flex: 1,),
+                  const Spacer(flex: 1),
                   // Column(
                   //   crossAxisAlignment: CrossAxisAlignment.start,
                   //   children: List.generate(4, (index) {
@@ -76,6 +75,16 @@ class MenuView extends StatelessWidget {
                   //     );
                   //   }),
                   // ),
+                  Center(
+                    child: Text(
+                      "لافندر  إصدار 1.0.0",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 13,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
                 ],
               );
             },
@@ -85,4 +94,3 @@ class MenuView extends StatelessWidget {
     );
   }
 }
-

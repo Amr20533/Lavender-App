@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/custom_cached_network_image.dart';
 import 'package:lavender/core/widget/inter_text.dart';
@@ -63,7 +64,7 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
         final currentSeconds = current.inSeconds.clamp(0, totalSeconds);
 
         final progress =
-        (totalSeconds > 0) ? currentSeconds / totalSeconds : 0.0;
+            (totalSeconds > 0) ? currentSeconds / totalSeconds : 0.0;
 
         return Padding(
           padding: const EdgeInsets.only(top: 100),
@@ -73,7 +74,11 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
             children: [
               Padding(
                 padding: const EdgeInsets.only(bottom: 16),
-                child: AlexText(text: widget.album, fontSize: 20, color: Colors.white,),
+                child: AlexText(
+                  text: widget.album,
+                  fontSize: 20,
+                  color: Colors.white,
+                ),
               ),
 
               CustomCachedNetworkImage(
@@ -83,41 +88,56 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
                 borderRadius: 16,
                 heroTag: 'album_${widget.musicId}',
               ),
-              AlexText(text: widget.title, fontSize: 20, color: Colors.white,),
-              InterText(text: "Author Name: ${widget.author}", color: Colors.white,),
+              AlexText(text: widget.title, fontSize: 20, color: Colors.white),
+              InterText(
+                text: "Author Name: ${widget.author}",
+                color: Colors.white,
+              ),
 
               // Slider Row
-              Row(
-                children: [
-                  Text(formatDuration(current),
-                      style: const TextStyle(fontSize: 12)),
-                  Expanded(
-                    child: SliderTheme(
-                      data: SliderTheme.of(context).copyWith(
-                        trackShape: const RoundedRectSliderTrackShape(),
-                        trackHeight: 6,
-                        thumbShape:
-                        const RoundSliderThumbShape(enabledThumbRadius: 8),
-                        overlayShape:
-                        const RoundSliderOverlayShape(overlayRadius: 14),
-                        activeTrackColor: Colors.white,
-                        inactiveTrackColor: Colors.grey.shade400,
-                        thumbColor: Colors.white,
-                      ),
-                      child: Slider(
-                        value: currentSeconds.toDouble(),
-                        max: totalSeconds.toDouble(),
-                        onChanged: (value) {
-                          context
-                              .read<MusicPlayerCubit>()
-                              .seekTo(Duration(seconds: value.toInt()));
-                        },
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Text(
+                      formatDuration(current),
+                      style: const TextStyle(fontSize: 12 , color:AppColors.w, ),
+                    ),
+                    Expanded(
+                      child: SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          trackShape: const RoundedRectSliderTrackShape(),
+                          trackHeight: 6,
+                          thumbShape: const RoundSliderThumbShape(
+                            enabledThumbRadius: 8,
+                          ),
+                          overlayShape: const RoundSliderOverlayShape(
+                            overlayRadius: 14,
+                          ),
+                          activeTrackColor: Colors.white,
+                          inactiveTrackColor: Colors.grey.shade400,
+                          thumbColor: Colors.white,
+                        ),
+                        child: Slider(
+                          value: currentSeconds.toDouble(),
+                          max: totalSeconds.toDouble(),
+                          onChanged: (value) {
+                            context.read<MusicPlayerCubit>().seekTo(
+                              Duration(seconds: value.toInt()),
+                            );
+                          },
+                        ),
                       ),
                     ),
-                  ),
-                  Text(formatDuration(total),
-                      style: const TextStyle(fontSize: 12)),
-                ],
+                    Text(
+                      formatDuration(total),
+                      style: const TextStyle(
+                        fontSize: 12,
+                        color:AppColors.w, 
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
 
@@ -125,39 +145,42 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  const Icon(Icons.shuffle, size: 28),
-                  const Icon(Icons.skip_previous, size: 36),
+                  const Icon(Icons.shuffle, size: 28, color: AppColors.w),
+                  const Icon(Icons.skip_previous, size: 36, color: AppColors.w),
                   Stack(
                     alignment: Alignment.center,
                     children: [
                       SizedBox(
-                        width: 70,
-                        height: 70,
+                        width: 62,
+                        height: 62,
                         child: CircularProgressIndicator(
                           value: progress,
                           strokeWidth: 4,
                           backgroundColor: Colors.grey.shade300,
-                          valueColor:
-                          const AlwaysStoppedAnimation<Color>(Colors.blue),
+                          valueColor: const AlwaysStoppedAnimation<Color>(
+                            AppColors.button,
+                          ),
                         ),
                       ),
                       InkWell(
                         onTap: () {
                           // context.read<MusicPlayerCubit>().togglePlayPause();
-                          context.read<MusicPlayerCubit>().play(widget.audioFile);
+                          context.read<MusicPlayerCubit>().play(
+                            widget.audioFile,
+                          );
                         },
                         child: Icon(
                           isPlaying ? Icons.pause : Icons.play_arrow,
                           size: 40,
-                          color: Colors.blue,
+                          color: AppColors.button,
                         ),
                       ),
                     ],
                   ),
-                  const Icon(Icons.skip_next, size: 36),
-                  const Icon(Icons.repeat, size: 28),
+                  const Icon(Icons.skip_next, size: 36, color: AppColors.w),
+                  const Icon(Icons.repeat, size: 28, color: AppColors.w),
                 ],
-              )
+              ),
             ],
           ),
         );
@@ -165,4 +188,3 @@ class _MusicPlayerWidgetState extends State<MusicPlayerWidget> {
     );
   }
 }
-

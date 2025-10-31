@@ -16,10 +16,10 @@ class BackIcon extends StatelessWidget {
           width: 42,
           height: 42,
           decoration: BoxDecoration(
-              color: AppColors.purple50,
+              color: AppColors.purple50.withOpacity(0.6),
               shape: BoxShape.circle
           ) ,
-          child: Icon(Icons.arrow_back_sharp, color: AppColors.primaryColorLavenderLangAndText,size: 30,),
+          child: Icon(Icons.arrow_back_sharp, color: AppColors.primaryColorLavenderLangAndText,size: 25,),
         ),
       ),
     );

@@ -21,6 +21,7 @@ class CoursesRepositoryImpl implements CoursesRepository {
           'Authorization': 'Bearer $token',
         },
       );
+      
       Future.delayed(const Duration(seconds: 2), () {});
       final data = response.data is List ? response.data : response.data['courses'];
       return (data as List).map((json) => CourseModel.fromJson(json)).toList();

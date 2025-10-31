@@ -26,7 +26,7 @@ class _SplashTimerScreenState extends State<SplashTimerScreen> {
             "assets/images/background_app.png",
             fit: BoxFit.cover,
             width: double.infinity,
-          ),
+          ), 
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

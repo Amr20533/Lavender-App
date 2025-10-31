@@ -6,7 +6,6 @@ import 'package:lavender/core/helpers/format_helper.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/themes/app_colors.dart';
-import 'package:lavender/core/widget/app_icons.dart';
 import 'package:lavender/core/widget/custom_cached_network_image.dart';
 import 'package:lavender/features/home/data/models/specialist.dart';
 import 'package:lavender/features/home/presenation/widgets/info_card.dart';
@@ -25,6 +24,14 @@ class PsychologistDetailsPage extends StatefulWidget {
 }
 
 class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
+  late double _currentRating;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentRating = widget.specialist.avgRating;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +42,7 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: CustomCachedNetworkImage(
+              background: CustomCachedNetworkImage( 
                 imageUrl:
                     "${ApiConstants.imagePath}${widget.specialist.profilePic}",
                 fit: BoxFit.cover,
@@ -79,7 +86,8 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                             // لو المستخدم رجع تقييم جديد (يعني ضغط "إرسال التقييم")
                             if (newRating != null && newRating is double) {
                               setState(() {
-                               // widget.specialist.avgRating = newRating; // ← نحدّث التقييم المعروض
+                                _currentRating =
+                                    newRating; // ← نحدّث التقييم المعروض
                               });
                             }
                           },
@@ -88,7 +96,7 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                               const Icon(Icons.star, color: Colors.amber),
                               const SizedBox(width: 4),
                               Text(
-                                "${widget.specialist.avgRating}",
+                                "${_currentRating}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey[700],
@@ -153,7 +161,10 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                     /// Schedule
                     Row(
                       children: [
-                        Icon(Icons.calendar_month, color: AppColors.primaryColorLavenderLangAndText,),
+                        Icon(
+                          Icons.calendar_month,
+                          color: AppColors.primaryColorLavenderLangAndText,
+                        ),
                         Text(
                           "الجدول",
                           style: Theme.of(context).textTheme.titleMedium,

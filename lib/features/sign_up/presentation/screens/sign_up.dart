@@ -77,7 +77,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         Future.delayed(const Duration(milliseconds: 600), () {
                           Navigator.pushReplacementNamed(
                             context,
-                            Routes.signInScreen,
+                            Routes.homeScreen
                           );
                         });
                       } else if (state is SignUpError) {

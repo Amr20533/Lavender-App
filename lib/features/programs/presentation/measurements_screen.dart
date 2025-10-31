@@ -15,23 +15,28 @@ class MeasurementsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: AlexText(text: "المقاييس"),
-      toolbarHeight: 70,
-      leading: BackIcon(),
-      actions: [
-        Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(3, 3, 10, 0),
-          child: Container(
-            width: 42,
-            height: 42,
-            decoration: BoxDecoration(
-                color: AppColors.purple50,
-                shape: BoxShape.circle
-            ) ,
-            child: Icon(Icons.more_vert_sharp, color: AppColors.primaryColorLavenderLangAndText,size: 30,),
+      appBar: AppBar(
+        title: AlexText(text: "المقاييس"),
+        toolbarHeight: 70,
+        leading: BackIcon(),
+        actions: [
+          Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(3, 3, 10, 0),
+            child: Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: AppColors.purple50.withOpacity(0.6),
+                shape: BoxShape.circle,
+              ),
+              child: Icon(
+                Icons.more_vert_sharp,
+                color: AppColors.primaryColorLavenderLangAndText,
+                size: 26,
+              ),
+            ),
           ),
-        ),
-      ],
+        ],
       ),
       body: Column(
         spacing: 30.h,
@@ -45,7 +50,8 @@ class MeasurementsScreen extends StatelessWidget {
                 } else if (state is QuizLoaded) {
                   return GridView.builder(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                       crossAxisSpacing: 10,
                       mainAxisSpacing: 10,
@@ -56,8 +62,8 @@ class MeasurementsScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final quiz = state.quizzes[index];
                       return GestureDetector(
-                        onTap: (){
-                          Navigator.pushNamed(context, Routes.quizResultScreen);
+                        onTap: () {
+                          _navigateToQuizScreen(context, index, quiz);
                         },
                         child: Container(
                           width: 164.w,
@@ -65,20 +71,24 @@ class MeasurementsScreen extends StatelessWidget {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16),
                             color: Colors.white,
-                            border: Border.all(color: AppColors.purple50, width: 1.w)
+                            border: Border.all(
+                              color: AppColors.purple50,
+                              width: 1.w,
+                            ),
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Padding(
-                                padding: const EdgeInsets.symmetric(horizontal: 16),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                ),
                                 child: AlexText(
                                   text: quiz.title,
                                   textAlign: TextAlign.center,
                                   fontSize: 12,
                                 ),
                               ),
-
                               Container(
                                 width: 72,
                                 height: 72,
@@ -88,16 +98,17 @@ class MeasurementsScreen extends StatelessWidget {
                                   image: DecorationImage(
                                     image: NetworkImage(quiz.image!),
                                     fit: BoxFit.fill,
-                                    onError: (error, stackTrace) {
-                                    },
+                                    onError: (error, stackTrace) {},
                                   ),
                                 ),
                                 child: quiz.image!.isEmpty
-                                    ? const Icon(Icons.broken_image, size: 50, color: Colors.grey)
+                                    ? const Icon(
+                                        Icons.broken_image,
+                                        size: 50,
+                                        color: Colors.grey,
+                                      )
                                     : null,
                               ),
-
-
                             ],
                           ),
                         ),
@@ -115,5 +126,23 @@ class MeasurementsScreen extends StatelessWidget {
       ),
     );
   }
+
+  void _navigateToQuizScreen(BuildContext context, int index, dynamic quiz) {
+  
+    final Map<int, String> quizRoutes = {
+      0: Routes.firstQuizScreen,             
+     // 1: Routes.reviewsScreen,          
+     // 2: Routes.allDoctorsScreen,       
+    //  3: Routes.courseOne,            
+    //  4: Routes.reviewsScreen,         
+     // 5: Routes.allDoctorsScreen,     
+    };
+
+    final route = quizRoutes[index] ?? Routes.quizResultScreen;
+    
+    Navigator.pushNamed(context, route);
+  }
 }
+
+
 

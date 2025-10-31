@@ -46,7 +46,7 @@ class DioHelper {
     );
 
     // PrettyDioLogger
-    dio.interceptors.add(
+    dio.interceptors.add(  
       PrettyDioLogger(
         requestHeader: true,
         requestBody: true,

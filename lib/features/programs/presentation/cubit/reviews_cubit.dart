@@ -5,7 +5,6 @@ part 'reviews_state.dart';
 class ReviewsCubit extends Cubit<ReviewsState> {
   ReviewsCubit() : super(ReviewsInitial());
 
-  // نخزن تقييم كل دكتور بناءً على الـ id بتاعه
   final Map<int, double> _doctorRatings = {};
 
   double getDoctorRating(int doctorId) {

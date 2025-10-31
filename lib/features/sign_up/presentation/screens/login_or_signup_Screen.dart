@@ -67,7 +67,9 @@ class LoginOrSignupScreen extends StatelessWidget {
                   ),
                   SizedBox(height: 20.h),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                       Navigator.pushNamed(context, Routes.homeScreen);
+                    },
                     child: Text(
                       " الدخول ك ضيف",
                       style: TextStyle(
