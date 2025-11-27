@@ -17,7 +17,7 @@ class TimeSlotSelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // فلترة المواعيد بناءً على اليوم المختار
+
     final filteredSlots = appointments.where((slot) {
       DateTime date = DateTime.parse(slot.date);
       return date.year == selectedDate.year &&
@@ -26,7 +26,7 @@ class TimeSlotSelector extends StatelessWidget {
     }).toList();
 
     return BlocBuilder<SlotCubit, int?>(
-      builder: (context, selectedIndex) {
+      builder: (context, selectedSlot) {
         if (filteredSlots.isEmpty) {
           return const Center(child: Text("لا توجد مواعيد متاحة لهذا اليوم"));
         }
@@ -39,9 +39,9 @@ class TimeSlotSelector extends StatelessWidget {
             return TimeSlot(
               label: "${FormatHelper.formatTime(slots.startTime)} - ${FormatHelper.formatTime(slots.endTime)}",
               booked: slots.isBooked,
-              selected: selectedIndex == index,
+              selected: slots.id == selectedSlot,
               onTap: () {
-                context.read<SlotCubit>().selectSlot(index);
+                context.read<SlotCubit>().selectSlot(slots.id);
               },
             );
           }),

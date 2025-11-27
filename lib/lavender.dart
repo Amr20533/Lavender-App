@@ -6,8 +6,11 @@ import 'package:hive/hive.dart';
 import 'package:lavender/core/routing/app_router.dart';
 import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/themes/app_colors.dart';
+import 'package:lavender/features/appointments/data/repositories/appointment_repo_impl.dart';
+import 'package:lavender/features/appointments/presentation/cubit/appointment_cubit.dart';
 import 'package:lavender/features/community/data/repositories/community_repo_impl.dart';
-import 'package:lavender/features/community/presentaion/cubit/community_cubit.dart';
+import 'package:lavender/features/community/presentation/cubit/comment_cubit.dart';
+import 'package:lavender/features/community/presentation/cubit/community_cubit.dart';
 import 'package:lavender/features/favorites/data/repository/favorites_repository_impl.dart';
 import 'package:lavender/features/favorites/presenation/cubit/favorit_cubit.dart';
 import 'package:lavender/features/home/data/repositories/home_repo_impl.dart';
@@ -66,28 +69,45 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (_) => ProfileCubit(ProfileRepositoryImpl())..fetchUsers()),
         BlocProvider(create: (_) => CurrentUserCubit(ProfileRepositoryImpl())..fetchCurrentUser()),
         BlocProvider(create: (_) => PostsCubit(CommunityRepositoryImpl())..fetchPosts()),
+        BlocProvider(create: (_) => CommentCubit(CommunityRepositoryImpl(), context.read<PostsCubit>())),
         BlocProvider(create: (_) => SearchCubit(SearchRepositoryImpl())),
         BlocProvider(create: (context) => MenuCubit()),
         BlocProvider(create: (_) => FavoritesCubit(FavoritesRepositoryImpl())..fetchFavorites()),
         BlocProvider(create: (_) => CoursesCubit(CoursesRepositoryImpl())..fetchCourses()),
+        BlocProvider(create: (_) => AppointmentCubit(AppointmentRepositoryImpl())),
+        BlocProvider(create: (_) => SlotCubit()),
         ],
-          child: MaterialApp(
-           locale: context.locale,
-            supportedLocales: context.supportedLocales,
-            localizationsDelegates: context.localizationDelegates,
-            initialRoute: Routes.splashTimerScreen,
-            debugShowCheckedModeBanner: false,
-            onGenerateRoute: appRouter.generateRoute,
-            theme: ThemeData(
-              scaffoldBackgroundColor: Colors.white,
-              appBarTheme: AppBarTheme(
-                backgroundColor: Colors.white,
-                centerTitle: true,
-                shadowColor: AppColors.shadowColor,
-                scrolledUnderElevation: 0,
-                elevation: 0,
+          child: MultiBlocProvider(
+              providers: [
+                BlocProvider(
+                  create: (context) => CommentCubit(
+                    CommunityRepositoryImpl(),
+                    context.read<PostsCubit>(),
+                  ),
+                ),
+              ],
+
+              child: MaterialApp(
+                locale: context.locale,
+                supportedLocales: context.supportedLocales,
+                localizationsDelegates: context.localizationDelegates,
+                initialRoute: Routes.splashTimerScreen,
+                debugShowCheckedModeBanner: false,
+                
+                onGenerateRoute: appRouter.generateRoute,
+                theme: ThemeData(
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                    scaffoldBackgroundColor: Colors.white,
+                    appBarTheme: AppBarTheme(
+                      backgroundColor: Colors.white,
+                      centerTitle: true,
+                      shadowColor: AppColors.shadowColor,
+                      scrolledUnderElevation: 0,
+                      elevation: 0,
+                      
+                    )
+                ),
               )
-            ),
           ),
         );
       },

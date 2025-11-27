@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/app_icons.dart';
@@ -9,16 +8,18 @@ import 'package:lavender/features/programs/data/models/course_model.dart';
 
 class CoursesCard extends StatelessWidget {
   final CourseModel course;
+  final void Function()? onTap;
 
   const CoursesCard({
     super.key,
     required this.course,
+    required this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=> Navigator.pushNamed(context, Routes.courseOne),
+      onTap: onTap,
       child: Container(
         width: 170.w,
         padding: EdgeInsets.all(12.w),
@@ -55,19 +56,19 @@ class CoursesCard extends StatelessWidget {
                     ),
                   ),
                 ),
-      
+
               ],
             ),
             SizedBox(height: 20.h),
-      
+
             AlexText(
               text: course.title,
               fontSize: 12.sp,
               color: Colors.black,
             ),
-      
+
             SizedBox(height: 4.h),
-      
+
             Row(
               children: [
                 AlexText(
@@ -78,7 +79,7 @@ class CoursesCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 4),
                 ...List.generate(course.avgRating.toInt(), (index) {
-                 // bool lastStar = course.avgRating.toInt() -1 == index;
+                  bool lastStar = course.avgRating.toInt() -1 == index;
                   return Padding(
                     padding: const EdgeInsetsDirectional.only(end: 4),
                     child: Icon(AppIcons.star_9, color: Colors.amber, size: 16),
@@ -87,9 +88,9 @@ class CoursesCard extends StatelessWidget {
                 }),
               ],
             ),
-      
+
             SizedBox(height: 8.h),
-      
+
             Container(
               padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 6.h),
               decoration: BoxDecoration(
@@ -111,9 +112,9 @@ class CoursesCard extends StatelessWidget {
                 ],
               ),
             ),
-      
+
             SizedBox(height: 8.h),
-      
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [

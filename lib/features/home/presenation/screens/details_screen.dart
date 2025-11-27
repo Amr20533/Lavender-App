@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:lavender/core/cubits/slot_cubit.dart';
 import 'package:lavender/core/helpers/format_helper.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/themes/app_colors.dart';
+import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/custom_cached_network_image.dart';
+import 'package:lavender/features/appointments/presentation/cubit/appointment_cubit.dart';
+import 'package:lavender/features/appointments/presentation/cubit/appointment_state.dart';
 import 'package:lavender/features/home/data/models/specialist.dart';
 import 'package:lavender/features/home/presenation/widgets/info_card.dart';
 import 'package:lavender/features/home/presenation/widgets/time_slot_selector.dart';
@@ -24,14 +27,6 @@ class PsychologistDetailsPage extends StatefulWidget {
 }
 
 class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
-  late double _currentRating;
-
-  @override
-  void initState() {
-    super.initState();
-    _currentRating = widget.specialist.avgRating;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,7 +37,7 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
             floating: false,
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: CustomCachedNetworkImage( 
+              background: CustomCachedNetworkImage(
                 imageUrl:
                     "${ApiConstants.imagePath}${widget.specialist.profilePic}",
                 fit: BoxFit.cover,
@@ -86,8 +81,7 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                             // لو المستخدم رجع تقييم جديد (يعني ضغط "إرسال التقييم")
                             if (newRating != null && newRating is double) {
                               setState(() {
-                                _currentRating =
-                                    newRating; // ← نحدّث التقييم المعروض
+                               // widget.specialist.avgRating = newRating; // ← نحدّث التقييم المعروض
                               });
                             }
                           },
@@ -96,7 +90,7 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                               const Icon(Icons.star, color: Colors.amber),
                               const SizedBox(width: 4),
                               Text(
-                                "${_currentRating}",
+                                "${widget.specialist.avgRating}",
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.grey[700],
@@ -161,10 +155,7 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                     /// Schedule
                     Row(
                       children: [
-                        Icon(
-                          Icons.calendar_month,
-                          color: AppColors.primaryColorLavenderLangAndText,
-                        ),
+                        Icon(Icons.calendar_month, color: AppColors.primaryColorLavenderLangAndText,),
                         Text(
                           "الجدول",
                           style: Theme.of(context).textTheme.titleMedium,
@@ -186,23 +177,48 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                     SizedBox(
                       width: double.infinity,
                       height: 48.h,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              AppColors.primaryColorLavenderLangAndText,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(28.sp),
-                          ),
-                        ),
-                        onPressed: () {},
-                        child: Text(
-                          "احجز استشارة",
-                          style: GoogleFonts.alexandria(
-                            fontSize: 16.sp,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.white,
-                          ),
-                        ),
+                      child: BlocConsumer<AppointmentCubit, AppointmentState>(
+                        listener: (context, state) {
+                          if (state is AppointmentBookingSuccess) {
+                            Navigator.of(context).pushNamed(Routes.subscriptionPlanScreen, arguments: state.paymentResponse);
+                          }
+                        },
+                        builder: (context, state) {
+                          if (state is AppointmentBookingLoading) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.primaryColorLavenderLangAndText,
+                              ),
+                            );
+                          }
+
+                          return BlocBuilder<SlotCubit, int?>(
+                            builder: (context, selectedSlot) {
+                              return ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: AppColors.primaryColorLavenderLangAndText,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(28.sp),
+                                  ),
+                                ),
+                                onPressed: () {
+                                  if (selectedSlot != null) {
+                                    context.read<AppointmentCubit>().bookAppointment(selectedSlot);
+                                  } else {
+                                    debugPrint("Please select an available slot");
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(content: Text("من فضلك اختر موعدًا أولاً")),
+                                    );
+                                  }
+                                },
+                                child: AlexText(
+                                  text: "احجز استشارة",
+                                  color: Colors.white,
+                                ),
+                              );
+                            },
+                          );
+                        },
                       ),
                     ),
                     const SizedBox(height: 24),

@@ -1,7 +1,7 @@
 class ApiConstants {
   // static const String baseUrl = "http://192.168.1.8:8000/api/v1/user";
-   static const String baseUrl = "http://192.168.1.7:8000/";
-   static const String imagePath="http://192.168.1.7:8000";
+   static const String baseUrl = "http://192.168.1.5:8000/";
+   static const String imagePath="http://192.168.1.5:8000";
   //static const String baseUrl = "http://10.0.2.2:8000/";
   //static const String imagePath = "http://10.0.2.2:8000";
   static const String signUp = "api/v1/user/register";
@@ -17,6 +17,9 @@ class ApiConstants {
 
   static const String getPosts = "api/v1/posts/";
   static const String likePost = "api/v1/posts";
+  static const String getPostComments = "api/v1/posts";
+  static const String addPostComments = "api/v1/posts";
+  static const String likeComment = "api/v1/comments";
 
   static const String searchSpecialists = "api/v1/specialists/";
 
@@ -25,5 +28,7 @@ class ApiConstants {
   static const String removeFromFavorites = "api/v1/specialist/favorites/remove";
 
   static const String getCourses = "api/v1/courses/";
+
+  static const String bookAppointment = "api/v1/appointments/checkout";
 
 }

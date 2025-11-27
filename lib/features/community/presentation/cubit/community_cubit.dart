@@ -1,7 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:lavender/features/community/data/models/comment.dart';
 import 'package:lavender/features/community/data/models/post.dart';
 import 'package:lavender/features/community/data/repositories/community_repo_impl.dart';
-import 'package:lavender/features/community/presentaion/cubit/community_states.dart';
+import 'package:lavender/features/community/presentation/cubit/community_states.dart';
 
 class PostsCubit extends Cubit<PostsState> {
   final CommunityRepositoryImpl repository;
@@ -43,6 +44,19 @@ class PostsCubit extends Cubit<PostsState> {
     }
   }
 
+  void addCommentToPost(String postId, Comment newComment) {
+    if (state is! PostsLoaded) return;
 
+    final currentState = state as PostsLoaded;
+    final posts = List<Post>.from(currentState.postResponse.data);
+    final index = posts.indexWhere((p) => p.id == postId);
+    if (index == -1) return;
+
+    final updatedComments = [newComment, ...posts[index].comments];
+    final updatedPost = posts[index].copyWith(comments: updatedComments);
+
+    posts[index] = updatedPost;
+    emit(PostsLoaded(currentState.postResponse.copyWith(data: posts)));
+  }
 
 }

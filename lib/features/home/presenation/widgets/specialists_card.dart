@@ -25,7 +25,7 @@ class SpecialistCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(20.r),
         color: Colors.grey.shade200,
       ),
-      clipBehavior: Clip.antiAlias, // عشان الصورة تتقص مع الحواف
+      clipBehavior: Clip.antiAlias,
       child: Stack(
         alignment: Alignment.center,
         children: [

@@ -83,7 +83,6 @@ class ProgramsScreen extends StatelessWidget {
 
             BlocBuilder<CoursesCubit, CoursesState>(
               builder: (context, state) {
-                
                 if (state is CoursesLoading) {
                   return SizedBox(
                     height: 290.h,
@@ -96,9 +95,9 @@ class ProgramsScreen extends StatelessWidget {
                       ),
                       scrollDirection: Axis.horizontal,
                       itemCount: 4,
-                      separatorBuilder:
-                          (context, index) => SizedBox(width: 15.w),
+                      separatorBuilder: (context, index) => SizedBox(width: 15.w),
                       itemBuilder: (context, index) {
+
                         return CourseCardShimmer();
                       },
                     ),
@@ -117,15 +116,16 @@ class ProgramsScreen extends StatelessWidget {
                       ),
                       scrollDirection: Axis.horizontal,
                       itemCount: courses.length,
-                      separatorBuilder:
-                          (context, index) => SizedBox(width: 15.w),
+                      separatorBuilder: (context, index) => SizedBox(width: 15.w),
                       itemBuilder: (context, index) {
                         final course = courses[index];
 
-                          return CoursesCard(course: course);
-                        },
-                      ),
-                    
+                        return CoursesCard(
+                          onTap: ()=> Navigator.pushNamed(context, Routes.courseOne),
+                          course: course,
+                        );
+                      },
+                    ),
                   );
                 } else if (state is CoursesError) {
                   debugPrint('Error: ${state.message}');

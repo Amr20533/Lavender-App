@@ -10,7 +10,6 @@ import 'package:lavender/features/programs/presentation/cubit/quiz_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/quiz_states.dart';
 import 'package:lavender/features/programs/presentation/widgets/quiz_progress_indicator.dart';
 
-
 class FirstQuizScreen extends StatefulWidget {
   const FirstQuizScreen({Key? key}) : super(key: key);
 
@@ -35,7 +34,6 @@ class _FirstQuizScreenState extends State<FirstQuizScreen> {
         selectedAnswerIndex = null;
       });
     } else {
-
       Navigator.pushNamed(context, Routes.quizResultScreen);
     }
   }

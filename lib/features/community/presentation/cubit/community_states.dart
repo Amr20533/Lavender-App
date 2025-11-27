@@ -1,4 +1,5 @@
 
+import 'package:lavender/features/community/data/models/comment.dart';
 import 'package:lavender/features/community/data/models/post_response.dart';
 
 abstract class PostsState {}
@@ -32,3 +33,4 @@ class LikePostError extends PostsState {
 
   LikePostError(this.message);
 }
+

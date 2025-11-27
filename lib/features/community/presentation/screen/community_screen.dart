@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lavender/core/widget/alex_text.dart';
-import 'package:lavender/features/community/presentaion/cubit/community_cubit.dart';
-import 'package:lavender/features/community/presentaion/cubit/community_states.dart';
-import 'package:lavender/features/community/presentaion/widgets/community_app_bar.dart';
-import 'package:lavender/features/community/presentaion/widgets/post_card.dart';
+import 'package:lavender/features/community/presentation/cubit/community_cubit.dart';
+import 'package:lavender/features/community/presentation/cubit/community_states.dart';
+import 'package:lavender/features/community/presentation/widgets/community_app_bar.dart';
+import 'package:lavender/features/community/presentation/widgets/post_card.dart';
+import 'package:lavender/features/stories/data/repositories/screens/stories_bar.dart';
 
 class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});
@@ -17,6 +18,10 @@ class CommunityScreen extends StatelessWidget {
         slivers: [
           SliverToBoxAdapter(
             child: CommunityAppBar(),
+          ),
+
+          SliverToBoxAdapter(
+            child: StoriesBar(),
           ),
 
           // Wrap your plain widget/text in SliverToBoxAdapter

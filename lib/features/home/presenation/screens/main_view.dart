@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lavender/core/themes/app_colors.dart';
-import 'package:lavender/features/community/presentaion/community_screen.dart';
+import 'package:lavender/features/community/presentation/screen/community_screen.dart';
 import 'package:lavender/features/home/presenation/cubit/menu_cubit.dart';
 import 'package:lavender/features/home/presenation/screens/home_screen.dart';
 import 'package:lavender/features/programs/presentation/programs_screen.dart';

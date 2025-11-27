@@ -19,7 +19,11 @@ class FavoritesScreen extends StatelessWidget {
       appBar: AppBar(
         title: AlexText(text: "المفضلات"),
         toolbarHeight: 70,
-        leading: BackIcon(),
+        leading: BackIcon(
+            onTap:(){
+              Navigator.pushReplacementNamed(context, Routes.homeScreen,);
+            }
+        ),
       ),
 
       body: BlocBuilder<FavoritesCubit, FavoritesState>(

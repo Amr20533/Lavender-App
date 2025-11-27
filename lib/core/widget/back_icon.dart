@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 
 class BackIcon extends StatelessWidget {
+  final VoidCallback? onTap;
+
   const BackIcon({
     super.key,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: ()=> Navigator.pop(context),
+      onTap: onTap ?? () => Navigator.pop(context),
       child: Padding(
         padding: const EdgeInsetsDirectional.fromSTEB(10, 3, 0, 3),
         child: Container(

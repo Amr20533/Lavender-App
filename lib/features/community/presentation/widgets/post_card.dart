@@ -2,11 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lavender/core/networking/api_constants.dart';
+import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/custom_cached_network_image.dart';
 import 'package:lavender/features/community/data/models/post.dart';
-import 'package:lavender/features/community/presentaion/cubit/community_cubit.dart';
+import 'package:lavender/features/community/presentation/cubit/community_cubit.dart';
 import 'package:lavender/features/profile/data/models/user.dart';
 import 'package:lavender/features/profile/data/models/user_with_profile.dart';
 import 'package:lavender/features/profile/presentation/cubit/current_user_cubit.dart';
@@ -142,16 +143,21 @@ class PostCard extends StatelessWidget {
                   ),
                 ],
               ),
-              Row(
-                children: [
-                  Image.asset('assets/icons/message-notif.png'),
-                  SizedBox(width: 5.w),
-                  AlexText(
-                    text: "${post.comments.length} تعليق",
-                    fontSize: 12,
-                    color: Colors.black,
-                  ),
-                ],
+              GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(Routes.commentScreen, arguments: post);
+                },
+                child: Row(
+                  children: [
+                    Image.asset('assets/icons/message-notif.png'),
+                    SizedBox(width: 5.w),
+                    AlexText(
+                      text: "${post.comments.length} تعليق",
+                      fontSize: 12,
+                      color: Colors.black,
+                    ),
+                  ],
+                ),
               ),
               Row(
                 children: [

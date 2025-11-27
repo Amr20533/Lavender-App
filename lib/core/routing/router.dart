@@ -15,9 +15,13 @@ class Routes {
   static const String musicPlayerScreen ='/music-player-screen';
   static const String quizResultScreen ='/quiz-result-screen';
   static const String searchScreen ='/search-screen';
-  static const String reviewsScreen ='/reviewsScreen';
-  static const String userInfoProfile ='/UserInfoProfile';
+  static const String reviewsScreen ='/reviews-screen';
+  static const String paymentSuccess ='/payment-success';
+  static const String paymentViewScreen ='/payment-view-screen';
+  static const String commentScreen ='/comment-screen';
   static const String firstQuizScreen = '/firstQuizScreen';
   static const String courseOne ='/courseOne';
-
+  static const String userInfoProfile ='/UserInfoProfile';
+  static const String subscriptionPlanScreen ='/SubscriptionPlanScreen';
+  static const String storiesBar ='/StoriesBar';
 }
