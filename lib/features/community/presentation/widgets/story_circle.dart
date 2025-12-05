@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:lavender/features/stories/data/models/user_story_model.dart';
+import 'package:lavender/features/community/data/models/story_model.dart';
 
 /// Widget لدائرة Story الخاصة بكل مستخدم
 class StoryCircle extends StatelessWidget {
-  final UserStory user;
+  final Story story;
   final VoidCallback onTap;
 
   const StoryCircle({
-    Key? key,
-    required this.user,
+    super.key,
+    required this.story,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -25,14 +25,14 @@ class StoryCircle extends StatelessWidget {
               height: 70,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: user.hasUnseen
+                gradient: story.isSeen
                     ? LinearGradient(
                         colors: [Colors.purple, Colors.orange],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       )
                     : null,
-                border: user.hasUnseen
+                border: story.isSeen
                     ? null
                     : Border.all(color: Colors.grey[300]!, width: 2),
               ),
@@ -42,7 +42,7 @@ class StoryCircle extends StatelessWidget {
                   shape: BoxShape.circle,
                   border: Border.all(color: Colors.white, width: 3),
                   image: DecorationImage(
-                    image: NetworkImage(user.profileImage),
+                    image: NetworkImage(story.image!),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -52,7 +52,7 @@ class StoryCircle extends StatelessWidget {
             SizedBox(
               width: 70,
               child: Text(
-                user.name,
+                '${story.caption}',
                 style: TextStyle(fontSize: 12),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

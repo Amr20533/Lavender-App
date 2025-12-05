@@ -6,7 +6,8 @@ import 'package:lavender/features/community/presentation/cubit/community_cubit.d
 import 'package:lavender/features/community/presentation/cubit/community_states.dart';
 import 'package:lavender/features/community/presentation/widgets/community_app_bar.dart';
 import 'package:lavender/features/community/presentation/widgets/post_card.dart';
-import 'package:lavender/features/stories/data/repositories/screens/stories_bar.dart';
+import 'package:lavender/features/community/presentation/screen/stories_bar.dart';
+
 
 class CommunityScreen extends StatelessWidget {
   const CommunityScreen({super.key});

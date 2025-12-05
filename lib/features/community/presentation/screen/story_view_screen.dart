@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:lavender/features/stories/data/models/user_story_model.dart';
-import 'package:lavender/features/stories/presentation/screens/story_view_page.dart';
+import 'package:lavender/features/community/data/models/user_stories.dart';
+import 'package:lavender/features/community/presentation/screen/story_view_page.dart';
 
 class StoryViewScreen extends StatefulWidget {
-  final List<UserStory> users;
+  final List<UserStories> stories;
   final int initialIndex;
 
-  StoryViewScreen({
-    required this.users,
+  const StoryViewScreen({super.key,
+    required this.stories,
     required this.initialIndex,
   });
 
@@ -37,18 +37,19 @@ class _StoryViewScreenState extends State<StoryViewScreen> {
     return Scaffold(
       body: PageView.builder(
         controller: _pageController,
-        itemCount: widget.users.length,
+        itemCount: widget.stories.length,
         onPageChanged: (index) {
           setState(() {
             currentUserIndex = index;
           });
         },
         itemBuilder: (context, index) {
+          final userStories = widget.stories[index];
+
           return StoryViewPage(
-            user: widget.users[index],
+            story: userStories,
             onComplete: () {
-              // الانتقال للمستخدم التالي
-              if (index < widget.users.length - 1) {
+              if (index < widget.stories.length - 1) {
                 _pageController.nextPage(
                   duration: Duration(milliseconds: 300),
                   curve: Curves.easeInOut,
@@ -58,7 +59,6 @@ class _StoryViewScreenState extends State<StoryViewScreen> {
               }
             },
             onPrevious: () {
-              // الرجوع للمستخدم السابق
               if (index > 0) {
                 _pageController.previousPage(
                   duration: Duration(milliseconds: 300),

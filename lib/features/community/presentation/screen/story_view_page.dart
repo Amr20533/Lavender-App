@@ -1,17 +1,18 @@
-// 4️⃣ صفحة Story واحدة (باستخدام الـ Package)
+
 import 'package:flutter/material.dart';
-import 'package:lavender/features/stories/data/models/user_story_model.dart' hide StoryItem;
+import 'package:lavender/features/community/data/models/user_stories.dart';
 import 'package:story_view/controller/story_controller.dart';
 import 'package:story_view/utils.dart';
 import 'package:story_view/widgets/story_view.dart';
 
 class StoryViewPage extends StatefulWidget {
-  final UserStory user;
+  final UserStories story;
   final VoidCallback onComplete;
   final VoidCallback onPrevious;
 
-  StoryViewPage({
-    required this.user,
+  const StoryViewPage({
+    super.key,
+    required this.story,
     required this.onComplete,
     required this.onPrevious,
   });
@@ -31,29 +32,28 @@ class _StoryViewPageState extends State<StoryViewPage> {
   }
 
   void _buildStoryItems() {
-    storyItems = widget.user.stories.map((story) {
-      if (story.isVideo) {
-        // للفيديو
-        return StoryItem.pageVideo(
-          story.url,
-          controller: controller,
-          duration: story.duration,
-          caption: Text(
-            widget.user.name,
-            style: TextStyle(color: Colors.white, fontSize: 17),
-          ),
-        );
-      } else {
-        // للصورة
+    storyItems = widget.story.stories.map((story) {
+      // If image exists → normal image story
+      if (story.image != null) {
         return StoryItem.inlineImage(
-          url: story.url,
+          url: story.image!,
           controller: controller,
           caption: Text(
-            widget.user.name,
-            style: TextStyle(color: Colors.white, fontSize: 17),
+            story.caption ?? "",
+            style: TextStyle(color: Colors.white, fontSize: 16),
           ),
         );
       }
+
+      // If no image → text story
+      return StoryItem.text(
+        textStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+        ),
+        title: story.caption ?? "",
+        backgroundColor: Colors.black,
+      );
     }).toList();
   }
 
@@ -76,42 +76,44 @@ class _StoryViewPageState extends State<StoryViewPage> {
               Navigator.pop(context);
             }
           },
-          onStoryShow: (storyItem, index) {
-            print('Showing story at index: $index');
-          },
           progressPosition: ProgressPosition.top,
           repeat: false,
           inline: false,
         ),
-        // Header مع اسم المستخدم
+
+        // ---------------- HEADER ------------------
         SafeArea(
           child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
             child: Row(
               children: [
                 CircleAvatar(
                   radius: 20,
-                  backgroundImage: NetworkImage(widget.user.profileImage),
+                  backgroundImage: widget.story.profilePic != null
+                      ? NetworkImage(widget.story.profilePic!)
+                      : null,
+                  child: widget.story.profilePic == null
+                      ? const Icon(Icons.person)
+                      : null,
                 ),
-                SizedBox(width: 10),
-                Expanded(
-                  child: Text(
-                    widget.user.name,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 4,
-                          color: Colors.black45,
-                        ),
-                      ],
-                    ),
+                const SizedBox(width: 10),
+                Text(
+                  "${widget.story.firstName} ${widget.story.lastName}",
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    shadows: [
+                      Shadow(
+                        blurRadius: 4,
+                        color: Colors.black45,
+                      ),
+                    ],
                   ),
                 ),
+                const Spacer(),
                 IconButton(
-                  icon: Icon(Icons.close, color: Colors.white),
+                  icon: const Icon(Icons.close, color: Colors.white),
                   onPressed: () => Navigator.pop(context),
                 ),
               ],

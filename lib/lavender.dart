@@ -9,8 +9,10 @@ import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/features/appointments/data/repositories/appointment_repo_impl.dart';
 import 'package:lavender/features/appointments/presentation/cubit/appointment_cubit.dart';
 import 'package:lavender/features/community/data/repositories/community_repo_impl.dart';
+import 'package:lavender/features/community/data/repositories/story_repository_impl.dart';
 import 'package:lavender/features/community/presentation/cubit/comment_cubit.dart';
 import 'package:lavender/features/community/presentation/cubit/community_cubit.dart';
+import 'package:lavender/features/community/presentation/cubit/story_cubit.dart';
 import 'package:lavender/features/favorites/data/repository/favorites_repository_impl.dart';
 import 'package:lavender/features/favorites/presenation/cubit/favorit_cubit.dart';
 import 'package:lavender/features/home/data/repositories/home_repo_impl.dart';
@@ -74,6 +76,7 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (context) => MenuCubit()),
         BlocProvider(create: (_) => FavoritesCubit(FavoritesRepositoryImpl())..fetchFavorites()),
         BlocProvider(create: (_) => CoursesCubit(CoursesRepositoryImpl())..fetchCourses()),
+        BlocProvider(create: (_) => StoryCubit(StoryRepositoryImpl())..fetchStories()),
         BlocProvider(create: (_) => AppointmentCubit(AppointmentRepositoryImpl())),
         BlocProvider(create: (_) => SlotCubit()),
         ],

@@ -27,7 +27,7 @@ import 'package:lavender/features/sign_up/presentation/screens/login_or_signup_S
 import 'package:lavender/features/sign_up/presentation/screens/sign_up.dart';
 import 'package:lavender/features/splash/presenation/screens/select_language.dart';
 import 'package:lavender/features/splash/presenation/screens/splash_timer_screen.dart';
-import 'package:lavender/features/stories/data/repositories/screens/stories_bar.dart';
+import 'package:lavender/features/community/presentation/screen/stories_bar.dart';
 
 import '../../features/home/data/models/specialist.dart';
 import '../../features/home/presenation/screens/details_screen.dart';
