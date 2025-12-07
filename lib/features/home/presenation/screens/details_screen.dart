@@ -180,7 +180,8 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                       child: BlocConsumer<AppointmentCubit, AppointmentState>(
                         listener: (context, state) {
                           if (state is AppointmentBookingSuccess) {
-                            Navigator.of(context).pushNamed(Routes.subscriptionPlanScreen, arguments: state.paymentResponse);
+                            Navigator.of(context).pushNamed(Routes.paymentViewScreen, arguments: state.paymentResponse);
+                            // Navigator.of(context).pushNamed(Routes.subscriptionPlanScreen, arguments: state.paymentResponse);
                           }
                         },
                         builder: (context, state) {
