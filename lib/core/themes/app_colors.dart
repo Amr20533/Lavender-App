@@ -12,6 +12,7 @@ class AppColors {
   static const Color grey200 = Color(0xFFD6D7EC);
   static const Color purple50 =  Color(0xFFF2F2FF);
   static const Color dividerColor =  Color(0xFFF6F6FF);
+  static const Color secondDividerColor =  Color(0xFFF3F4F6);
   static const Color purpleappbar =  Color(0xFFEDEEFF);
   static const Color purple100 = Color(0xFFD7D6FD);
   static const Color purple200 = Color(0xFFC3C2FD);

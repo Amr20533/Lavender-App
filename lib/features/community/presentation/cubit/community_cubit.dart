@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:lavender/features/community/data/models/comment.dart';
 import 'package:lavender/features/community/data/models/post.dart';
 import 'package:lavender/features/community/data/repositories/community_repo_impl.dart';
@@ -6,6 +7,7 @@ import 'package:lavender/features/community/presentation/cubit/community_states.
 
 class PostsCubit extends Cubit<PostsState> {
   final CommunityRepositoryImpl repository;
+  TextEditingController captionController = TextEditingController();
 
   PostsCubit(this.repository) : super(PostsInitial());
 
@@ -58,5 +60,18 @@ class PostsCubit extends Cubit<PostsState> {
     posts[index] = updatedPost;
     emit(PostsLoaded(currentState.postResponse.copyWith(data: posts)));
   }
+
+  void addPostToList(Post newPost) {
+    if (state is! PostsLoaded) return;
+
+    final currentState = state as PostsLoaded;
+    final posts = List<Post>.from(currentState.postResponse.data);
+
+    posts.insert(0, newPost);
+
+    emit(PostsLoaded(currentState.postResponse.copyWith(data: posts)));
+  }
+
+
 
 }

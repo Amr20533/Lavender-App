@@ -6,6 +6,7 @@ import 'package:lavender/core/networking/dio_helper.dart';
 import 'package:lavender/features/community/data/models/comment.dart';
 import 'package:lavender/features/community/data/models/comment_like_response.dart';
 import 'package:lavender/features/community/data/models/comment_response.dart';
+import 'package:lavender/features/community/data/models/create_post_response_model.dart';
 import 'package:lavender/features/community/data/models/like_post_response.dart';
 import 'package:lavender/features/community/data/models/post_response.dart';
 import '../../logic/repositories_interface/community_repo.dart';
@@ -122,6 +123,31 @@ class CommunityRepositoryImpl implements CommunityRepository {
     );
 
     return CommentLikeResponse.fromJson(response.data);
+  }
+
+
+  @override
+  Future<CreatePostResponseModel> addPost(String text) async {
+    String? token = await SecureStorageHelper.getAccessToken();
+    if (token == null) throw Exception("No access token");
+
+    try {
+      final response = await DioHelper.postData(
+        url: ApiConstants.addPost,
+        data: {'caption': text},
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+      );
+
+      return CreatePostResponseModel.fromJson(response.data);
+    } on DioException catch (e) {
+      throw Exception("Failed to add post: ${e.message}");
+    } catch (e) {
+      debugPrint("Unexpected error: $e");
+      throw Exception("Unexpected error: $e");
+    }
   }
 
 

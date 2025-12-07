@@ -12,6 +12,7 @@ import 'package:lavender/features/community/data/repositories/community_repo_imp
 import 'package:lavender/features/community/data/repositories/story_repository_impl.dart';
 import 'package:lavender/features/community/presentation/cubit/comment_cubit.dart';
 import 'package:lavender/features/community/presentation/cubit/community_cubit.dart';
+import 'package:lavender/features/community/presentation/cubit/create_post_cubit.dart';
 import 'package:lavender/features/community/presentation/cubit/story_cubit.dart';
 import 'package:lavender/features/favorites/data/repository/favorites_repository_impl.dart';
 import 'package:lavender/features/favorites/presenation/cubit/favorit_cubit.dart';
@@ -71,6 +72,7 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (_) => ProfileCubit(ProfileRepositoryImpl())..fetchUsers()),
         BlocProvider(create: (_) => CurrentUserCubit(ProfileRepositoryImpl())..fetchCurrentUser()),
         BlocProvider(create: (_) => PostsCubit(CommunityRepositoryImpl())..fetchPosts()),
+        BlocProvider(create: (_) => CreatePostCubit(CommunityRepositoryImpl())),
         BlocProvider(create: (_) => CommentCubit(CommunityRepositoryImpl(), context.read<PostsCubit>())),
         BlocProvider(create: (_) => SearchCubit(SearchRepositoryImpl())),
         BlocProvider(create: (context) => MenuCubit()),

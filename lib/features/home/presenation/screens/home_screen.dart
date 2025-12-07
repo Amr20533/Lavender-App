@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lavender/features/home/presenation/widgets/daily_quote.dart';
 import 'package:lavender/features/home/presenation/widgets/home_header.dart';
@@ -8,6 +9,8 @@ import 'package:lavender/features/home/presenation/widgets/trip_cards.dart';
 import '../../../../core/routing/router.dart';
 import '../widgets/view_all_row.dart';
 import '../../../../../l10n/app_localizations.dart';
+import 'package:lavender/features/home/presenation/cubit/quote_cubit.dart';
+import 'package:lavender/features/home/presenation/cubit/home_cubit.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -15,53 +18,62 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          // Header part: HomeHeader
-          SliverToBoxAdapter(
-            child: HomeHeader(),
-          ),
-          // Spacing
-          SliverToBoxAdapter(
-            child: SizedBox(height: 25.h),
-          ),
-          // Subscription Card
-          SliverToBoxAdapter(
-            child: SubscriptionCard(),
-          ),
-          SliverToBoxAdapter(
-            child: SizedBox(height: 10.h),
-          ),
-          // ViewAllRow (first)
-          SliverToBoxAdapter(
-            child: ViewAllRow(
-              title: AppLocalizations.of(context)?.start_your_journey ?? "ابدأ رحلتك",
-              onTap: () {
-                Navigator.pushNamed(context, Routes.specialistScreen);
-              },
-            ),
-          ),
-          // TripCards
-          SliverToBoxAdapter(
-            child: TripCards(),
-          ),
-          // ViewAllRow (second)
-          SliverToBoxAdapter(
-            child: ViewAllRow(
-              title: AppLocalizations.of(context)?.start_your_journey ?? "افضل الاخصائيين",
-              onTap: () {
-                Navigator.pushNamed(context, Routes.allDoctorsScreen);
-              },
-            ),
-          ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          final homeCubit = context.read<HomeCubit>();
+          final quoteCubit = context.read<QuoteCubit>();
 
-          SpecialistSlider(),
+          await homeCubit.fetchSpecialists();
+          await quoteCubit.fetchQuotes();
+        },
+        child: CustomScrollView(
+          slivers: [
+            // Header part: HomeHeader
+            SliverToBoxAdapter(
+              child: HomeHeader(),
+            ),
+            // Spacing
+            SliverToBoxAdapter(
+              child: SizedBox(height: 25.h),
+            ),
+            // Subscription Card
+            SliverToBoxAdapter(
+              child: SubscriptionCard(),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: 10.h),
+            ),
+            // ViewAllRow (first)
+            SliverToBoxAdapter(
+              child: ViewAllRow(
+                title: AppLocalizations.of(context)?.start_your_journey ?? "ابدأ رحلتك",
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.specialistScreen);
+                },
+              ),
+            ),
+            // TripCards
+            SliverToBoxAdapter(
+              child: TripCards(),
+            ),
+            // ViewAllRow (second)
+            SliverToBoxAdapter(
+              child: ViewAllRow(
+                title: AppLocalizations.of(context)?.start_your_journey ?? "افضل الاخصائيين",
+                onTap: () {
+                  Navigator.pushNamed(context, Routes.allDoctorsScreen);
+                },
+              ),
+            ),
 
-          // DailyQuote at bottom
-          SliverToBoxAdapter(
-            child: DailyQuote(),
-          ),
-        ],
+            SpecialistSlider(),
+
+            // DailyQuote at bottom
+            SliverToBoxAdapter(
+              child: DailyQuote(),
+            ),
+          ],
+        ),
       ),
     );
   }
