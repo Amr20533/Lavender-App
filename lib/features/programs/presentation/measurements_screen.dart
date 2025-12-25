@@ -63,7 +63,12 @@ class MeasurementsScreen extends StatelessWidget {
                       final quiz = state.quizzes[index];
                       return GestureDetector(
                         onTap: () {
-                          _navigateToQuizScreen(context, index, quiz);
+                          Navigator.pushNamed(
+                            context,
+                            Routes.firstQuizScreen,
+                            arguments: quiz, // Pass the loaded quizzes here
+                          );
+                          // _navigateToQuizScreen(context, index, quiz);
                         },
                         child: Container(
                           width: 164.w,

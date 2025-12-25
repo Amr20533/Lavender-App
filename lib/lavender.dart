@@ -30,6 +30,7 @@ import 'package:lavender/features/programs/data/repositories/quizzes_repository_
 import 'package:lavender/features/programs/presentation/cubit/courses_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/music_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/quiz_cubit.dart';
+import 'package:lavender/features/programs/presentation/cubit/quiz_result_cubit.dart';
 import 'package:lavender/features/search/data/repositories/search_repository_impl.dart';
 import 'package:lavender/features/search/presentation/cubit/search_cubit.dart';
 import 'package:lavender/features/sign_in/logic/use_cases/sign_in_usecase.dart';
@@ -68,6 +69,7 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (_) => HomeCubit(HomeRepositoryImpl())..fetchSpecialists()),
         BlocProvider(create: (_) => QuoteCubit(HomeRepositoryImpl())..fetchQuotes(),),
         BlocProvider(create: (_) => QuizCubit(QuizRepositoryImpl())..fetchMeasurementQuizzes(),),
+        BlocProvider(create: (_) => QuizResultCubit(QuizRepositoryImpl())),
         BlocProvider(create: (_) => MusicCubit(MusicRepositoryImpl())..fetchMusicCards()),
         BlocProvider(create: (_) => ProfileCubit(ProfileRepositoryImpl())..fetchUsers()),
         BlocProvider(create: (_) => CurrentUserCubit(ProfileRepositoryImpl())..fetchCurrentUser()),
@@ -77,7 +79,7 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (_) => SearchCubit(SearchRepositoryImpl())),
         BlocProvider(create: (context) => MenuCubit()),
         BlocProvider(create: (_) => FavoritesCubit(FavoritesRepositoryImpl())..fetchFavorites()),
-        BlocProvider(create: (_) => CoursesCubit(CoursesRepositoryImpl())..fetchCourses()),
+        BlocProvider(create: (_) => CoursesCubit(CoursesRepositoryImpl())..fetchFreePrograms()),
         BlocProvider(create: (_) => StoryCubit(StoryRepositoryImpl())..fetchStories()),
         BlocProvider(create: (_) => AppointmentCubit(AppointmentRepositoryImpl())),
         BlocProvider(create: (_) => SlotCubit()),

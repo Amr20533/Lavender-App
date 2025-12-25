@@ -16,4 +16,18 @@ class QuizCubit extends Cubit<QuizState> {
       emit(QuizError(e.toString()));
     }
   }
+
+  Future<void> submitAnswer({required int questionId, required int answerValue}) async {
+    // Note: We don't emit Loading here if we want to keep the UI showing the quiz
+    // during individual question transitions, OR we can emit a specific loading.
+    try {
+      final response = await repository.submitMeasurementQuizzes(
+        questionId: questionId,
+        answerValue: answerValue,
+      );
+      emit(QuizSubmissionSuccess(response));
+    } catch (e) {
+      emit(QuizError(e.toString()));
+    }
+  }
 }

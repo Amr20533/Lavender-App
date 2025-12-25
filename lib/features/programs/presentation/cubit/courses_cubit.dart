@@ -7,13 +7,23 @@ class CoursesCubit extends Cubit<CoursesState> {
 
   CoursesCubit(this.repository) : super(CoursesInitial());
 
-  Future<void> fetchCourses() async {
-    emit(CoursesLoading());
+  Future<void> fetchFreePrograms() async {
+    emit(ProgramLoading());
     try {
-      final courses = await repository.getCourses();
-      emit(CoursesLoaded(courses));
+      final programs = await repository.getFreePrograms();
+      emit(ProgramLoaded(programs));
     } catch (e) {
-      emit(CoursesError(e.toString()));
+      emit(ProgramError(e.toString()));
     }
   }
+
+  // Future<void> fetchCourses() async {
+  //   emit(CoursesLoading());
+  //   try {
+  //     final courses = await repository.getCourses();
+  //     emit(CoursesLoaded(courses));
+  //   } catch (e) {
+  //     emit(CoursesError(e.toString()));
+  //   }
+  // }
 }

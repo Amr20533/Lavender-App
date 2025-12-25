@@ -7,17 +7,26 @@ import 'package:lavender/core/widget/back_icon.dart';
 import 'package:lavender/core/widget/custom_botton.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/inter_text.dart';
+import '../../../core/routing/router.dart';
+import '../data/models/quizzes/quiz_submission_response.dart';
 
 class QuizResultScreen extends StatefulWidget {
-  const QuizResultScreen({super.key});
+  const QuizResultScreen({super.key, required this.result});
+  final QuizResult result;
 
   @override
   State<QuizResultScreen> createState() => _QuizResultScreenState();
 }
 
 class _QuizResultScreenState extends State<QuizResultScreen> {
-  final ValueNotifier<double> _valueNotifier = ValueNotifier(0);
+  late ValueNotifier<double> _valueNotifier;
 
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the notifier with the actual result percentage
+    _valueNotifier = ValueNotifier(widget.result.percentage);
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,12 +42,12 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
 
           Padding(
           padding: EdgeInsets.only(top: 24.h, bottom: 35.h),
-          child: AlexText(text: "احتمالية وجود اكتئاب"),
+          child: AlexText(text: widget.result.title),
         ),
         DashedCircularProgressBar.aspectRatio(
           aspectRatio: 1.5,
           valueNotifier: _valueNotifier,
-          progress: 34,
+          progress: widget.result.percentage,
           startAngle: 270,
           corners: StrokeCap.square,
           foregroundColor: AppColors.primaryColorLavenderLangAndText,
@@ -64,11 +73,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         Divider(color: AppColors.dividerColor, indent: 22,endIndent: 22,height: 1.5.h,),
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 22.w),
-          child: InterText(text: "نذكرك أن هذا المقياس مساعد للتشخيص المبدئي ولا يعتبر تشخيص نهائي", color: AppColors.primaryColorDarkText,fontSize: 12.sp,),
-        ),
-          Padding(
-          padding: EdgeInsets.symmetric(horizontal: 22.w),
-          child: InterText(text: "لمساعدتك في تحسين صحتك النفسية والوصول للراحة التي تعيدك للحياة المستقرة.استمر في المتابعة مع الأخصائي", color: AppColors.grey, fontSize: 12.sp,),
+          child: InterText(text: widget.result.description, color: AppColors.primaryColorDarkText,fontSize: 12.sp,maxLines: 6),
         ),
 
       ],),
@@ -88,7 +93,7 @@ class _QuizResultScreenState extends State<QuizResultScreen> {
         ),
         child: CustomButton(
           onPressed: () {
-
+            Navigator.pushReplacementNamed(context, Routes.homeScreen);
           },
           text: "ناقش الاخصائي النتيجة الان",
         ),

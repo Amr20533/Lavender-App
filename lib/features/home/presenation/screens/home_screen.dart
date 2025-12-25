@@ -45,11 +45,14 @@ class HomeScreen extends StatelessWidget {
             ),
             // ViewAllRow (first)
             SliverToBoxAdapter(
-              child: ViewAllRow(
-                title: AppLocalizations.of(context)?.start_your_journey ?? "ابدأ رحلتك",
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.specialistScreen);
-                },
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: ViewAllRow(
+                  title: AppLocalizations.of(context)?.start_your_journey ?? "ابدأ رحلتك",
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.specialistScreen);
+                  },
+                ),
               ),
             ),
             // TripCards
@@ -58,11 +61,14 @@ class HomeScreen extends StatelessWidget {
             ),
             // ViewAllRow (second)
             SliverToBoxAdapter(
-              child: ViewAllRow(
-                title: AppLocalizations.of(context)?.start_your_journey ?? "افضل الاخصائيين",
-                onTap: () {
-                  Navigator.pushNamed(context, Routes.allDoctorsScreen);
-                },
+              child: Padding(
+                padding: const EdgeInsets.only(top: 16, bottom: 12),
+                child: ViewAllRow(
+                  title: AppLocalizations.of(context)?.start_your_journey ?? "افضل الاخصائيين",
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.allDoctorsScreen);
+                  },
+                ),
               ),
             ),
 

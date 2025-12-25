@@ -20,7 +20,7 @@ class _CourseOneState extends State<CourseOne> {
   @override
   void initState() {
     super.initState();
-    context.read<CoursesCubit>().fetchCourses();
+    context.read<CoursesCubit>().fetchFreePrograms();
   }
 
   @override

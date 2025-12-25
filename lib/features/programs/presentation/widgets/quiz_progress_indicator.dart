@@ -9,16 +9,17 @@ class QuizProgressIndicator extends StatelessWidget {
   final int totalQuestions;
 
   const QuizProgressIndicator({
-    Key? key,
+    super.key,
     required this.currentQuestion,
     required this.totalQuestions,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             '$currentQuestion',
@@ -37,34 +38,30 @@ class QuizProgressIndicator extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 12),
-          Expanded(
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: List.generate(totalQuestions, (index) {
-                  final questionNumber = index + 1;
-                  final isAnswered = questionNumber < currentQuestion;
-                  final isCurrent = questionNumber == currentQuestion;
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(totalQuestions, (index) {
+              final questionNumber = index + 1;
+              final isAnswered = questionNumber < currentQuestion;
+              final isCurrent = questionNumber == currentQuestion;
 
-                  return Container(
-                    margin: const EdgeInsets.only(right: 6),
-                    width: 25.w,
-                    height: 8.h,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(4),
-                      gradient:
-                          isAnswered || isCurrent
-                              ? AppColors.linearGradient
-                              : null,
-                      color:
-                          isAnswered || isCurrent
-                              ? null
-                              : const Color(0xFFE0E0FF),
-                    ),
-                  );
-                }),
-              ),
-            ),
+              return Container(
+                margin: const EdgeInsets.only(right: 6),
+                width: 8.w,
+                height: 8.w,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  gradient:
+                      isAnswered || isCurrent
+                          ? AppColors.linearGradient
+                          : null,
+                  color:
+                      isAnswered || isCurrent
+                          ? null
+                          : const Color(0xFFE0E0FF),
+                ),
+              );
+            }),
           ),
         ],
       ),

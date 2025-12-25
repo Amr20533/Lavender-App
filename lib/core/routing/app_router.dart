@@ -14,6 +14,7 @@ import 'package:lavender/features/home/presenation/widgets/zoom_menu_layout.dart
 import 'package:lavender/features/onbording/presentation/screens/onbpording_screen.dart';
 import 'package:lavender/features/programs/data/models/doctor_basic_info.dart';
 import 'package:lavender/features/programs/data/models/music_card_model.dart';
+import 'package:lavender/features/programs/data/models/quizzes/quiz_submission_response.dart';
 import 'package:lavender/features/programs/presentation/course_one.dart';
 import 'package:lavender/features/programs/presentation/first_quiz_screen.dart';
 import 'package:lavender/features/programs/presentation/measurements_screen.dart';
@@ -31,6 +32,7 @@ import 'package:lavender/features/community/presentation/screen/stories_bar.dart
 
 import '../../features/home/data/models/specialist.dart';
 import '../../features/home/presenation/screens/details_screen.dart';
+import '../../features/programs/data/models/quizzes/quizzes_response.dart';
 
 class AppRouter {
   Route<dynamic> generateRoute(RouteSettings settings) {
@@ -65,8 +67,15 @@ class AppRouter {
       case Routes.musicScreen:
         return MaterialPageRoute(builder: (_) => MusicScreen());
       case Routes.quizResultScreen:
-        return MaterialPageRoute(builder: (_) => QuizResultScreen());
-      case Routes.searchScreen:
+      // Extract the argument passed from Navigator.pushNamed
+        final submissionResponse = settings.arguments as QuizSubmissionResponse;
+
+        return MaterialPageRoute(
+          builder: (_) => QuizResultScreen(
+            // We pass the result directly from the previous API call
+            result: submissionResponse.result,
+          ),
+        );      case Routes.searchScreen:
         return MaterialPageRoute(builder: (_) => SearchScreen());
       case Routes.paymentSuccess:
         return MaterialPageRoute(builder: (_) => PaymentSuccess());
@@ -79,8 +88,10 @@ class AppRouter {
         final doctor = settings.arguments as DoctorBasicInfo;
         return MaterialPageRoute(builder: (_) => ReviewsScreen(doctor: doctor));
       case Routes.firstQuizScreen:
-        return MaterialPageRoute(builder: (_) => FirstQuizScreen());
-      /* case Routes.courseOne:
+        final quizzes = settings.arguments as Quiz;
+        return MaterialPageRoute(
+          builder: (_) => FirstQuizScreen( initialQuiz: quizzes),
+        );      /* case Routes.courseOne:
                 final course = settings.arguments as CourseModel;
                 return MaterialPageRoute(builder: (_) => CourseOne(
                   course: course,

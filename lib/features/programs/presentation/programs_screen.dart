@@ -7,11 +7,11 @@ import 'package:lavender/core/widget/app_bar_shadow.dart';
 import 'package:lavender/core/widget/back_icon.dart';
 import 'package:lavender/features/programs/presentation/cubit/courses_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/courses_states.dart';
-import 'package:lavender/features/programs/presentation/widgets/course_card_shimer.dart';
-import 'package:lavender/features/programs/presentation/widgets/courses_card.dart';
 import 'package:lavender/features/programs/presentation/widgets/daily_emotion.dart';
+import 'package:lavender/features/programs/presentation/widgets/program_card.dart';
+import 'package:lavender/features/programs/presentation/widgets/program_card_shimmer.dart';
 import 'package:lavender/features/programs/presentation/widgets/tool_card.dart';
-import '../../home/presenation/widgets/view_all_row.dart';
+
 
 class ProgramsScreen extends StatelessWidget {
   const ProgramsScreen({super.key});
@@ -24,12 +24,18 @@ class ProgramsScreen extends StatelessWidget {
         leading: BackIcon(),
       ),
 
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AppBarShadow(),
-            Padding(
+      body: CustomScrollView(
+        scrollDirection: Axis.vertical,
+        physics: const ClampingScrollPhysics(),
+        slivers: [
+          /// App bar shadow
+          SliverToBoxAdapter(
+            child: AppBarShadow(),
+          ),
+
+          /// Greeting
+          SliverToBoxAdapter(
+            child: Padding(
               padding: EdgeInsetsDirectional.only(
                 top: 16.h,
                 bottom: 12.h,
@@ -37,9 +43,16 @@ class ProgramsScreen extends StatelessWidget {
               ),
               child: AlexText(text: "كيف حالك اليوم !"),
             ),
-            DailyEmotion(),
+          ),
 
-            Padding(
+          /// Daily Emotion
+          SliverToBoxAdapter(
+            child: DailyEmotion(),
+          ),
+
+          /// Tools title
+          SliverToBoxAdapter(
+            child: Padding(
               padding: EdgeInsetsDirectional.only(
                 top: 24.h,
                 bottom: 12.h,
@@ -47,8 +60,11 @@ class ProgramsScreen extends StatelessWidget {
               ),
               child: AlexText(text: "ادوات"),
             ),
+          ),
 
-            Padding(
+          /// Tools grid (Wrap)
+          SliverToBoxAdapter(
+            child: Padding(
               padding: EdgeInsetsDirectional.only(start: 18),
               child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
@@ -57,21 +73,19 @@ class ProgramsScreen extends StatelessWidget {
                 runSpacing: 12.h,
                 children: [
                   ToolCard(
-                    onTap: () {
-                      Navigator.pushNamed(context, Routes.musicScreen);
-                    },
+                    onTap: () => Navigator.pushNamed(context, Routes.musicScreen),
                     text: "الموسيقى",
                     imagePath: "assets/images/الموسيقى.png",
                   ),
                   ToolCard(
-                    onTap: () {
-                      Navigator.pushNamed(context, Routes.measurementScreen);
-                    },
+                    onTap: () => Navigator.pushNamed(context, Routes.measurementScreen),
                     text: "المقاييس",
                     imagePath: "assets/images/measure.png",
                   ),
-
-                  ToolCard(text: "الهدف", imagePath: "assets/images/الهدف.png"),
+                  ToolCard(
+                    text: "الهدف",
+                    imagePath: "assets/images/الهدف.png",
+                  ),
                   ToolCard(
                     text: "تسجيل اليوميات",
                     imagePath: "assets/images/اليوميات.png",
@@ -79,64 +93,78 @@ class ProgramsScreen extends StatelessWidget {
                 ],
               ),
             ),
-            ViewAllRow(title: "كورسات عمليه", onTap: () {}),
+          ),
 
-            BlocBuilder<CoursesCubit, CoursesState>(
-              builder: (context, state) {
-                if (state is CoursesLoading) {
-                  return SizedBox(
-                    height: 290.h,
-                    child: ListView.separated(
-                      padding: EdgeInsetsDirectional.only(
-                        top: 16.h,
-                        bottom: 12.h,
-                        start: 20,
-                        end: 20,
-                      ),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 4,
-                      separatorBuilder: (context, index) => SizedBox(width: 15.w),
-                      itemBuilder: (context, index) {
-
-                        return CourseCardShimmer();
-                      },
-                    ),
-                  );
-                } else if (state is CoursesLoaded) {
-                  final courses = state.courses;
-
-                  return SizedBox(
-                    height: 290.h,
-                    child: ListView.separated(
-                      padding: EdgeInsetsDirectional.only(
-                        top: 16.h,
-                        bottom: 12.h,
-                        start: 20,
-                        end: 20,
-                      ),
-                      scrollDirection: Axis.horizontal,
-                      itemCount: courses.length,
-                      separatorBuilder: (context, index) => SizedBox(width: 15.w),
-                      itemBuilder: (context, index) {
-                        final course = courses[index];
-
-                        return CoursesCard(
-                          onTap: ()=> Navigator.pushNamed(context, Routes.courseOne),
-                          course: course,
-                        );
-                      },
-                    ),
-                  );
-                } else if (state is CoursesError) {
-                  debugPrint('Error: ${state.message}');
-                  return Center(child: Text('Error: ${state.message}'));
-                } else {
-                  return const SizedBox.shrink();
-                }
-              },
+          /// View all row
+          SliverToBoxAdapter(
+            child: Padding(
+              padding: const EdgeInsetsDirectional.only(top: 20, bottom: 10, start: 16),
+              child: AlexText(text: "برامج مجانية"),
             ),
-          ],
-        ),
+          ),
+
+          /// Programs list
+          BlocBuilder<CoursesCubit, CoursesState>(
+            builder: (context, state) {
+              if (state is ProgramLoading) {
+                return SliverToBoxAdapter(
+                  child: ListView.separated(
+                    padding: EdgeInsetsDirectional.only(
+                      top: 16.h,
+                      bottom: 12.h,
+                      start: 20,
+                      end: 20,
+                    ),
+                    scrollDirection: Axis.vertical,
+                    itemCount: 4,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    separatorBuilder: (_, __) => SizedBox(width: 15.w),
+                    itemBuilder: (_, __) => ProgramCardShimmer(),
+                  ),
+                );
+              }
+
+              if (state is ProgramLoaded) {
+                return SliverList.separated(
+                  itemCount: state.programs.length,
+                  separatorBuilder: (_, __) => SizedBox(height: 15.h),
+                  itemBuilder: (context, index) {
+                    final program = state.programs[index];
+                    return Padding(
+                      padding: EdgeInsetsDirectional.only(
+                        start: 20,
+                        end: 20,
+                      ),
+                      child: ProgramCard(
+                        onTap: () => Navigator.pushNamed(
+                          context,
+                          Routes.courseOne,
+                        ),
+                        program: program,
+                      ),
+                    );
+                  },
+                );
+              }
+
+              if (state is ProgramError) {
+                return SliverToBoxAdapter(
+                  child: Center(
+                    child: Text('Error: ${state.message}'),
+                  ),
+                );
+              }
+
+              return const SliverToBoxAdapter(child: SizedBox.shrink());
+            },
+          ),
+
+          /// Bottom spacing
+          SliverToBoxAdapter(
+            child: SizedBox(height: 24.h),
+          ),
+        ],
       ),
     );
   }

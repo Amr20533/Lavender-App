@@ -9,13 +9,15 @@ class InterText extends StatelessWidget {
     this.fontSize= 16,
     this.fontWeight = FontWeight.w500,
     this.color = AppColors.primaryColorLavenderLangAndText,
-    this.textAlign = TextAlign.start
+    this.textAlign = TextAlign.start,
+    this.maxLines = 2,
   });
   final String text;
   final double fontSize;
   final FontWeight fontWeight;
   final Color color;
   final TextAlign? textAlign;
+  final int? maxLines;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class InterText extends StatelessWidget {
       fontSize: fontSize.sp,
       fontWeight: FontWeight.w500,
       color: color,),
-      maxLines: 2,
+      maxLines: maxLines,
       overflow: TextOverflow.ellipsis,
       textAlign: textAlign,
     );

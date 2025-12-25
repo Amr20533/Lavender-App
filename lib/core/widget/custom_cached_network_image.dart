@@ -8,6 +8,7 @@ class CustomCachedNetworkImage extends StatelessWidget {
   final double borderRadius;
   final BoxFit fit;
   final String? heroTag;
+  final bool sided;
 
   const CustomCachedNetworkImage({
     super.key,
@@ -17,6 +18,7 @@ class CustomCachedNetworkImage extends StatelessWidget {
     this.borderRadius = 16,
     this.fit = BoxFit.cover,
     this.heroTag,
+    this.sided = false,
   });
 
   @override
@@ -40,7 +42,7 @@ class CustomCachedNetworkImage extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(borderRadius),
+        borderRadius: sided ? BorderRadiusDirectional.only(topStart: Radius.circular(borderRadius), topEnd: Radius.circular(borderRadius), ) : BorderRadius.circular(borderRadius),
         color: Colors.grey.shade200,
       ),
       clipBehavior: Clip.hardEdge,

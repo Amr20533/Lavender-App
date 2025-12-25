@@ -38,6 +38,8 @@ class AppColors {
   static const Color grey2     = Color(0xFFD9D9D9);
   static const Color grey3     = Color(0xFFFAFAFC);
   static const Color grey4     = Color(0xFFD9D9D9);
+  static const Color lightBorder     = Color(0xFFE5E7EB);
+  static const Color lightBlack   = Color(0xFF1F2937);
 
   static const Color doctorCardColor     = Color(0xFFFAFAFC);
   static const Color inactiveBorderColor     = Color(0xFFF0F4FC);
