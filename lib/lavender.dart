@@ -69,7 +69,7 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (_) => HomeCubit(HomeRepositoryImpl())..fetchSpecialists()),
         BlocProvider(create: (_) => QuoteCubit(HomeRepositoryImpl())..fetchQuotes(),),
         BlocProvider(create: (_) => QuizCubit(QuizRepositoryImpl())..fetchMeasurementQuizzes(),),
-        BlocProvider(create(QuizRepositoryImpl())),
+        BlocProvider(create: (_) => QuizResultCubit(QuizRepositoryImpl())),
         BlocProvider(create: (_) => MusicCubit(MusicRepositoryImpl())..fetchMusicCards()),
         BlocProvider(create: (_) => ProfileCubit(ProfileRepositoryImpl())..fetchUsers()),
         BlocProvider(create: (_) => CurrentUserCubit(ProfileRepositoryImpl())..fetchCurrentUser()),
