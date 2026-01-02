@@ -101,7 +101,7 @@ class AppRouter {
       case Routes.courseOne:
         return MaterialPageRoute(builder: (_) => CourseOne());
 
-      case Routes.paymentSuccess:
+      case Routes.paymentViewScreen:
         final payment = settings.arguments as PaymentResponse;
         return MaterialPageRoute(
           builder: (_) => PaymentViewScreen(paymentUrl: payment.url),
