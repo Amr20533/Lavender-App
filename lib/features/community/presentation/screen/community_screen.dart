@@ -6,12 +6,14 @@ import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/custom_botton.dart';
 import 'package:lavender/core/widget/custom_cached_network_image.dart';
+import 'package:lavender/core/widget/exception_view.dart';
 import 'package:lavender/features/community/presentation/cubit/community_cubit.dart';
 import 'package:lavender/features/community/presentation/cubit/community_states.dart';
 import 'package:lavender/features/community/presentation/cubit/create_post_cubit.dart';
 import 'package:lavender/features/community/presentation/widgets/community_app_bar.dart';
 import 'package:lavender/features/community/presentation/widgets/post_card.dart';
 import 'package:lavender/features/community/presentation/screen/stories_bar.dart';
+import 'package:lavender/features/community/presentation/widgets/post_card_shimmer.dart';
 import 'package:lavender/features/profile/presentation/cubit/current_user_cubit.dart';
 import 'package:lavender/features/profile/presentation/cubit/current_user_states.dart';
 
@@ -45,13 +47,24 @@ class CommunityScreen extends StatelessWidget {
           BlocBuilder<PostsCubit, PostsState>(
             builder: (context, state) {
               if (state is PostsLoading) {
-                return SliverToBoxAdapter(
-                  child: SizedBox(
-                    height: 200,
-                    child: Center(child: CircularProgressIndicator()),
+                // Direct SliverList for loading state
+                return SliverPadding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                  sliver: SliverList(
+                    delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 16.h),
+                          child: const PostCardShimmer(),
+                        );
+                      },
+                      childCount: 5, // Show 5 skeleton loaders
+                    ),
                   ),
                 );
-              } else if (state is PostsLoaded) {
+              }
+
+              else if (state is PostsLoaded) {
                 final posts = state.postResponse.data;
 
                 return SliverPadding(
@@ -60,30 +73,29 @@ class CommunityScreen extends StatelessWidget {
                     delegate: SliverChildBuilderDelegate(
                           (context, index) {
                         final post = posts[index];
-                        return Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: [
-                            PostCard(post: post),
-                            const SizedBox(height: 16),
-                          ],
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 16.h),
+                          child: PostCard(post: post),
                         );
                       },
                       childCount: posts.length,
                     ),
                   ),
                 );
-              } else if (state is PostsError) {
+              }
+
+              else if (state is PostsError) {
                 return SliverToBoxAdapter(
-                  child: Center(
-                    child: Text("Error: ${state.message}"),
+                  child: ExceptionView(
+                    onPressed: () => context.read<PostsCubit>().fetchPosts(),
+                    message: state.message,
                   ),
                 );
-              } else {
-                return SliverToBoxAdapter(child: SizedBox());
               }
+
+              return const SliverToBoxAdapter(child: SizedBox.shrink());
             },
           ),
-
           // Optionally, add a bottom padding so the last item isn't cut off
           SliverToBoxAdapter(
             child: SizedBox(height: 16.h),

@@ -36,19 +36,18 @@ class MusicPlayerScreen extends StatelessWidget {
           create: (_) => MusicPlayerCubit(),
           child: Stack(
             children: [
-              // Fullscreen blurred background
+              // Fullscreen Background Image (No blur)
               Positioned.fill(
                 child: CustomCachedNetworkImage(
                   imageUrl: musicCardModel.albumCover,
                   fit: BoxFit.cover,
                 ),
               ),
+
+              // Solid Shade Overlay (Replaces BackdropFilter)
               Positioned.fill(
-                child: BackdropFilter(
-                  filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                  child: Container(
-                    color: AppColors.shadowColor,
-                  ),
+                child: Container(
+                  color: AppColors.shadeColor,
                 ),
               ),
 
@@ -57,12 +56,11 @@ class MusicPlayerScreen extends StatelessWidget {
                 author: musicCardModel.author,
                 albumCover: musicCardModel.albumCover,
                 audioFile: "icons/moral_story.mp3",
-                // audioFile: musicCardModel.audioFile,
                 musicId: musicCardModel.id,
                 album: musicCardModel.album!,
               ),
             ],
-          ),
+          )
         ),
       ),
     );

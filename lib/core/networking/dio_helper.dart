@@ -1,7 +1,12 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:lavender/core/helpers/api_exception.dart';
+import 'package:lavender/core/helpers/app_exception.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../helpers/hanfle_dio_error.dart';
 
 class DioHelper {
   // Singleton instance
@@ -58,18 +63,32 @@ class DioHelper {
     );
   }
 
+
+
   // GET request
   static Future<Response> getData({
     required String url,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
   }) async {
-    return await _dio!.get(
-      url,
-      queryParameters: query,
-      options: Options(headers: headers),
-    );
+    try {
+      return await _dio!.get(
+        url,
+        queryParameters: query,
+        options: Options(headers: headers),
+      );
+    } on DioException catch (e) {
+      if (kDebugMode) {
+        debugPrint("❌ DIO ERROR [$url]");
+        debugPrint("Type: ${e.type}");
+        debugPrint("Status: ${e.response?.statusCode}");
+        debugPrint("Data: ${e.response?.data}");
+      }
+      throw handleDioError(e); // <-- throws AppException
+    }
   }
+
+
 
   // POST request
   static Future<Response> postData({
@@ -113,4 +132,6 @@ class DioHelper {
       options: Options(headers: headers),
 );
 }
+
 }
+

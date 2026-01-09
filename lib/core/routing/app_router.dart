@@ -15,6 +15,7 @@ import 'package:lavender/features/onbording/presentation/screens/onbpording_scre
 import 'package:lavender/features/programs/data/models/doctor_basic_info.dart';
 import 'package:lavender/features/programs/data/models/music_card_model.dart';
 import 'package:lavender/features/programs/data/models/quizzes/quiz_submission_response.dart';
+import 'package:lavender/features/programs/exercises_details.dart';
 import 'package:lavender/features/programs/presentation/course_one.dart';
 import 'package:lavender/features/programs/presentation/first_quiz_screen.dart';
 import 'package:lavender/features/programs/presentation/measurements_screen.dart';
@@ -33,6 +34,7 @@ import 'package:lavender/features/community/presentation/screen/stories_bar.dart
 import '../../features/home/data/models/specialist.dart';
 import '../../features/home/presenation/screens/details_screen.dart';
 import '../../features/programs/data/models/quizzes/quizzes_response.dart';
+import '../../features/programs/presentation/Exercises_activities_screen.dart';
 
 class AppRouter {
   Route<dynamic> generateRoute(RouteSettings settings) {
@@ -111,12 +113,6 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => CommentScreen(postId: post.id),
         );
-        
-        case Routes.paymentViewScreen:
-        final payment = settings.arguments as PaymentResponse;
-        return MaterialPageRoute(
-          builder: (_) => PaymentViewScreen(paymentUrl: payment.url,),
-        );
 
       case Routes.subscriptionPlanScreen:
        final payment = settings.arguments as PaymentResponse;
@@ -125,7 +121,24 @@ class AppRouter {
         );
       case Routes.storiesBar:
         return MaterialPageRoute(builder: (_) => StoriesBar());
-      default:
+      case Routes.exercisesAndActivities:
+        return MaterialPageRoute(builder: (_) => ExercisesActivitiesScreen());
+      case Routes.exerciseDetails:
+      // Retrieve the arguments passed during navigation
+        final args = settings.arguments as Map<String, dynamic>;
+
+        return MaterialPageRoute(
+          builder: (_) => ExercisesDetails(exerciseData: args),
+        );
+      // case Routes.musicPlayer:
+      //   final args = settings.arguments as Map<String, dynamic>;
+      //   return MaterialPageRoute(
+      //     builder: (_) => MusicPlayerScreen(
+      //       musicCardModel: args['currentSong'],
+      //       playlist: args['playlist'], // Pass the full list here
+      //     ),
+      //   );
+        default:
         return MaterialPageRoute(
           builder:
               (_) => Scaffold(body: Center(child: Text('Page not found!'))),

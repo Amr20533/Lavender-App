@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lavender/core/helpers/app_exception.dart';
 import 'package:lavender/features/community/data/repositories/story_repository_impl.dart';
 import 'package:lavender/features/community/presentation/cubit/story_states.dart';
 
@@ -13,8 +14,10 @@ class StoryCubit extends Cubit<StoryStates> {
     try {
       final stories = await repository.getStories();
       emit(StoryLoaded(stories));
-    } catch (e) {
-      emit(StoryError(e.toString()));
+    } on AppException catch (e) {
+      emit(StoryError(e.message));
+    } catch (_) {
+      emit(StoryError("Something went wrong. Please try again later."));
     }
   }
 

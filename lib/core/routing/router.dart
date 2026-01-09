@@ -24,4 +24,7 @@ class Routes {
   static const String userInfoProfile ='/UserInfoProfile';
   static const String subscriptionPlanScreen ='/SubscriptionPlanScreen';
   static const String storiesBar ='/StoriesBar';
+  static const String exercisesAndActivities ='/exercises-activities';
+  static const String exerciseDetails ='/exercises-details';
+  static const String musicPlayer ='/music-player';
 }

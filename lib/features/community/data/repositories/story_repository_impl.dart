@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:lavender/core/helpers/app_exception.dart';
 import 'package:lavender/core/helpers/secure_storage_helper.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/networking/dio_helper.dart';
@@ -11,7 +12,7 @@ class StoryRepositoryImpl implements StoryRepo {
   Future<List<UserStories>> getStories() async {
     String? token = await SecureStorageHelper.getAccessToken();
     if (token == null) {
-      throw Exception("No access token");
+      throw UnauthorizedException();
     }
 
     try {
@@ -26,15 +27,11 @@ class StoryRepositoryImpl implements StoryRepo {
       // Expected response: { "status": "success", "data": [ {user + stories}, ... ] }
       final List<dynamic> data = response.data["data"];
 
-      // Convert each user object into UserStories
-      debugPrint("Loaded Stories: ${data.length}");
       return data.map((json) => UserStories.fromJson(json)).toList();
     } on DioException catch (e) {
-      throw Exception("Network error: ${e.message}");
+      throw NetworkException();
     } catch (e) {
-      debugPrint("Unexpected error: $e");
-
-      throw Exception("Unexpected error: $e");
+      throw UnknownException();
     }
   }
 

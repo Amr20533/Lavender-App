@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:lavender/core/helpers/app_exception.dart';
 import 'package:lavender/features/community/data/models/comment.dart';
 import 'package:lavender/features/community/data/models/post.dart';
 import 'package:lavender/features/community/data/repositories/community_repo_impl.dart';
@@ -16,8 +17,10 @@ class PostsCubit extends Cubit<PostsState> {
     try {
       final postResponse = await repository.getPosts();
       emit(PostsLoaded(postResponse));
-    } catch (e) {
-      emit(PostsError(e.toString()));
+    } on AppException catch (e) {
+      emit(PostsError(e.message));
+    } catch (_) {
+      emit(PostsError("Something went wrong. Please try again later."));
     }
   }
 

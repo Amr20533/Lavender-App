@@ -40,11 +40,17 @@ class AppColors {
   static const Color grey4     = Color(0xFFD9D9D9);
   static const Color lightBorder     = Color(0xFFE5E7EB);
   static const Color lightBlack   = Color(0xFF1F2937);
+  static const Color subtitleColor   = Color(0xFF6B7280);
+  static const Color playPauseButtonBorderColor = Color(0xFF424899);
+  static const Color playPauseButtonColor = Color(0xFFDADDFF);
+  static const Color playPauseBlackColor = Color(0xFF0F153C);
 
   static const Color doctorCardColor     = Color(0xFFFAFAFC);
   static const Color inactiveBorderColor     = Color(0xFFF0F4FC);
   static const Color inActiveDateColor = Color(0xFF8A96BC);
+  static const Color inactiveSliderColor = Color(0xFFABABAB);
   static const Color shadePurpleColor = Color(0xFFDCDCF9);
+  static  Color shadeColor = const Color(0xE60F153C).withValues(alpha: 0.8);
   static Color shadowColor = Color(0xFF000000).withValues(alpha: 0.04);
 
 

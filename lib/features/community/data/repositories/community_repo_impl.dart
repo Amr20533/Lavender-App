@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:lavender/core/helpers/app_exception.dart';
 import 'package:lavender/core/helpers/secure_storage_helper.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/networking/dio_helper.dart';
@@ -16,7 +17,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   Future<PostResponse> getPosts() async {
     String? token = await SecureStorageHelper.getAccessToken();
     if (token == null) {
-      throw Exception("No access token");
+      throw UnauthorizedException();
     }
 
     try {
@@ -30,9 +31,9 @@ class CommunityRepositoryImpl implements CommunityRepository {
 
       return PostResponse.fromJson(response.data);
     } on DioException catch (e) {
-      throw Exception("Network error: ${e.message}");
+      throw NetworkException();
     } catch (e) {
-      throw Exception("Unexpected error: $e");
+      throw UnknownException();
     }
   }
 
@@ -40,7 +41,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   Future<LikePostResponse> likePost(String postId) async {
     String? token = await SecureStorageHelper.getAccessToken();
     if (token == null) {
-      throw Exception("No access token");
+      throw UnauthorizedException();
     }
 
     try {
@@ -54,16 +55,16 @@ class CommunityRepositoryImpl implements CommunityRepository {
       );
       return LikePostResponse.fromJson(response.data);
     } on DioException catch (e) {
-      throw Exception("Network error: ${e.message}");
+      throw NetworkException();
     } catch (e) {
-      throw Exception("Unexpected error: $e");
+      throw UnknownException();
     }
   }
 
   @override
   Future<List<Comment>> getComments(String postId) async {
     String? token = await SecureStorageHelper.getAccessToken();
-    if (token == null) throw Exception("No access token");
+    if (token == null) throw UnauthorizedException();
 
     try {
       final response = await DioHelper.getData(
@@ -79,7 +80,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
     } on DioException catch (e) {
       throw Exception("Network error: ${e.message}");
     } catch (e) {
-      throw Exception("Unexpected error: $e");
+      throw UnknownException();
     }
   }
 
@@ -87,7 +88,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   @override
   Future<Comment> addComment(String postId, String text) async {
     String? token = await SecureStorageHelper.getAccessToken();
-    if (token == null) throw Exception("No access token");
+    if (token == null) throw UnauthorizedException();
 
     try {
       final response = await DioHelper.postData(
@@ -104,14 +105,14 @@ class CommunityRepositoryImpl implements CommunityRepository {
       throw Exception("Failed to add comment: ${e.message}");
     } catch (e) {
       debugPrint("Unexpected error: $e");
-      throw Exception("Unexpected error: $e");
+      throw UnknownException();
     }
   }
 
   @override
   Future<CommentLikeResponse> likeComment(String commentId) async {
     String? token = await SecureStorageHelper.getAccessToken();
-    if (token == null) throw Exception("No access token");
+    if (token == null) throw UnauthorizedException();
 
     final response = await DioHelper.postData(
       url: "${ApiConstants.likeComment}/$commentId/like/",
@@ -129,7 +130,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
   @override
   Future<CreatePostResponseModel> addPost(String text) async {
     String? token = await SecureStorageHelper.getAccessToken();
-    if (token == null) throw Exception("No access token");
+    if (token == null) throw UnauthorizedException();
 
     try {
       final response = await DioHelper.postData(
@@ -146,7 +147,7 @@ class CommunityRepositoryImpl implements CommunityRepository {
       throw Exception("Failed to add post: ${e.message}");
     } catch (e) {
       debugPrint("Unexpected error: $e");
-      throw Exception("Unexpected error: $e");
+      throw UnknownException();
     }
   }
 

@@ -26,8 +26,8 @@ class ToolCard extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        width:width ?? 165.w,
-        height:height ?? 72.h,
+        width: width ?? 165.w,
+        height: height ?? 72.h,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8.r),
           color: AppColors.purple50,
@@ -36,16 +36,25 @@ class ToolCard extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.only(start: 12.w),
-              child: AlexText(text: text, color: Colors.black, fontSize: 12,),
+            Expanded(
+              child: Padding(
+                padding: EdgeInsetsDirectional.only(start: 12.w, end: 4.w), // Added small end padding
+                child: AlexText(
+                  text: text,
+                  color: Colors.black,
+                  fontSize: 12,
+                ),
+              ),
             ),
 
-            Image.asset(imagePath, fit: BoxFit.cover),
-
+            Image.asset(
+              imagePath,
+              fit: BoxFit.cover,
+              width: 60.w,
+              height: double.infinity,
+            ),
           ],
         ),
       ),
-    );
-  }
+    );  }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/custom_cached_network_image.dart';
 import 'package:lavender/core/widget/inter_text.dart';
@@ -47,7 +48,7 @@ import 'package:lavender/features/programs/presentation/cubit/music_player_state
       return BlocBuilder<MusicPlayerCubit, MusicPlayerState>(
         builder: (context, state) {
           Duration current = Duration.zero;
-          Duration total = const Duration(minutes: 3, seconds: 25);
+          Duration total = Duration.zero; // Start at zero
           bool isPlaying = false;
 
           if (state is MusicPlayerPlaying) {
@@ -59,11 +60,13 @@ import 'package:lavender/features/programs/presentation/cubit/music_player_state
             total = state.totalDuration;
           }
 
-          final totalSeconds = total.inSeconds;
+          // Ensure totalSeconds is at least 1 to avoid division by zero
+          final totalSeconds = total.inSeconds > 0 ? total.inSeconds : 1;
           final currentSeconds = current.inSeconds.clamp(0, totalSeconds);
+          final progress = currentSeconds / totalSeconds;
 
-          final progress =
-          (totalSeconds > 0) ? currentSeconds / totalSeconds : 0.0;
+          // final progress =
+          // (totalSeconds > 0) ? currentSeconds / totalSeconds : 0.0;
 
           return Padding(
             padding: const EdgeInsets.only(top: 100),
@@ -71,10 +74,11 @@ import 'package:lavender/features/programs/presentation/cubit/music_player_state
               mainAxisSize: MainAxisSize.min,
               spacing: 16,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 16),
-                  child: AlexText(text: widget.album, fontSize: 20, color: Colors.white,),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.only(bottom: 16),
+                //   child: AlexText(text: widget.album, fontSize: 20, color: Colors.white,),
+                // ),
+                const Spacer(),
 
                 CustomCachedNetworkImage(
                   imageUrl: widget.albumCover,
@@ -83,41 +87,47 @@ import 'package:lavender/features/programs/presentation/cubit/music_player_state
                   borderRadius: 16,
                   heroTag: 'album_${widget.musicId}',
                 ),
+                const SizedBox.shrink(),
+
                 AlexText(text: widget.title, fontSize: 20, color: Colors.white,),
                 InterText(text: "Author Name: ${widget.author}", color: Colors.white,),
 
+                const Spacer(),
+
                 // Slider Row
-                Row(
-                  children: [
-                    Text(formatDuration(current),
-                        style: const TextStyle(fontSize: 12)),
-                    Expanded(
-                      child: SliderTheme(
-                        data: SliderTheme.of(context).copyWith(
-                          trackShape: const RoundedRectSliderTrackShape(),
-                          trackHeight: 6,
-                          thumbShape:
-                          const RoundSliderThumbShape(enabledThumbRadius: 8),
-                          overlayShape:
-                          const RoundSliderOverlayShape(overlayRadius: 14),
-                          activeTrackColor: Colors.white,
-                          inactiveTrackColor: Colors.grey.shade400,
-                          thumbColor: Colors.white,
-                        ),
-                        child: Slider(
-                          value: currentSeconds.toDouble(),
-                          max: totalSeconds.toDouble(),
-                          onChanged: (value) {
-                            context
-                                .read<MusicPlayerCubit>()
-                                .seekTo(Duration(seconds: value.toInt()));
-                          },
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
+                    children: [
+                      AlexText(text: formatDuration(current), color: Colors.white, fontSize: 12,),
+                      Expanded(
+                        child: SliderTheme(
+                          data: SliderTheme.of(context).copyWith(
+                            trackShape: const RoundedRectSliderTrackShape(),
+                            trackHeight: 6,
+                            thumbShape:
+                            const RoundSliderThumbShape(enabledThumbRadius: 8),
+                            overlayShape:
+                            const RoundSliderOverlayShape(overlayRadius: 14),
+                            activeTrackColor: Colors.white,
+                            inactiveTrackColor: AppColors.inactiveSliderColor,
+                            thumbColor: Colors.white,
+                            thumbSize: WidgetStateProperty.all(Size(0,0))
+                          ),
+                          child: Slider(
+                            value: currentSeconds.toDouble(),
+                            max: totalSeconds.toDouble(),
+                            onChanged: (value) {
+                              context
+                                  .read<MusicPlayerCubit>()
+                                  .seekTo(Duration(seconds: value.toInt()));
+                            },
+                          ),
                         ),
                       ),
-                    ),
-                    Text(formatDuration(total),
-                        style: const TextStyle(fontSize: 12)),
-                  ],
+                      AlexText(text: formatDuration(total), color: Colors.white, fontSize: 12,),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20),
 
@@ -125,39 +135,43 @@ import 'package:lavender/features/programs/presentation/cubit/music_player_state
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    const Icon(Icons.shuffle, size: 28),
-                    const Icon(Icons.skip_previous, size: 36),
+                    const Icon(Icons.repeat, size: 28, color: Colors.white),
+                    const Icon(Icons.skip_next, size: 36, color: Colors.white),
                     Stack(
                       alignment: Alignment.center,
                       children: [
-                        SizedBox(
+                        Container(
                           width: 70,
                           height: 70,
+                          decoration: BoxDecoration(
+                            color: AppColors.playPauseButtonColor,
+                            shape: BoxShape.circle,
+                          ),
                           child: CircularProgressIndicator(
                             value: progress,
-                            strokeWidth: 4,
-                            backgroundColor: Colors.grey.shade300,
+                            strokeWidth: 5,
+                            backgroundColor: AppColors.playPauseButtonBorderColor,
                             valueColor:
-                            const AlwaysStoppedAnimation<Color>(Colors.blue),
+                            const AlwaysStoppedAnimation<Color>(AppColors.playPauseButtonColor),
                           ),
                         ),
                         InkWell(
                           onTap: () {
-                            // context.read<MusicPlayerCubit>().togglePlayPause();
-                            context.read<MusicPlayerCubit>().play(widget.audioFile);
-                          },
+                            context.read<MusicPlayerCubit>().togglePlayPause();
+                            },
                           child: Icon(
                             isPlaying ? Icons.pause : Icons.play_arrow,
-                            size: 40,
-                            color: Colors.blue,
+                            size: 55,
+                            color: AppColors.playPauseBlackColor,
                           ),
                         ),
                       ],
                     ),
-                    const Icon(Icons.skip_next, size: 36),
-                    const Icon(Icons.repeat, size: 28),
+                    const Icon(Icons.skip_previous, size: 36, color: Colors.white),
+                    const Icon(Icons.shuffle, size: 28, color: Colors.white,),
                   ],
-                )
+                ),
+                const SizedBox(height: 48),
               ],
             ),
           );

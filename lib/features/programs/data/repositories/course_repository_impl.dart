@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:lavender/core/helpers/app_exception.dart';
 import 'package:lavender/core/helpers/secure_storage_helper.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/networking/dio_helper.dart';
@@ -35,9 +36,9 @@ class CoursesRepositoryImpl implements CoursesRepository {
 
   @override
   Future<List<FreeProgram>> getFreePrograms() async {
-    String? token = await SecureStorageHelper.getAccessToken();
+    final token = await SecureStorageHelper.getAccessToken();
     if (token == null) {
-      throw Exception("No access token");
+      throw const UnauthorizedException();
     }
 
     try {
@@ -49,20 +50,15 @@ class CoursesRepositoryImpl implements CoursesRepository {
         },
       );
 
-      // If you want to simulate loading for 2 seconds (optional)
-      await Future.delayed(const Duration(seconds: 2));
-
-      // response.data is expected to be a List based on your JSON example
       final List data = response.data;
-
       return data.map((json) => FreeProgram.fromJson(json)).toList();
 
     } on DioException catch (e) {
       // Better error handling for Dio
-      String errorMsg = e.response?.data?['message'] ?? e.message;
-      throw Exception("Network error: $errorMsg");
+      // String errorMsg = e.response?.data?['message'] ?? e.message;
+      throw NetworkException();
     } catch (e) {
-      throw Exception("Unexpected error: $e");
+      throw const UnknownException();
     }
   }
 

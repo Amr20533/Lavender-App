@@ -5,13 +5,13 @@ import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/app_bar_shadow.dart';
 import 'package:lavender/core/widget/back_icon.dart';
+import 'package:lavender/core/widget/exception_view.dart';
 import 'package:lavender/features/programs/presentation/cubit/courses_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/courses_states.dart';
 import 'package:lavender/features/programs/presentation/widgets/daily_emotion.dart';
 import 'package:lavender/features/programs/presentation/widgets/program_card.dart';
 import 'package:lavender/features/programs/presentation/widgets/program_card_shimmer.dart';
 import 'package:lavender/features/programs/presentation/widgets/tool_card.dart';
-
 
 class ProgramsScreen extends StatelessWidget {
   const ProgramsScreen({super.key});
@@ -63,38 +63,44 @@ class ProgramsScreen extends StatelessWidget {
           ),
 
           /// Tools grid (Wrap)
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsetsDirectional.only(start: 18),
-              child: Wrap(
-                crossAxisAlignment: WrapCrossAlignment.center,
-                alignment: WrapAlignment.center,
-                spacing: 12.w,
-                runSpacing: 12.h,
-                children: [
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 18.w),
+            sliver: SliverGrid(
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 12.w,
+                mainAxisSpacing: 12.h,
+                mainAxisExtent: 72.h,
+              ),
+              delegate: SliverChildListDelegate(
+                [
                   ToolCard(
                     onTap: () => Navigator.pushNamed(context, Routes.musicScreen),
                     text: "الموسيقى",
                     imagePath: "assets/images/الموسيقى.png",
+                    width: double.infinity, // Let the grid determine the width
                   ),
                   ToolCard(
                     onTap: () => Navigator.pushNamed(context, Routes.measurementScreen),
                     text: "المقاييس",
                     imagePath: "assets/images/measure.png",
+                    width: double.infinity,
                   ),
                   ToolCard(
-                    text: "الهدف",
+                    onTap: () => Navigator.pushNamed(context, Routes.exercisesAndActivities),
+                    text: "الانشطة والتمارين",
                     imagePath: "assets/images/الهدف.png",
+                    width: double.infinity,
                   ),
                   ToolCard(
                     text: "تسجيل اليوميات",
                     imagePath: "assets/images/اليوميات.png",
+                    width: double.infinity,
                   ),
                 ],
               ),
             ),
           ),
-
           /// View all row
           SliverToBoxAdapter(
             child: Padding(
@@ -119,7 +125,7 @@ class ProgramsScreen extends StatelessWidget {
                     itemCount: 4,
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
-                    separatorBuilder: (_, __) => SizedBox(width: 15.w),
+                    separatorBuilder: (_, __) => SizedBox(height: 15.w),
                     itemBuilder: (_, __) => ProgramCardShimmer(),
                   ),
                 );
@@ -150,9 +156,11 @@ class ProgramsScreen extends StatelessWidget {
 
               if (state is ProgramError) {
                 return SliverToBoxAdapter(
-                  child: Center(
-                    child: Text('Error: ${state.message}'),
-                  ),
+                  child: ExceptionView(
+                    onPressed: (){
+                      context.read<CoursesCubit>().fetchFreePrograms();
+                    },
+                    message: state.message),
                 );
               }
 
@@ -169,3 +177,4 @@ class ProgramsScreen extends StatelessWidget {
     );
   }
 }
+
