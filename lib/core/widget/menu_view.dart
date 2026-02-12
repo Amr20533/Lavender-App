@@ -56,6 +56,7 @@ class MenuView extends StatelessWidget {
                         onTap: () {
                           signInContext.read<SignInCubit>().signOut();
                           context.read<MenuCubit>().toggleDrawer();
+                          Navigator.popAndPushNamed(context, Routes.loginOrSignupScreen);
                         },
                         title: "Logout",
                         icon: Icons.logout,

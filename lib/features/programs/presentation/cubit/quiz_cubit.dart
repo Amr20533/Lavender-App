@@ -27,7 +27,7 @@ class QuizCubit extends Cubit<QuizState> {
       );
       emit(QuizSubmissionSuccess(response));
     } catch (e) {
-      emit(QuizError(e.toString()));
+      emit(QuizSubmissionError(e.toString()));
     }
   }
 }

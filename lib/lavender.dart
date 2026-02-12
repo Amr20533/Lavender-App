@@ -8,6 +8,8 @@ import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/features/appointments/data/repositories/appointment_repo_impl.dart';
 import 'package:lavender/features/appointments/presentation/cubit/appointment_cubit.dart';
+import 'package:lavender/features/chat/data/repositories/chat_repository_impl.dart';
+import 'package:lavender/features/chat/presentation/cubit/inbox_cubit.dart';
 import 'package:lavender/features/community/data/repositories/community_repo_impl.dart';
 import 'package:lavender/features/community/data/repositories/story_repository_impl.dart';
 import 'package:lavender/features/community/presentation/cubit/comment_cubit.dart';
@@ -82,6 +84,7 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (_) => CoursesCubit(CoursesRepositoryImpl())..fetchFreePrograms()),
         BlocProvider(create: (_) => StoryCubit(StoryRepositoryImpl())..fetchStories()),
         BlocProvider(create: (_) => AppointmentCubit(AppointmentRepositoryImpl())),
+        BlocProvider(create: (_) => InboxCubit(ChatRepositoryImpl())..fetchInboxes()),
         BlocProvider(create: (_) => SlotCubit()),
         ],
           child: MultiBlocProvider(

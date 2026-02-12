@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/widget/user_info_profile.dart';
 import 'package:lavender/features/Questions/screens/question_screen.dart';
@@ -6,6 +7,10 @@ import 'package:lavender/features/appointments/data/models/payment_response.dart
 import 'package:lavender/features/appointments/presentation/screens/payment_success.dart';
 import 'package:lavender/features/appointments/presentation/screens/payment_view_screen.dart';
 import 'package:lavender/features/appointments/presentation/screens/subscription_plan_screen.dart';
+import 'package:lavender/features/chat/data/models/chat/inbox_user_profile.dart';
+import 'package:lavender/features/chat/data/repositories/chat_repository_impl.dart';
+import 'package:lavender/features/chat/presentation/chat_details.dart';
+import 'package:lavender/features/chat/presentation/cubit/chat_cubit.dart';
 import 'package:lavender/features/community/data/models/post.dart';
 import 'package:lavender/features/community/presentation/screen/comment_screen.dart';
 import 'package:lavender/features/home/presenation/screens/all_doctors_screen.dart';
@@ -130,14 +135,18 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => ExercisesDetails(exerciseData: args),
         );
-      // case Routes.musicPlayer:
-      //   final args = settings.arguments as Map<String, dynamic>;
-      //   return MaterialPageRoute(
-      //     builder: (_) => MusicPlayerScreen(
-      //       musicCardModel: args['currentSong'],
-      //       playlist: args['playlist'], // Pass the full list here
-      //     ),
-      //   );
+      case Routes.chatDetails:
+        final userProfile = settings.arguments as InboxUserProfile;
+
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (context) => ChatCubit(
+              chatRepo: ChatRepositoryImpl(),
+              receiverId: userProfile.user.id,
+            ),
+            child: ChatLayout(user: userProfile),
+          ),
+        );
         default:
         return MaterialPageRoute(
           builder:

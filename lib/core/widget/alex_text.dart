@@ -9,13 +9,17 @@ class AlexText extends StatelessWidget {
     this.fontSize= 16,
     this.fontWeight = FontWeight.w500,
     this.color = AppColors.primaryColorLavenderLangAndText,
-    this.textAlign = TextAlign.start
+    this.textAlign = TextAlign.start,
+    this.maxLines = 2,
+    this.overflow = TextOverflow.ellipsis,
     });
   final String text;
   final double fontSize;
   final FontWeight fontWeight;
   final Color color;
   final TextAlign? textAlign;
+  final int? maxLines;
+  final TextOverflow? overflow;
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +27,8 @@ class AlexText extends StatelessWidget {
         fontSize: fontSize.sp,
         fontWeight: FontWeight.w500,
         color: color,),
-      maxLines: 2,
-      overflow: TextOverflow.ellipsis,
+      maxLines: maxLines,
+      overflow: overflow,
       textAlign: textAlign,
     );
   }

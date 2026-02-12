@@ -5,12 +5,9 @@ class User {
   final String firstName;
   final String lastName;
 
-  User({
-    required this.id,
-    required this.email,
-    required this.firstName,
-    required this.lastName,
-  });
+  User({required this.id, required this.email, required this.firstName, required this.lastName});
+
+  factory User.empty() => User(id: 0, email: '', firstName: 'User', lastName: '');
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
@@ -20,15 +17,10 @@ class User {
       lastName: json['last_name'] ?? '',
     );
   }
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      if (email != null) 'email': email,
-      if (firstName != null) 'first_name': firstName,
-      if (lastName != null) 'last_name': lastName,
-    };
-  }
 
+  Map<String, dynamic> toJson() => {
+    'id': id, 'email': email, 'first_name': firstName, 'last_name': lastName
+  };
   @override
   String toString() {
     return 'User(id: $id, email: $email, firstName: $firstName, lastName: $lastName)';

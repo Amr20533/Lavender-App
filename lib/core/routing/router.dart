@@ -27,4 +27,5 @@ class Routes {
   static const String exercisesAndActivities ='/exercises-activities';
   static const String exerciseDetails ='/exercises-details';
   static const String musicPlayer ='/music-player';
+  static const String chatDetails ='/chat-details';
 }

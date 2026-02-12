@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/alex_text.dart';
@@ -10,10 +13,12 @@ import 'package:lavender/core/widget/exception_view.dart';
 import 'package:lavender/features/community/presentation/cubit/community_cubit.dart';
 import 'package:lavender/features/community/presentation/cubit/community_states.dart';
 import 'package:lavender/features/community/presentation/cubit/create_post_cubit.dart';
+import 'package:lavender/features/community/presentation/widgets/add_post_bottom_sheet.dart';
 import 'package:lavender/features/community/presentation/widgets/community_app_bar.dart';
 import 'package:lavender/features/community/presentation/widgets/post_card.dart';
 import 'package:lavender/features/community/presentation/screen/stories_bar.dart';
 import 'package:lavender/features/community/presentation/widgets/post_card_shimmer.dart';
+import 'package:lavender/features/community/presentation/widgets/story_picker_helper.dart';
 import 'package:lavender/features/profile/presentation/cubit/current_user_cubit.dart';
 import 'package:lavender/features/profile/presentation/cubit/current_user_states.dart';
 
@@ -123,8 +128,16 @@ class CommunityScreen extends StatelessWidget {
   }
 }
 
-class AddPostDialog extends StatelessWidget {
+class AddPostDialog extends StatefulWidget {
   const AddPostDialog({super.key});
+
+  @override
+  State<AddPostDialog> createState() => _AddPostDialogState();
+}
+
+class _AddPostDialogState extends State<AddPostDialog> {
+  File? _selectedImage;
+  final ImagePicker _picker = ImagePicker();
 
   @override
   Widget build(BuildContext context) {
@@ -188,7 +201,7 @@ class AddPostDialog extends StatelessWidget {
 
               Container(
                 width: double.infinity,
-                height: 100,
+                height: 80,
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -203,7 +216,58 @@ class AddPostDialog extends StatelessWidget {
                   ),
                 ),
               ),
+              if (_selectedImage != null)
+                Stack(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.all(8),
+                      height: 108,
+                      width: 129,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        image: DecorationImage(
+                          image: FileImage(_selectedImage!),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      top: 16,
+                      left: 16,
+                      child: GestureDetector(
+                        child: Container(
+                            width: 30, height: 30,
+                            // padding: EdgeInsets.all(4),
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.black,
+                              shape: BoxShape.circle
+                            ),
+                            child: DecoratedBox(
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(width: 1, color: Colors.white)
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: const Icon(Icons.close, color: Colors.white,size: 16,),
+                                ))),
+                        onTap: () => setState(() => _selectedImage = null),
+                      ),
+                    ),
+                  ],
+                ),
 
+              // Your Input Field / Icon Button
+              GestureDetector(
+                onTap: () {
+                  AddPostBottomSheet.show(
+                    context,
+                    onPickImage: (source) => _pickImage(source),
+                  );
+                },
+                child: Image.asset("assets/icons/image-03.png", width: 22, height: 22),
+              ),
               Divider(
                 color: AppColors.secondDividerColor,
                 height: 1,
@@ -227,8 +291,8 @@ class AddPostDialog extends StatelessWidget {
                   } else {
                     return CustomButton(
                     onPressed: () async {
-                      if(context.read<CreatePostCubit>().captionController.text.isNotEmpty){
-                        final newPost = await context.read<CreatePostCubit>().createPost();
+                      if(context.read<CreatePostCubit>().captionController.text.isNotEmpty || _selectedImage != null){
+                        final newPost = await context.read<CreatePostCubit>().createPost(_selectedImage);
                         if (newPost != null) {
                           context.read<PostsCubit>().addPostToList(newPost);
                           Navigator.pop(context);
@@ -251,7 +315,26 @@ class AddPostDialog extends StatelessWidget {
       ),
     );
   }
+
+  Future<void> _pickImage(ImageSource source) async {
+    try {
+      final XFile? pickedFile = await _picker.pickImage(
+        source: source,
+        imageQuality: 80, // Compress for better performance
+      );
+
+      if (pickedFile != null) {
+        setState(() {
+          _selectedImage = File(pickedFile.path);
+        });
+      }
+    } catch (e) {
+      debugPrint("Error picking image: $e");
+    }
+  }
+
 }
+
 
 
 

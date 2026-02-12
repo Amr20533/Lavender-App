@@ -127,25 +127,10 @@ class MeasurementsScreen extends StatelessWidget {
               },
             ),
           ),
+          const SizedBox.shrink(),
         ],
       ),
     );
-  }
-
-  void _navigateToQuizScreen(BuildContext context, int index, dynamic quiz) {
-  
-    final Map<int, String> quizRoutes = {
-      0: Routes.firstQuizScreen,             
-     // 1: Routes.reviewsScreen,          
-     // 2: Routes.allDoctorsScreen,       
-    //  3: Routes.courseOne,            
-    //  4: Routes.reviewsScreen,         
-     // 5: Routes.allDoctorsScreen,     
-    };
-
-    final route = quizRoutes[index] ?? Routes.quizResultScreen;
-    
-    Navigator.pushNamed(context, route);
   }
 }
 

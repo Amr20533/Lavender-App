@@ -27,6 +27,7 @@ class AppColors {
   static const Color green1    = Color(0XFF3BC98B);
   static const Color green2    = Color(0XFF00FF90);
   static const Color green3    = Color(0XFF29CC6A);
+  static const Color green4    = Color(0XFF68C200);
   static const Color orang     = Color(0XFFFFBFA8);
   static const Color orang2    = Color(0XFFFF7442);
   static const Color read      = Color(0xFFFC5555);
@@ -44,6 +45,7 @@ class AppColors {
   static const Color playPauseButtonBorderColor = Color(0xFF424899);
   static const Color playPauseButtonColor = Color(0xFFDADDFF);
   static const Color playPauseBlackColor = Color(0xFF0F153C);
+  static const Color inactiveGrey = Color(0xFFF9FAFB);
 
   static const Color doctorCardColor     = Color(0xFFFAFAFC);
   static const Color inactiveBorderColor     = Color(0xFFF0F4FC);
@@ -75,6 +77,15 @@ class AppColors {
     stops: [0.0, 1.0],
   );
 
+  static LinearGradient inboxGradient = const LinearGradient(
+    colors: [
+      Color.fromRGBO(245, 212, 228, 1),
+      Color.fromRGBO(180, 179, 250, 1),
+    ],
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    stops: [0.0, 1.0],
+  );
     static const Gradient cardGradient = LinearGradient(
     colors: [
       Color(0xFFF1F6F9), // رمادي فاتح جدًا

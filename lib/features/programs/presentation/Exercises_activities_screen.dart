@@ -5,7 +5,6 @@ import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/back_icon.dart';
 import 'package:lavender/features/programs/presentation/widgets/activities_view.dart';
 import 'package:lavender/features/programs/presentation/widgets/exercises_view.dart';
-
 import '../../../core/themes/app_colors.dart';
 
 class ExercisesActivitiesScreen extends StatelessWidget {

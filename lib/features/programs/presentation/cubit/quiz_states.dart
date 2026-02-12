@@ -26,3 +26,9 @@ final class QuizSubmissionSuccess extends QuizState {
   final QuizSubmissionResponse response;
   QuizSubmissionSuccess(this.response);
 }
+
+
+final class QuizSubmissionError extends QuizState {
+  final String message;
+  QuizSubmissionError(this.message);
+}

@@ -21,12 +21,23 @@ class UserProfile {
     this.country,
   });
 
+  factory UserProfile.empty() {
+    return UserProfile(
+      user: User.empty(),
+      role: 'Guest',
+    );
+  }
+
   factory UserProfile.fromJson(Map<String, dynamic> json) {
     return UserProfile(
-      user: User.fromJson(json['user'] as Map<String, dynamic>),
+      // FIX: Check if 'user' key exists. If not, the 'json' itself might BE the user data.
+      user: json.containsKey('user') && json['user'] != null
+          ? User.fromJson(json['user'] as Map<String, dynamic>)
+          : User.fromJson(json), // Try parsing the top-level keys
+
       profilePic: json['profile_pic'] as String?,
       dateOfBirth: json['date_of_birth'] != null
-          ? DateTime.parse(json['date_of_birth'] as String)
+          ? DateTime.tryParse(json['date_of_birth'] as String)
           : null,
       gender: json['gender'] as String?,
       phoneNumber: json['phone_number'] as String?,
@@ -34,9 +45,7 @@ class UserProfile {
       bio: json['bio'] as String?,
       country: json['country'] as String?,
     );
-  }
-
-  Map<String, dynamic> toJson() {
+  }  Map<String, dynamic> toJson() {
     return {
       'user': user.toJson(),
       if (profilePic != null) 'profile_pic': profilePic,

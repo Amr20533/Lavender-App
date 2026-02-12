@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:lavender/core/helpers/app_exception.dart';
@@ -127,27 +129,40 @@ class CommunityRepositoryImpl implements CommunityRepository {
   }
 
 
-  @override
-  Future<CreatePostResponseModel> addPost(String text) async {
-    String? token = await SecureStorageHelper.getAccessToken();
-    if (token == null) throw UnauthorizedException();
+      @override
+      Future<CreatePostResponseModel> addPost(String text, File? imageFile) async {
+        String? token = await SecureStorageHelper.getAccessToken();
+        try {
 
-    try {
-      final response = await DioHelper.postData(
-        url: ApiConstants.addPost,
-        data: {'caption': text},
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-      );
+        // Create the map for FormData
+        Map<String, dynamic> dataMap = {};
 
-      return CreatePostResponseModel.fromJson(response.data);
+        // Only add caption if it's not empty
+        if (text.isNotEmpty) {
+          dataMap['caption'] = text;
+        }
+
+        // Add the image if it exists
+        if (imageFile != null) {
+          dataMap['image'] = await MultipartFile.fromFile(
+            imageFile.path,
+            filename: imageFile.path.split('/').last,
+          );
+        }
+
+        FormData formData = FormData.fromMap(dataMap);
+
+        final response = await DioHelper.postFormData(
+          url: ApiConstants.addPost,
+          data: formData,
+          headers: {
+            'Authorization': 'Bearer $token',
+          },
+        );
+
+        return CreatePostResponseModel.fromJson(response.data);
     } on DioException catch (e) {
       throw Exception("Failed to add post: ${e.message}");
-    } catch (e) {
-      debugPrint("Unexpected error: $e");
-      throw UnknownException();
     }
   }
 

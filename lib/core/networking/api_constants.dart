@@ -37,5 +37,8 @@ class ApiConstants {
   static const String getFreePrograms = "api/v1/free-programs/";
 
   static const String bookAppointment = "api/v1/appointments/checkout";
+  static const String getInboxes = "api/v1/messages/myMessages/";
+  static const String sendMessage = "api/v1/sendMessages/";
+  static const String getMessages = "api/v1/messages";
 
 }

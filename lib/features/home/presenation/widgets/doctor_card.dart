@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/themes/stylesdart.dart';
@@ -73,13 +74,6 @@ class DoctorCard extends StatelessWidget {
 
                       Row(
                         children: [
-                          Text(
-                            "${specialist.yearsOfExperience} years experience",
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: Colors.grey,
-                            ),
-                          ),
                           SizedBox(width: 8.w),
                           Text(
                             "${specialist.avgRating}",
@@ -90,50 +84,94 @@ class DoctorCard extends StatelessWidget {
                           ),
                           SizedBox(width: 2.w),
                           const Icon(Icons.star, size: 14, color: Colors.amber),
-                        ],
+                          SizedBox(width: 2.w),
+                          Text(
+                            "${specialist.yearsOfExperience} سنين خبرة",
+                            style: TextStyle(
+                              fontSize: 12.sp,
+                              color: Colors.grey,
+                            ),
+                          ),
+                                                ],
                       ),
 
                       SizedBox(height: 6.h),
 
-                      Row(
+                      Row(spacing: 8,
                         children: [
-                          Icon(Icons.circle,
-                              size: 8.sp, color: Colors.greenAccent.shade400),
-                          SizedBox(width: 4.w),
-                          AlexText(text: "85% attendance",fontSize: 12, color: Colors.black),
+                          Row(
+                            children: [
+                              Icon(Icons.circle,
+                                  size: 8.sp, color: AppColors.primaryColorLavenderLangAndText),
+                              SizedBox(width: 4.w),
+                              AlexText(text: "20 قصة تعافي",fontSize: 12, color: Colors.black),
+                            ],
+                          ),
+
+                          Row(
+                            children: [
+                              Icon(Icons.circle,
+                                  size: 8.sp, color: Colors.greenAccent.shade400),
+                              SizedBox(width: 4.w),
+                              AlexText(text: "85% حضور",fontSize: 12, color: Colors.black),
+                            ],
+                          ),
+
                         ],
                       ),
 
                       SizedBox(height: 4.h),
+                      // SizedBox(height: 10.h),
 
-                      Row(
-                        children: [
-                          Icon(Icons.circle,
-                              size: 8.sp, color: AppColors.primaryColorLavenderLangAndText),
-                          SizedBox(width: 4.w),
-                          AlexText(text: "20 stories recovery",fontSize: 12, color: Colors.black),
-                        ],
+                      RichText(
+                        text: TextSpan(
+                          // Base style for all children
+                          style: TextStyle(
+                            fontSize: 12.sp,
+                            fontFamily: GoogleFonts.alexandria().fontFamily,
+                          ),
+                          children: [
+                            const TextSpan(text: "اقرب موعد: ",style: TextStyle(
+                                color: AppColors.grey
+                            )),
+                            TextSpan(
+                              text: "يوم ",
+                              // text: "October 25 at 5:00 PM",
+                              style: TextStyles.smallRegular.copyWith(
+                                color: AppColors.playPauseBlackColor,
+                                // Ensure it doesn't override the parent's font family if not needed
+                              ),
+                            ),
+                            TextSpan(
+                              text: "25-10 ",
+                              style: TextStyles.smallRegular.copyWith(
+                                color: AppColors.primaryColorLavenderLangAndText,
+                              ),
+                            ),
+                            TextSpan(
+                              text: "الساعة ",
+                              // text: "October 25 at 5:00 PM",
+                              style: TextStyles.smallRegular.copyWith(
+                                color: AppColors.playPauseBlackColor,
+                              ),
+                            ),
+
+                            TextSpan(
+                              text: " 5:00م",
+                              style: TextStyles.smallRegular.copyWith(
+                                color: AppColors.primaryColorLavenderLangAndText,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
+
                     ],
                   ),
                 ),
               ],
             ),
 
-            SizedBox(height: 10.h),
-
-            RichText(
-              text: TextSpan(
-                style: TextStyle(fontSize: 12.sp, color: Colors.black87),
-                children: [
-                  const TextSpan(text: "Earliest appointment: "),
-                  TextSpan(
-                    text: "October 25 at 5:00 PM",
-                    style: TextStyles.smallRegular.copyWith(color: AppColors.primaryColorLavenderLangAndText),
-                  ),
-                ],
-              ),
-            ),
 
             SizedBox(height: 12.h),
             Row(
@@ -150,34 +188,20 @@ class DoctorCard extends StatelessWidget {
                     onPressed: () {},
                     icon: Image.asset('assets/icons/glass.png'),
                     // icon: const Icon(Icons.event_available, color: Colors.white),
-                    label: Text(
-                      "Book now",
-                      style: TextStyle(
-                        fontSize: 14.sp,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white,
-                      ),
+                    label: AlexText(
+                      text: "احجز الان",
+                      fontSize: 14.sp,
+                      color: Colors.white,
                     ),
                   ),
                 ),
                 SizedBox(width: 12.w),
                 Column(
+                  spacing: 2,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "${specialist.pricePerHour} L.E",
-                      style: TextStyles.smallRegular.copyWith(
-                        color: AppColors.primaryColorLavenderLangAndText,
-                        height: 1.2,
-                      ),
-                    ),
-                    Text(
-                      "hourly rate",
-                      style: TextStyles.smallRegular.copyWith(
-                        color: AppColors.grey,
-                        height: 1.2,
-                      ),
-                    ),
+                    AlexText(text: "سعر الساعة", fontSize: 12,color: AppColors.grey,),
+                    AlexText(text: "${_removeTrailingZeros(double.parse(specialist.pricePerHour))} جنيه", fontSize: 12,color: AppColors.primaryColorLavenderLangAndText,),
                   ],
                 )
               ],
@@ -186,6 +210,13 @@ class DoctorCard extends StatelessWidget {
         ),
       ),
     );
+  }
+  String _removeTrailingZeros(double value) {
+    // Convert to string with a high precision limit
+    String str = value.toStringAsFixed(2);
+
+    // Remove trailing zeros and then the decimal point if it's left at the end
+    return str.replaceAll(RegExp(r'\.?0+$'), "");
   }
 }
 

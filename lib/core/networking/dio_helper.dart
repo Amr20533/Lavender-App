@@ -79,10 +79,10 @@ class DioHelper {
       );
     } on DioException catch (e) {
       if (kDebugMode) {
-        debugPrint("❌ DIO ERROR [$url]");
-        debugPrint("Type: ${e.type}");
-        debugPrint("Status: ${e.response?.statusCode}");
-        debugPrint("Data: ${e.response?.data}");
+        // debugPrint("❌ DIO ERROR [$url]");
+        // debugPrint("Type: ${e.type}");
+        // debugPrint("Status: ${e.response?.statusCode}");
+        // debugPrint("Data: ${e.response?.data}");
       }
       throw handleDioError(e); // <-- throws AppException
     }
@@ -104,7 +104,24 @@ class DioHelper {
       options: Options(headers: headers),
     );
   }
-
+  // POST request
+  static Future<Response> postFormData({
+    required String url,
+    required dynamic data, // Changed from Map to dynamic to accept FormData
+    Map<String, dynamic>? query,
+    Map<String, dynamic>? headers,
+  }) async {
+    return await _dio!.post(
+      url,
+      data: data,
+      queryParameters: query,
+      options: Options(
+        headers: headers,
+        // Ensure Dio knows this is not a JSON request
+        contentType: 'multipart/form-data',
+      ),
+    );
+  }
   // PUT request
   static Future<Response> putData({
     required String url,

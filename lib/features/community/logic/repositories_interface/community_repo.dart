@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:lavender/features/community/data/models/comment.dart';
 import 'package:lavender/features/community/data/models/comment_like_response.dart';
 import 'package:lavender/features/community/data/models/create_post_response_model.dart';
@@ -10,7 +12,7 @@ abstract class CommunityRepository {
   Future<Comment> addComment(String postId, String text);
   Future<List<Comment>> getComments(String postId);
   Future<CommentLikeResponse> likeComment(String commentId);
-  Future<CreatePostResponseModel> addPost(String text);
+  Future<CreatePostResponseModel> addPost(String text, File? imageFile);
 }
 
 
