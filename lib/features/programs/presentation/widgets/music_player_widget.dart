@@ -33,9 +33,13 @@ import 'package:lavender/features/programs/presentation/cubit/music_player_state
     @override
     void initState() {
       super.initState();
-      context.read<MusicPlayerCubit>().play(widget.audioFile);
+      // We use addPostFrameCallback to ensure the Cubit is ready
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (widget.audioFile.isNotEmpty) {
+          context.read<MusicPlayerCubit>().play(widget.audioFile);
+        }
+      });
     }
-
     String formatDuration(Duration d) {
       String twoDigits(int n) => n.toString().padLeft(2, "0");
       final minutes = twoDigits(d.inMinutes.remainder(60));
@@ -60,14 +64,21 @@ import 'package:lavender/features/programs/presentation/cubit/music_player_state
             total = state.totalDuration;
           }
 
-          // Ensure totalSeconds is at least 1 to avoid division by zero
-          final totalSeconds = total.inSeconds > 0 ? total.inSeconds : 1;
-          final currentSeconds = current.inSeconds.clamp(0, totalSeconds);
-          final progress = currentSeconds / totalSeconds;
+// Inside BlocBuilder
+          final totalSeconds = total.inSeconds.toDouble();
+          final currentSeconds = current.inSeconds.toDouble();
 
-          // final progress =
-          // (totalSeconds > 0) ? currentSeconds / totalSeconds : 0.0;
+// 1. Ensure max is never 0 (Slider throws error if max == min)
+          final sliderMax = totalSeconds > 0 ? totalSeconds : 1.0;
 
+// 2. Clamp the value so it's ALWAYS between 0 and sliderMax
+          final sliderValue = currentSeconds.clamp(0.0, sliderMax);
+
+// 3. Keep your progress for the Circular indicator
+          double progress = 0.0;
+          if (totalSeconds > 0) {
+            progress = (currentSeconds / totalSeconds).clamp(0.0, 1.0);
+          }
           return Padding(
             padding: const EdgeInsets.only(top: 100),
             child: Column(
@@ -82,6 +93,8 @@ import 'package:lavender/features/programs/presentation/cubit/music_player_state
 
                 CustomCachedNetworkImage(
                   imageUrl: widget.albumCover,
+                  fit: BoxFit.cover,
+                  // fit: BoxFit.fill,
                   width: 220,
                   height: 220,
                   borderRadius: 16,
@@ -90,7 +103,7 @@ import 'package:lavender/features/programs/presentation/cubit/music_player_state
                 const SizedBox.shrink(),
 
                 AlexText(text: widget.title, fontSize: 20, color: Colors.white,),
-                InterText(text: "Author Name: ${widget.author}", color: Colors.white,),
+                InterText(text: "اسم المغني: ${widget.author}", color: Colors.white,),
 
                 const Spacer(),
 
@@ -115,13 +128,12 @@ import 'package:lavender/features/programs/presentation/cubit/music_player_state
                             thumbSize: WidgetStateProperty.all(Size(0,0))
                           ),
                           child: Slider(
-                            value: currentSeconds.toDouble(),
-                            max: totalSeconds.toDouble(),
+                            value: sliderValue,
+                            max: sliderMax,
                             onChanged: (value) {
                               context
                                   .read<MusicPlayerCubit>()
-                                  .seekTo(Duration(seconds: value.toInt()));
-                            },
+                                  .seekTo(Duration(seconds: value.toInt()));                            },
                           ),
                         ),
                       ),

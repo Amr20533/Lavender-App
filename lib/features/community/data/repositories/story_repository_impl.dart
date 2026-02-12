@@ -25,15 +25,30 @@ class StoryRepositoryImpl implements StoryRepo {
       );
 
       // Expected response: { "status": "success", "data": [ {user + stories}, ... ] }
-      final List<dynamic> data = response.data["data"];
+      final dynamic responseData = response.data["data"];
 
-      return data.map((json) => UserStories.fromJson(json)).toList();
+      if (responseData is! List) {
+        debugPrint("API Error: 'data' is not a list: $responseData");
+        return [];
+      }
+
+      return responseData.map((json) {
+        try {
+          return UserStories.fromJson(json as Map<String, dynamic>);
+        } catch (e) {
+          debugPrint("Error parsing UserStories: $e");
+          return UserStories(
+            id: 0,
+            firstName: "Error",
+            lastName: "",
+            stories: [],
+          );
+        }
+      }).toList();
     } on DioException catch (e) {
       throw NetworkException();
     } catch (e) {
       throw UnknownException();
     }
   }
-
-
 }

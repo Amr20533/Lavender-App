@@ -12,10 +12,16 @@ class ZoomMenuLayout extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<MenuCubit, int>(
       builder: (context, state) {
+        final bool isRtl = Directionality.of(context) == TextDirection.rtl;
+
         return ZoomDrawer(
           controller: context.read<MenuCubit>().zoomDrawerController,
           menuScreen: const MenuView(),
           mainScreen: context.watch<MenuCubit>().menuScreens[state],
+
+          // RTL configuration
+          isRtl: isRtl,
+
           angle: 0,
           borderRadius: 12,
           slideWidth: 295.0,

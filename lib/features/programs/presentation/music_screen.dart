@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lavender/core/routing/router.dart';
+import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/back_icon.dart';
 import 'package:lavender/core/widget/custom_cached_network_image.dart';
 import 'package:lavender/core/widget/alex_text.dart';
@@ -69,8 +71,12 @@ class MusicScreen extends StatelessWidget {
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                     ),
-                    trailing: const Icon(Icons.play_arrow,
-                        color: Colors.blue, size: 28),
+                    trailing: SvgPicture.asset(
+                      "assets/svg/Frame 1597882414.svg",
+                      color: AppColors.button.withOpacity(0.8),
+                  ),
+                    // trailing: const Icon(Icons.play_arrow,
+                    //     color: AppColors.primaryColorLavenderLangAndText, size: 28),
                     onTap: () {
                       Navigator.pushNamed(
                         context,

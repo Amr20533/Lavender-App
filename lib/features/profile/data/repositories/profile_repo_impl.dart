@@ -54,4 +54,37 @@ class ProfileRepositoryImpl implements ProfileRepository {
       throw Exception("Unexpected error: $e");
     }
   }
+  @override
+  Future<void> updateProfile({required Map<String, dynamic> data, dynamic image}) async {
+    String? token = await SecureStorageHelper.getAccessToken();
+    if (token == null) {
+      throw Exception("No access token");
+    }
+
+    try {
+      FormData formData = FormData.fromMap(data);
+
+      if (image != null) {
+        String fileName = image.path.split('/').last;
+        formData.files.add(
+          MapEntry(
+            "profile_pic",
+            await MultipartFile.fromFile(image.path, filename: fileName),
+          ),
+        );
+      }
+
+      await DioHelper.putData(
+        url: ApiConstants.updateProfile,
+        data: formData,
+        headers: {
+          'Authorization': 'Bearer $token',
+        },
+      );
+    } on DioException catch (e) {
+      throw Exception("Network error: ${e.message}");
+    } catch (e) {
+      throw Exception("Unexpected error: $e");
+    }
+  }
 }

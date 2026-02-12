@@ -21,12 +21,14 @@ class UserStories {
       firstName: json["first_name"] ?? "",
       lastName: json["last_name"] ?? "",
       profilePic: json["profile_pic"],
-      stories: (json["statuses"] as List<dynamic>)
+      stories:
+      json["statuses"] != null
+          ? (json["statuses"] as List<dynamic>)
           .map((e) => Story.fromJson(e))
-          .toList(),
+          .toList()
+          : [],
     );
   }
-
 
   Map<String, dynamic> toJson() {
     return {

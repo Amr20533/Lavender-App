@@ -31,18 +31,24 @@ class MusicPlayerCubit extends Cubit<MusicPlayerState> {
   }
 
   /// Play a new audio file
+// In MusicPlayerCubit
   Future<void> play(String audioPath) async {
     try {
-      await _audioPlayer.stop();
+      // 1. Reset state so UI shows 'Loading' if needed
+      _current = Duration.zero;
+      _total = Duration.zero;
 
-      if (audioPath.startsWith('http')) {
-        // Network file
-        await _audioPlayer.play(UrlSource(audioPath));
+      // 2. Set Player Mode to media (High quality)
+      await _audioPlayer.setPlayerMode(PlayerMode.mediaPlayer);
+
+      if (audioPath.startsWith('http') || audioPath.startsWith('https')) {
+        await _audioPlayer.setSourceUrl(audioPath); // Pre-load source
       } else {
-        // Local asset
-        await _audioPlayer.play(AssetSource(audioPath.replaceFirst('assets/', '')));
+        await _audioPlayer.setSourceAsset(audioPath.replaceFirst('assets/', ''));
       }
 
+      // 3. Trigger Play
+      await _audioPlayer.resume();
       _isPlaying = true;
       _emitState();
     } catch (e) {

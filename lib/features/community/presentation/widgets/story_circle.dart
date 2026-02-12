@@ -6,11 +6,7 @@ class StoryCircle extends StatelessWidget {
   final Story story;
   final VoidCallback onTap;
 
-  const StoryCircle({
-    super.key,
-    required this.story,
-    required this.onTap,
-  });
+  const StoryCircle({super.key, required this.story, required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -21,20 +17,22 @@ class StoryCircle extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              width: 70,
-              height: 70,
+              width: 50,
+              height: 50,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                gradient: story.isSeen
-                    ? LinearGradient(
-                        colors: [Colors.purple, Colors.orange],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      )
-                    : null,
-                border: story.isSeen
-                    ? null
-                    : Border.all(color: Colors.grey[300]!, width: 2),
+                gradient:
+                    story.isSeen
+                        ? LinearGradient(
+                          colors: [Colors.purple, Colors.orange],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        )
+                        : null,
+                border:
+                    story.isSeen
+                        ? null
+                        : Border.all(color: Colors.grey[300]!, width: 2),
               ),
               padding: EdgeInsets.all(3),
               child: Container(

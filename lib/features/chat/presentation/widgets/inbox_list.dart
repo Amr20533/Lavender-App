@@ -11,44 +11,41 @@ class InboxList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    return ListView.separated(
-      itemCount: messages.length,
-      // Optimization flags
-      addAutomaticKeepAlives: true,
-      addRepaintBoundaries: true,
+    // نستخدم SliverList بدلاً من ListView لتعمل داخل CustomScrollView
+    return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-      itemBuilder: (context, index) {
-        final inbox = messages[index];
+      sliver: SliverList(
+        delegate: SliverChildBuilderDelegate(
+              (context, index) {
+            final inbox = messages[index];
+            final bool isMeSender = inbox.sender == currentUserId;
 
-        final bool isMeSender = inbox.sender == currentUserId;
+            // تحديد الملف الشخصي للطرف الآخر في المحادثة
+            final displayProfile = isMeSender ? inbox.receiverProfile : inbox.senderProfile;
 
-        final displayProfile = isMeSender
-            ? inbox.receiverProfile
-            : inbox.senderProfile;
+            if (displayProfile == null) return const SizedBox.shrink();
 
-        if (displayProfile == null) {
-          return const SizedBox.shrink();
-        }
-
-        return InboxCard(
-          key: ValueKey(inbox.id),
-          user: displayProfile,
-          message: inbox.message,
-          // Pass extra data to the card for UI
-          isMe: isMeSender,
-          time: inbox.timestamp,
-          onTap: () => Navigator.pushNamed(
-            context,
-            Routes.chatDetails,
-            arguments: displayProfile,
-          ),
-        );
-      },
-      separatorBuilder: (_, __) => const SizedBox(height: 12),
+            return Padding(
+              padding: const EdgeInsets.only(bottom: 12), // بديل للـ separator
+              child: InboxCard(
+                key: ValueKey(inbox.id),
+                user: displayProfile,
+                message: inbox.message,
+                isMe: isMeSender,
+                time: inbox.timestamp,
+                isRead: inbox.isRead,
+                onTap: () => Navigator.pushNamed(
+                  context,
+                  Routes.chatDetails,
+                  arguments: displayProfile,
+                ),
+              ),
+            );
+          },
+          childCount: messages.length,
+        ),
+      ),
     );
   }
-
 }
-
 

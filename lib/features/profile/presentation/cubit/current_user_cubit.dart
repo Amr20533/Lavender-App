@@ -17,4 +17,16 @@ class CurrentUserCubit extends Cubit<CurrentUserStates> {
       emit(CurrentUserProfileError(e.toString()));
     }
   }
+
+  Future<void> updateProfile({required Map<String, dynamic> data, dynamic image}) async {
+    emit(CurrentUserUpdateLoading());
+    try {
+      await repository.updateProfile(data: data, image: image);
+      emit(CurrentUserUpdateSuccess());
+      // Refresh user data after successful update
+      fetchCurrentUser();
+    } catch (e) {
+      emit(CurrentUserUpdateError(e.toString()));
+    }
+  }
 }

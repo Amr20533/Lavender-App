@@ -137,7 +137,7 @@ class _ChatLayoutState extends State<ChatLayout> {
                   separatorBuilder: (_, __)=> SizedBox(height: 4,),
                 ),
               ),
-              // InputSection now gets the ID from the state instantly!
+
               if (myId != null)
                 InputSection(
                   messageController: _messageController,

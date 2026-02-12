@@ -52,9 +52,9 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: List.generate(5, (index) {
             // final icons = [Icons.home, Icons.search, Icons.favorite, Icons.person];
-            final inactiveIcons = ["inactive_home.svg", "inactive_session.svg", "inactive_programs.svg","inactive_community.svg", "inactive_more.svg"];
-            final activeIcons = ["active_home.svg", "active_session.svg", "active_programs.svg", "active_community.svg", "active_more.svg"];
-            final labels = ["الرئيسية", "الجلسات", "البرامج", "المجتمع", "المزيد"];
+            final inactiveIcons = ["inactive_home.svg", "messages.svg", "inactive_programs.svg","inactive_community.svg", "inactive_more.svg"];
+            final activeIcons = ["active_home.svg", "inactive_messages.svg", "active_programs.svg", "active_community.svg", "active_more.svg"];
+            final labels = ["الرئيسية", "الدردشة", "البرامج", "المجتمع", "المزيد"];
 
             final isActive = _currentIndex == index || _currentIndex == 4;
 
@@ -82,7 +82,9 @@ class _MainViewState extends State<MainView> with SingleTickerProviderStateMixin
                           scale: isActive ? 1.0 : 0.9,
                           duration: const Duration(milliseconds: 300),
                           curve: Curves.easeOutBack,
-                          child: SvgPicture.asset(isActive ? "assets/svg/${activeIcons[index]}" : "assets/svg/${inactiveIcons[index]}"),
+                          child: SvgPicture.asset(isActive ? "assets/svg/${activeIcons[index]}" : "assets/svg/${inactiveIcons[index]}",
+                            // color: isActive ? AppColors.primaryColorLavenderLangAndText : Colors.transparent,
+                          ),
                         ),
                         if (isActive) ...[
                           const SizedBox(width: 6),

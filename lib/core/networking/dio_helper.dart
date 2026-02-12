@@ -125,7 +125,7 @@ class DioHelper {
   // PUT request
   static Future<Response> putData({
     required String url,
-    required Map<String, dynamic> data,
+    required dynamic data,
     Map<String, dynamic>? query,
     Map<String, dynamic>? headers,
   }) async {

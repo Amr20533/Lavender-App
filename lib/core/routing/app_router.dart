@@ -17,11 +17,13 @@ import 'package:lavender/features/home/presenation/screens/all_doctors_screen.da
 import 'package:lavender/features/home/presenation/screens/specialists_screen.dart';
 import 'package:lavender/features/home/presenation/widgets/zoom_menu_layout.dart';
 import 'package:lavender/features/onbording/presentation/screens/onbpording_screen.dart';
+import 'package:lavender/features/profile/presentation/edit_profile_screen.dart';
 import 'package:lavender/features/programs/data/models/doctor_basic_info.dart';
 import 'package:lavender/features/programs/data/models/music_card_model.dart';
 import 'package:lavender/features/programs/data/models/quizzes/quiz_submission_response.dart';
 import 'package:lavender/features/programs/exercises_details.dart';
 import 'package:lavender/features/programs/presentation/course_one.dart';
+import 'package:lavender/features/programs/presentation/diary_page.dart';
 import 'package:lavender/features/programs/presentation/first_quiz_screen.dart';
 import 'package:lavender/features/programs/presentation/measurements_screen.dart';
 import 'package:lavender/features/programs/presentation/music_player_screen.dart';
@@ -84,6 +86,8 @@ class AppRouter {
           ),
         );      case Routes.searchScreen:
         return MaterialPageRoute(builder: (_) => SearchScreen());
+      case Routes.editProfileScreen:
+        return MaterialPageRoute(builder: (_) => EditProfileScreen());
       case Routes.paymentSuccess:
         return MaterialPageRoute(builder: (_) => PaymentSuccess());
       case Routes.musicPlayerScreen:
@@ -147,7 +151,10 @@ class AppRouter {
             child: ChatLayout(user: userProfile),
           ),
         );
-        default:
+      case Routes.emptyDiaryPage:
+        return MaterialPageRoute(builder: (_) => EmptyDiaryPage());
+
+      default:
         return MaterialPageRoute(
           builder:
               (_) => Scaffold(body: Center(child: Text('Page not found!'))),

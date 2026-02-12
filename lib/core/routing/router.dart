@@ -28,4 +28,7 @@ class Routes {
   static const String exerciseDetails ='/exercises-details';
   static const String musicPlayer ='/music-player';
   static const String chatDetails ='/chat-details';
+  static const String emptyDiaryPage = '/EmptyDiaryPage';
+  static const String editProfileScreen = '/EditProfileScreen';
+
 }

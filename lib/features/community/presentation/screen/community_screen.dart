@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -18,7 +17,6 @@ import 'package:lavender/features/community/presentation/widgets/community_app_b
 import 'package:lavender/features/community/presentation/widgets/post_card.dart';
 import 'package:lavender/features/community/presentation/screen/stories_bar.dart';
 import 'package:lavender/features/community/presentation/widgets/post_card_shimmer.dart';
-import 'package:lavender/features/community/presentation/widgets/story_picker_helper.dart';
 import 'package:lavender/features/profile/presentation/cubit/current_user_cubit.dart';
 import 'package:lavender/features/profile/presentation/cubit/current_user_states.dart';
 
@@ -31,81 +29,90 @@ class CommunityScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverToBoxAdapter(
-            child: CommunityAppBar(),
-          ),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          final postsCubit = context.read<PostsCubit>();
 
-          SliverToBoxAdapter(
-            child: StoriesBar(),
-          ),
-
-          // Wrap your plain widget/text in SliverToBoxAdapter
-          SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 16.w),
-              child: AlexText(text: "بوستات"),
+          await postsCubit.fetchPosts();
+        },
+        backgroundColor: Colors.white,
+        color: AppColors.primaryColorLavenderLangAndText,
+        child: CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: CommunityAppBar(),
             ),
-          ),
 
-          BlocBuilder<PostsCubit, PostsState>(
-            builder: (context, state) {
-              if (state is PostsLoading) {
-                // Direct SliverList for loading state
-                return SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: 16.h),
-                          child: const PostCardShimmer(),
-                        );
-                      },
-                      childCount: 5, // Show 5 skeleton loaders
+            SliverToBoxAdapter(
+              child: StoriesBar(),
+            ),
+
+            // Wrap your plain widget/text in SliverToBoxAdapter
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: EdgeInsets.symmetric( horizontal: 16.w),
+                child: AlexText(text: "بوستات"),
+              ),
+            ),
+
+            BlocBuilder<PostsCubit, PostsState>(
+              builder: (context, state) {
+                if (state is PostsLoading) {
+                  // Direct SliverList for loading state
+                  return SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, ),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 16.h),
+                            child: const PostCardShimmer(),
+                          );
+                        },
+                        childCount: 5, // Show 5 skeleton loaders
+                      ),
                     ),
-                  ),
-                );
-              }
+                  );
+                }
 
-              else if (state is PostsLoaded) {
-                final posts = state.postResponse.data;
+                else if (state is PostsLoaded) {
+                  final posts = state.postResponse.data;
 
-                return SliverPadding(
-                  padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
-                  sliver: SliverList(
-                    delegate: SliverChildBuilderDelegate(
-                          (context, index) {
-                        final post = posts[index];
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: 16.h),
-                          child: PostCard(post: post),
-                        );
-                      },
-                      childCount: posts.length,
+                  return SliverPadding(
+                    padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 8.h),
+                    sliver: SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                            (context, index) {
+                          final post = posts[index];
+                          return Padding(
+                            padding: EdgeInsets.only(bottom: 16.h),
+                            child: PostCard(post: post),
+                          );
+                        },
+                        childCount: posts.length,
+                      ),
                     ),
-                  ),
-                );
-              }
+                  );
+                }
 
-              else if (state is PostsError) {
-                return SliverToBoxAdapter(
-                  child: ExceptionView(
-                    onPressed: () => context.read<PostsCubit>().fetchPosts(),
-                    message: state.message,
-                  ),
-                );
-              }
+                else if (state is PostsError) {
+                  return SliverToBoxAdapter(
+                    child: ExceptionView(
+                      onPressed: () => context.read<PostsCubit>().fetchPosts(),
+                      message: state.message,
+                    ),
+                  );
+                }
 
-              return const SliverToBoxAdapter(child: SizedBox.shrink());
-            },
-          ),
-          // Optionally, add a bottom padding so the last item isn't cut off
-          SliverToBoxAdapter(
-            child: SizedBox(height: 16.h),
-          ),
-        ],
+                return const SliverToBoxAdapter(child: SizedBox.shrink());
+              },
+            ),
+            // Optionally, add a bottom padding so the last item isn't cut off
+            SliverToBoxAdapter(
+              child: SizedBox(height: 16.h),
+            ),
+          ],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
       floatingActionButton: FloatingActionButton(

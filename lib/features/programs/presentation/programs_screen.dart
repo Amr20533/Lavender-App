@@ -8,6 +8,7 @@ import 'package:lavender/core/widget/back_icon.dart';
 import 'package:lavender/core/widget/exception_view.dart';
 import 'package:lavender/features/programs/presentation/cubit/courses_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/courses_states.dart';
+import 'package:lavender/features/programs/presentation/diary_page.dart';
 import 'package:lavender/features/programs/presentation/widgets/daily_emotion.dart';
 import 'package:lavender/features/programs/presentation/widgets/program_card.dart';
 import 'package:lavender/features/programs/presentation/widgets/program_card_shimmer.dart';
@@ -96,6 +97,7 @@ class ProgramsScreen extends StatelessWidget {
                     text: "تسجيل اليوميات",
                     imagePath: "assets/images/اليوميات.png",
                     width: double.infinity,
+                    onTap: () => Navigator.pushNamed(context, Routes.emptyDiaryPage),
                   ),
                 ],
               ),
@@ -157,10 +159,10 @@ class ProgramsScreen extends StatelessWidget {
               if (state is ProgramError) {
                 return SliverToBoxAdapter(
                   child: ExceptionView(
-                    onPressed: (){
-                      context.read<CoursesCubit>().fetchFreePrograms();
-                    },
-                    message: state.message),
+                      onPressed: (){
+                        context.read<CoursesCubit>().fetchFreePrograms();
+                      },
+                      message: state.message),
                 );
               }
 
@@ -177,4 +179,3 @@ class ProgramsScreen extends StatelessWidget {
     );
   }
 }
-

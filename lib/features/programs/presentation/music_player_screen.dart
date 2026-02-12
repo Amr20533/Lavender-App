@@ -1,13 +1,11 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/back_icon.dart';
 import 'package:lavender/core/widget/custom_cached_network_image.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/features/programs/data/models/music_card_model.dart';
+import 'package:lavender/features/programs/presentation/cubit/music_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/music_player_cubit.dart';
 import 'package:lavender/features/programs/presentation/widgets/music_player_widget.dart';
 
@@ -24,45 +22,53 @@ class MusicPlayerScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         leading: BackIcon(),
       ),
-      body: Container(
-        height: 812.h,
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
+      body: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            await context.read<MusicCubit>().fetchMusicCards();
+          },
+          backgroundColor: Colors.white,
+          color: AppColors.primaryColorLavenderLangAndText,
+          child: Container(
+            height: MediaQuery.of(context).size.height,
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: BlocProvider(
+              create: (_) => MusicPlayerCubit(),
+              child: Stack(
+                children: [
+                  // Fullscreen Background Image
+                  Positioned.fill(
+                    child: CustomCachedNetworkImage(
+                      imageUrl: musicCardModel.albumCover,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
 
+                  // Solid Shade Overlay
+                  Positioned.fill(
+                    child: Container(
+                      color: AppColors.shadeColor,
+                    ),
+                  ),
+
+                  MusicPlayerWidget(
+                    title: musicCardModel.title,
+                    author: musicCardModel.author,
+                    albumCover: musicCardModel.albumCover,
+                    audioFile: musicCardModel.audioFile,
+                    musicId: musicCardModel.id,
+                    album: musicCardModel.album ?? "فردي",
+                  ),
+                ],
+              ),
+            ),
+          ),
         ),
-        child: BlocProvider(
-          create: (_) => MusicPlayerCubit(),
-          child: Stack(
-            children: [
-              // Fullscreen Background Image (No blur)
-              Positioned.fill(
-                child: CustomCachedNetworkImage(
-                  imageUrl: musicCardModel.albumCover,
-                  fit: BoxFit.cover,
-                ),
-              ),
-
-              // Solid Shade Overlay (Replaces BackdropFilter)
-              Positioned.fill(
-                child: Container(
-                  color: AppColors.shadeColor,
-                ),
-              ),
-
-              MusicPlayerWidget(
-                title: musicCardModel.title,
-                author: musicCardModel.author,
-                albumCover: musicCardModel.albumCover,
-                audioFile: "icons/moral_story.mp3",
-                musicId: musicCardModel.id,
-                album: musicCardModel.album!,
-              ),
-            ],
-          )
-        ),
-      ),
-    );
+      ),    );
   }
 }

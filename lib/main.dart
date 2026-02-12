@@ -14,6 +14,8 @@ void main() async {
   await Hive.initFlutter();
   final box = await Hive.openBox('settings');
   await Hive.openBox('onboardingBox');
+  await Hive.openBox('diaryBox');
+  await Hive.openBox('localStoriesBox');
   final AppRouter appRouter = AppRouter();
   runApp(
      EasyLocalization(

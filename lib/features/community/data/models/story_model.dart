@@ -23,16 +23,22 @@ class Story {
 
   factory Story.fromJson(Map<String, dynamic> json) {
     return Story(
-      id: json["id"] as String,
+      id: json["id"] != null ? json["id"].toString() : "",
       caption: json["caption"] as String?,
       image: json["image"] as String?,
-      user: json["user"],
-      createdAt: DateTime.parse(json["created_at"]),
-      likesCount: json["likes_count"],
-      isSeen: json["is_seen"],
-      replies: (json["replies"] as List<dynamic>)
+      user: json["user"] ?? 0,
+      createdAt:
+      json["created_at"] != null
+          ? DateTime.parse(json["created_at"])
+          : DateTime.now(),
+      likesCount: json["likes_count"] ?? 0,
+      isSeen: json["is_seen"] ?? false,
+      replies:
+      json["replies"] != null
+          ? (json["replies"] as List<dynamic>)
           .map((e) => StoryReply.fromJson(e))
-          .toList(),
+          .toList()
+          : [],
     );
   }
 

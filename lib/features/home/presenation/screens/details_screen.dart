@@ -7,6 +7,7 @@ import 'package:lavender/core/networking/api_constants.dart';
 import 'package:lavender/core/routing/router.dart';
 import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/widget/alex_text.dart';
+import 'package:lavender/core/widget/back_icon.dart';
 import 'package:lavender/core/widget/custom_cached_network_image.dart';
 import 'package:lavender/features/appointments/presentation/cubit/appointment_cubit.dart';
 import 'package:lavender/features/appointments/presentation/cubit/appointment_state.dart';
@@ -34,18 +35,54 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
         slivers: [
           SliverAppBar(
             expandedHeight: 446,
-            floating: false,
+            floating: true,
             pinned: true,
+            // Optional: adds a smooth dark overlay so the bottom row is readable against the image
+            backgroundColor: Colors.white,
+            leading: BackIcon(),
             flexibleSpace: FlexibleSpaceBar(
               background: CustomCachedNetworkImage(
-                imageUrl:
-                    "${ApiConstants.imagePath}${widget.specialist.profilePic}",
+                imageUrl: "${ApiConstants.imagePath}${widget.specialist.profilePic}",
                 fit: BoxFit.cover,
+                // Note: Ensure heroTag is on the Image widget inside CustomCachedNetworkImage
                 heroTag: "specialist_${widget.specialist.user.id}",
               ),
             ),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(100.0),
+              child: Container(
+                padding: EdgeInsetsDirectional.only(start: 16),
+                height: 100.0,
+                // 2. Add scrolling to prevent overflow if text is long
+                child: SingleChildScrollView(
+                  scrollDirection: Axis.horizontal,
+                  child: Row(
+                    // Note: 'spacing' is only available in very recent Flutter versions.
+                    // If it fails, use SizedBox(width: 8) between items.
+                    children: [
+                      CategoryCard(
+                        backgroundColor: AppColors.green1,
+                        color: AppColors.green2,
+                        text: "نشط الان",
+                      ),
+                      const SizedBox(width: 8),
+                      CategoryCard(
+                        backgroundColor: AppColors.button,
+                        color: AppColors.purple50,
+                        text: widget.specialist.speciality,
+                      ),
+                      const SizedBox(width: 8),
+                      CategoryCard(
+                        backgroundColor: AppColors.orang2,
+                        color: AppColors.orang,
+                        text: widget.specialist.extraSpecialty,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
           ),
-
           /// Body content
           SliverList(
             delegate: SliverChildListDelegate([
@@ -81,7 +118,7 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                             // لو المستخدم رجع تقييم جديد (يعني ضغط "إرسال التقييم")
                             if (newRating != null && newRating is double) {
                               setState(() {
-                               // widget.specialist.avgRating = newRating; // ← نحدّث التقييم المعروض
+                                //  widget.specialist.avgRating = newRating; // ← نحدّث التقييم المعروض
                               });
                             }
                           },
@@ -111,7 +148,8 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                           size: 20.sp,
                         ),
                         Text(
-                          "12:00 ص - 3:00 م",
+                          // "${widget.specialist.appointments.first.startTime} ${widget.specialist.appointments.first.endTime}",
+                          "03:00 ص - 08:00 ص",
                           style: TextStyle(color: Colors.grey[600]),
                         ),
                       ],
@@ -141,10 +179,17 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                         ),
                         InfoCard(
                           title:
-                              "${FormatHelper.removeExtraDots(widget.specialist.pricePerHour)} جنيه",
+                          "${FormatHelper.removeExtraDots(widget.specialist.pricePerHour)} جنيه",
                           subtitle: "سعر الساعة",
                           icon: 'moneys.png',
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: 24),
+                    Row(spacing: 7,
+                      children: [
+                        Image.asset('assets/icons/calendar.png', cacheWidth: 800, width: 22,height: 22,),
+                        AlexText(text: "اختر الميعاد")
                       ],
                     ),
                     const SizedBox(height: 24),
@@ -153,13 +198,11 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                     const SizedBox(height: 24),
 
                     /// Schedule
-                    Row(
+                    /// Schedule
+                    Row(spacing: 7,
                       children: [
-                        Icon(Icons.calendar_month, color: AppColors.primaryColorLavenderLangAndText,),
-                        Text(
-                          "الجدول",
-                          style: Theme.of(context).textTheme.titleMedium,
-                        ),
+                        Image.asset('assets/icons/note-favorite.png', cacheWidth: 800, width: 22,height: 22,),
+                        AlexText(text: "الجدول")
                       ],
                     ),
                     const SizedBox(height: 12),
@@ -227,6 +270,54 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                 ),
               ),
             ]),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class CategoryCard extends StatelessWidget {
+  const CategoryCard({
+    super.key,
+    required this.backgroundColor,
+    required this.color,
+    required this.text,
+  });
+
+  final Color backgroundColor;
+  final Color color;
+  final String text;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 16),
+      decoration: BoxDecoration(
+        color: backgroundColor,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            width: 5,
+            height: 5,
+            decoration: BoxDecoration(
+              color: color,
+              shape: BoxShape.circle,
+            ),
+          ),
+          const SizedBox(width: 8),
+          Flexible(
+            child: AlexText(
+              text: text,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ],
       ),

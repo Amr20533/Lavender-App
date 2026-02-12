@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:lavender/core/themes/app_colors.dart';
 
 /// Helper class لاختيار الصور والفيديوهات للـ Stories
 
@@ -8,9 +9,9 @@ class StoryPickerHelper {
 
   /// اختيار صورة من الكاميرا أو المعرض
   static Future<XFile?> pickImage(
-      BuildContext context,
-      ImageSource source,
-      ) async {
+    BuildContext context,
+    ImageSource source,
+  ) async {
     try {
       final XFile? image = await _picker.pickImage(source: source);
 
@@ -19,13 +20,46 @@ class StoryPickerHelper {
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('تم اختيار الصورة بنجاح')),
+        SnackBar(
+          content: Text(
+            'تم اختيار الصورة بنجاح',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.primaryColorLavenderLangAndText,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.white.withOpacity(0.2),
+          behavior: SnackBarBehavior.floating,
+          elevation: 0,
+          margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+            side: BorderSide(
+              color: AppColors.primaryColorLavenderLangAndText.withOpacity(0.3),
+            ),
+          ),
+        ),
       );
 
       return image;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('حدث خطأ أثناء اختيار الصورة')),
+        SnackBar(
+          content: Text(
+            'حدث خطأ أثناء اختيار الصورة',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.white.withOpacity(0.2),
+          behavior: SnackBarBehavior.floating,
+          elevation: 0,
+          margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+            side: BorderSide(color: Colors.red.withOpacity(0.3)),
+          ),
+        ),
       );
       return null;
     }
@@ -33,9 +67,9 @@ class StoryPickerHelper {
 
   /// اختيار فيديو من الكاميرا أو المعرض
   static Future<XFile?> pickVideo(
-      BuildContext context,
-      ImageSource source,
-      ) async {
+    BuildContext context,
+    ImageSource source,
+  ) async {
     try {
       final XFile? video = await _picker.pickVideo(source: source);
 
@@ -44,13 +78,46 @@ class StoryPickerHelper {
       }
 
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('تم اختيار الفيديو بنجاح')),
+        SnackBar(
+          content: Text(
+            'تم اختيار الفيديو بنجاح',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.primaryColorLavenderLangAndText,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          backgroundColor: Colors.white.withOpacity(0.2),
+          behavior: SnackBarBehavior.floating,
+          elevation: 0,
+          margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+            side: BorderSide(
+              color: AppColors.primaryColorLavenderLangAndText.withOpacity(0.3),
+            ),
+          ),
+        ),
       );
 
       return video;
     } catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('حدث خطأ أثناء اختيار الفيديو')),
+        SnackBar(
+          content: Text(
+            'حدث خطأ أثناء اختيار الفيديو',
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.red, fontWeight: FontWeight.bold),
+          ),
+          backgroundColor: Colors.white.withOpacity(0.2),
+          behavior: SnackBarBehavior.floating,
+          elevation: 0,
+          margin: EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+            side: BorderSide(color: Colors.red.withOpacity(0.3)),
+          ),
+        ),
       );
       return null;
     }

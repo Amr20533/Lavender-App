@@ -96,6 +96,8 @@ class PostCard extends StatelessWidget {
             text: post.caption,
             color: Colors.black,
             fontSize: 12,
+            maxLines: null,
+            overflow: null,
           ),
           SizedBox(height: 8.h),
           if (post.image != null) ...[

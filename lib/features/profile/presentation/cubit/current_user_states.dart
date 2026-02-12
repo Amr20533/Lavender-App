@@ -17,3 +17,12 @@ class CurrentUserProfileError extends CurrentUserStates {
 
   CurrentUserProfileError(this.message);
 }
+
+class CurrentUserUpdateLoading extends CurrentUserStates {}
+
+class CurrentUserUpdateSuccess extends CurrentUserStates {}
+
+class CurrentUserUpdateError extends CurrentUserStates {
+  final String message;
+  CurrentUserUpdateError(this.message);
+}

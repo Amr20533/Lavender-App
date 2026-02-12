@@ -22,7 +22,7 @@ class InboxCard extends StatelessWidget {
     required this.onTap,
     required this.message,
     this.isLoading = false,
-    required this.time, // Placeholder
+    required this.time,
     this.isRead = false,
     this.isMe = false,
   });
@@ -42,11 +42,12 @@ class InboxCard extends StatelessWidget {
         padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          gradient: AppColors.inboxGradient
+          color: AppColors.doctorCardColor
+          // gradient: AppColors.inboxGradient
           // border: Border.all(color: AppColors.secondDividerColor), // Border added
         ),
         child: Padding(
-          padding: const EdgeInsets.only(top: 8), // Avoid overlapping with time
+          padding: const EdgeInsets.only(top: 8),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -78,11 +79,14 @@ class InboxCard extends StatelessWidget {
                       text: '${user.user.firstName} ${user.user.lastName}',
                       color: AppColors.primaryColorDarkText,
                       fontWeight: FontWeight.w600,
+                      fontSize: 12,
                     ),
                     const SizedBox(height: 4),
                     AlexText(
                       text: message,
                       color: AppColors.grey,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
                       maxLines: 1,
                     ),
                   ],
@@ -94,11 +98,12 @@ class InboxCard extends StatelessWidget {
                   AlexText(
                     text: formattedTime,
                     fontSize: 12,
+                    fontWeight: FontWeight.w400,
                     color: AppColors.purple600,
                   ),
                   const SizedBox(width: 4),
                   Icon(
-                    Icons.done_all,
+                    isRead ? Icons.done_all_sharp : Icons.done_all,
                     size: 16,
                     color: isRead ? AppColors.purple600 : AppColors.grey,
                   ),
