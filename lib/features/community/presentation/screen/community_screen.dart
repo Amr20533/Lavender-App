@@ -109,7 +109,7 @@ class CommunityScreen extends StatelessWidget {
             ),
             // Optionally, add a bottom padding so the last item isn't cut off
             SliverToBoxAdapter(
-              child: SizedBox(height: 16.h),
+              child: SizedBox(height: 54.h),
             ),
           ],
         ),

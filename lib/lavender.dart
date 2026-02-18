@@ -31,6 +31,7 @@ import 'package:lavender/features/programs/data/repositories/music_repository_im
 import 'package:lavender/features/programs/data/repositories/quizzes_repository_impl.dart';
 import 'package:lavender/features/programs/presentation/cubit/courses_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/music_cubit.dart';
+import 'package:lavender/features/programs/presentation/cubit/music_player_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/quiz_cubit.dart';
 import 'package:lavender/features/programs/presentation/cubit/quiz_result_cubit.dart';
 import 'package:lavender/features/search/data/repositories/search_repository_impl.dart';
@@ -85,6 +86,7 @@ class Lavender extends StatelessWidget {
         BlocProvider(create: (_) => StoryCubit(StoryRepositoryImpl())..fetchStories()),
         BlocProvider(create: (_) => AppointmentCubit(AppointmentRepositoryImpl())),
         BlocProvider(create: (_) => InboxCubit(ChatRepositoryImpl())..fetchInboxes()),
+        // BlocProvider(create: (_) => MusicPlayerCubit()),
         BlocProvider(create: (_) => SlotCubit()),
         ],
           child: MultiBlocProvider(

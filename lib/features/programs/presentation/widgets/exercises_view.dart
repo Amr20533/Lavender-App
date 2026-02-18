@@ -48,6 +48,33 @@ class ExercisesView extends StatelessWidget {
                 ],
               )),
         ),
+        GestureDetector(
+          onTap: () {
+            // نختار تمرين المشي الأول من القائمة الجديدة
+            final selectedWalking = ExerciseModel.walkingExercises[0];
+            Navigator.pushNamed(
+              context,
+              Routes.exerciseDetails,
+              arguments: selectedWalking, // تمرير خريطة المشي لنفس الشاشة
+            );
+          },
+          child: Container(
+              width: 167.w,
+              height: 132.h,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                  color: AppColors.doctorCardColor,
+                  borderRadius: BorderRadius.circular(16)
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset('assets/icons/workout-run.png',color: AppColors.primaryColorLavenderLangAndText,), // تأكد من المسار
+                  const SizedBox(height: 8),
+                  AlexText(text: 'تمارين المشي', fontSize: 12,)
+                ],
+              )),
+        ),
       ],
     );
   }

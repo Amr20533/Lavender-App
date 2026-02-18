@@ -49,11 +49,11 @@ class ActivityModel {
       time: "12:30 م",
       svgPath: "assets/svg/elements (1).svg",
     ),
-    ActivityModel(
-      id: "3",
-      title: "تمارين التنفس",
-      time: "12:30 م",
-      svgPath: "assets/svg/elements.svg",
-    ),
+    // ActivityModel(
+    //   id: "3",
+    //   title: "تمارين التنفس",
+    //   time: "12:30 م",
+    //   svgPath: "assets/svg/elements.svg",
+    // ),
   ];
 }

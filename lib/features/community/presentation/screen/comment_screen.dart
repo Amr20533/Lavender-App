@@ -7,6 +7,7 @@ import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/core/themes/stylesdart.dart';
 import 'package:lavender/core/widget/alex_text.dart';
 import 'package:lavender/core/widget/back_icon.dart';
+import 'package:lavender/core/widget/circularIcon.dart';
 import 'package:lavender/features/community/presentation/cubit/comment_cubit.dart';
 import 'package:lavender/features/community/presentation/cubit/comment_states.dart';
 import 'package:lavender/features/profile/data/models/user.dart';
@@ -244,10 +245,10 @@ class _CommentScreenState extends State<CommentScreen> {
                       onFieldSubmitted: (_) => _sendComment(),
                     ),
                   ),
-                  SizedBox(width: 10.w),
-                  IconButton(
-                    icon: const Icon(Icons.send, color: Colors.blue),
-                    onPressed: _sendComment,
+                  // SizedBox(width: 10.w),
+                  GestureDetector(
+                    onTap: _sendComment,
+                    child: CircularIcon(icon: 'send-2.png',),
                   ),
                 ],
               ),

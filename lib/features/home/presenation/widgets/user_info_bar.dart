@@ -108,21 +108,9 @@ class UserInfoBar extends StatelessWidget {
                       ),
                     );
                   },
-                  child: Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      color: AppColors.purple50,
-                      shape: BoxShape.circle,
-                    ),
-                    child: Icon(
-                      Icons.favorite_border_rounded,
-                      color: AppColors.primaryColorLavenderLangAndText,
-                      size: 24,
-                    ),
-                  ),
+                  child: const CircularIcon(icon: "heart.png",),
                 ),
-                const CircularIcon(icon: "notification.png"),
+                const CircularIcon(icon: "notification.png",),
               ],
             );
           } else if (state is CurrentUserProfileError) {

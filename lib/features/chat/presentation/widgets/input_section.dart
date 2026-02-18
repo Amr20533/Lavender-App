@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lavender/core/helpers/secure_storage_helper.dart';
+import 'package:lavender/core/widget/circularIcon.dart';
 import 'package:lavender/features/chat/presentation/cubit/chat_cubit.dart';
 
 import '../../data/models/chat/inbox_user_profile.dart' show InboxUserProfile;
@@ -38,8 +39,8 @@ class InputSection extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 8),
-          IconButton(
-            onPressed: () {
+          GestureDetector(
+            onTap: () {
               final text = messageController.text.trim();
               if (text.isNotEmpty) {
                 // INSTANT execution - no await delay
@@ -51,8 +52,24 @@ class InputSection extends StatelessWidget {
                 messageController.clear();
               }
             },
-            icon: const Icon(Icons.send, color: Colors.purple),
+            child: CircularIcon(icon: 'send-2.png',),
           ),
+
+          // IconButton(
+          //   onPressed: () {
+          //     final text = messageController.text.trim();
+          //     if (text.isNotEmpty) {
+          //       // INSTANT execution - no await delay
+          //       context.read<ChatCubit>().sendMessage(
+          //         text: text,
+          //         currentUserId: currentUserId,
+          //         receiverProfile: receiverProfile,
+          //       );
+          //       messageController.clear();
+          //     }
+          //   },
+          //   icon: const Icon(Icons.send, color: Colors.purple),
+          // ),
         ],
       ),
     );

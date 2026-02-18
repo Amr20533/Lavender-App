@@ -39,4 +39,18 @@ class ExerciseModel {
       "category": "نوم"
     }
   ];
+  static final List<Map<String, dynamic>> walkingExercises = [
+    {
+      "id": 101,
+      "title": "المشي الذهني",
+      "description": "ركز على ملمس الأرض وحركة جسدك لتفريغ التوتر العصبي",
+      "image": "assets/icons/walking.png",
+      "steps": [
+        {"action": "تركيز", "duration": 5, "instruction": "استشعر ملمس قدمك على الأرض"},
+        {"action": "هدوء", "duration": 5, "instruction": "استنشق الهواء بعمق مع كل خطوة"},
+        {"action": "تفريغ", "duration": 5, "instruction": "تخلص من التوتر مع كل زفير"},
+      ],
+      "category": "حركة"
+    },
+  ];
 }

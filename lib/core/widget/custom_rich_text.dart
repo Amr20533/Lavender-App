@@ -13,6 +13,8 @@ class CustomRichText extends StatelessWidget {
   Widget build(BuildContext context) {
     return RichText(
       textDirection: TextDirection.rtl,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
       text: TextSpan(
         children: [
           TextSpan(

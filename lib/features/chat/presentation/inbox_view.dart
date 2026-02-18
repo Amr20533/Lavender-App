@@ -17,7 +17,7 @@ class InboxView extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: AlexText(text: "الدردشة"),
-          toolbarHeight: 70,
+          toolbarHeight: 60,
           leading: Container(),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(1.0),
@@ -26,6 +26,10 @@ class InboxView extends StatelessWidget {
         ),
       body: CustomScrollView(
         slivers: [
+          const SliverToBoxAdapter(
+            child: SizedBox(height: 24,),
+          ),
+
           const SliverToBoxAdapter(child: StoriesBar()),
 
           const SliverToBoxAdapter(

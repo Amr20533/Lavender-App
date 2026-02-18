@@ -55,7 +55,7 @@ class _SplashTimerScreenState extends State<SplashTimerScreen> {
     if (accessToken != null && accessToken.isNotEmpty) {
       Navigator.pushReplacementNamed(context, Routes.homeScreen);
     } else {
-      Navigator.pushReplacementNamed(context, Routes.loginOrSignupScreen);
+      Navigator.pushReplacementNamed(context, Routes.onboardingScreen);
     }
   }
 }

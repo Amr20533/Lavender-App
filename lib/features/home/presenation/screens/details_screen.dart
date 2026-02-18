@@ -100,7 +100,7 @@ class _PsychologistDetailsPageState extends State<PsychologistDetailsPage> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          "أنا ${widget.specialist.user.firstName}${widget.specialist.user.lastName}",
+                          "أنا ${widget.specialist.user.firstName} ${widget.specialist.user.lastName}",
                           style: Theme.of(context).textTheme.titleMedium
                               ?.copyWith(color: Colors.indigo),
                         ),

@@ -53,14 +53,14 @@ class _SearchScreenState extends State<SearchScreen> {
           children: [
             SearchAnchor(
               isFullScreen: false,
-              viewHintText: "Search doctors",
+              viewHintText: "ابحث عن أخصائي",
               builder: (context, controller) {
                 return TextField(
                   controller: _searchController,
                   focusNode: _focusNode,
                   autofocus: true,
                   decoration: InputDecoration(
-                    hintText: "Search doctors",
+                    hintText: "ابحث عن أخصائي",
                     prefixIcon: GestureDetector(
                       onTap: () {
                         context.read<SearchCubit>().clear();

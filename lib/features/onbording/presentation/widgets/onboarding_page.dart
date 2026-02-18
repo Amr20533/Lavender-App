@@ -103,7 +103,7 @@ class OnboardingPage extends StatelessWidget {
                     SizedBox(height: 40.h),
                     CircularProgressIndicatorWidget(
                       progress: model.progress,
-                      onNext: onNext,
+                      onNext: onNext, totalSegments: 3,
                     ),
                   ],
                 ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lavender/core/themes/app_colors.dart';
 import 'package:lavender/features/home/presenation/widgets/daily_quote.dart';
 import 'package:lavender/features/home/presenation/widgets/home_header.dart';
 import 'package:lavender/features/home/presenation/widgets/specialists_slider.dart';
@@ -26,6 +27,8 @@ class HomeScreen extends StatelessWidget {
           await homeCubit.fetchSpecialists();
           await quoteCubit.fetchQuotes();
         },
+        backgroundColor: Colors.white,
+        color: AppColors.primaryColorLavenderLangAndText,
         child: CustomScrollView(
           slivers: [
             // Header part: HomeHeader

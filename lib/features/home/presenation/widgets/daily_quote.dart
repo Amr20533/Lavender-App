@@ -35,7 +35,7 @@ class DailyQuote extends StatelessWidget {
                   children: [
                     SizedBox(
                       width: double.infinity,
-                      height: 160.h,
+                      height: 180.h,
                       child: CustomPaint(
                         painter: QuotePainter(),
                       ),

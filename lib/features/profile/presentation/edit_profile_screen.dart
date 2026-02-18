@@ -241,7 +241,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
                       decoration: BoxDecoration(
-                        color: AppColors.grey3,
+                        color: Colors.white,
                         borderRadius: BorderRadius.circular(30),
                       ),
                       child: DropdownButtonHideUnderline(

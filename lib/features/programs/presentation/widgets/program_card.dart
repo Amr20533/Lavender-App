@@ -77,11 +77,15 @@ class ProgramCard extends StatelessWidget {
               child: Row(
                 spacing: 8,
                 children: [
-                  AlexText(
-                    text: program.title,
-                    fontSize: 16.sp,
-                    color: AppColors.lightBlack,
-                    fontWeight: FontWeight.w600,
+                  SizedBox(
+                    width:250,
+                    child: AlexText(
+                      text: program.title,
+                      fontSize: 16.sp,
+                      color: AppColors.lightBlack,
+                      fontWeight: FontWeight.w600,
+                      maxLines: 1,
+                    ),
                   ),
                   AlexText(
                     text: '${program.sessions.length} لقاءات',
